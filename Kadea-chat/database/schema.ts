@@ -7,6 +7,55 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
+export class ConversationMemberSchema extends BaseModel {
+  static $columns = ['conversationId', 'createdAt', 'id', 'updatedAt', 'userId'] as const
+  $columns = ConversationMemberSchema.$columns
+  @column()
+  declare conversationId: number
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+  @column()
+  declare userId: number
+}
+
+export class ConversationSchema extends BaseModel {
+  static $columns = ['createdAt', 'createdBy', 'id', 'name', 'type', 'updatedAt'] as const
+  $columns = ConversationSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column()
+  declare createdBy: number
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare name: string | null
+  @column()
+  declare type: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class MessageSchema extends BaseModel {
+  static $columns = ['content', 'conversationId', 'createdAt', 'id', 'updatedAt', 'userId'] as const
+  $columns = MessageSchema.$columns
+  @column()
+  declare content: string
+  @column()
+  declare conversationId: number
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+  @column({ isPrimary: true })
+  declare id: number
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+  @column()
+  declare userId: number
+}
+
 export class UserSchema extends BaseModel {
   static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'updatedAt'] as const
   $columns = UserSchema.$columns
