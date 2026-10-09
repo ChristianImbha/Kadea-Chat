@@ -8,6 +8,14 @@
     'x-data': '{ submitting: false }',
     'x-on:submit': 'submitting = true',
   })
+
+    @if (flashMessages.has('error'))
+      <p class="error">{{ flashMessages.get('error') }}</p>
+    @endif
+
+    @if (flashMessages.has('success'))
+      <p class="success">{{ flashMessages.get('success') }}</p>
+    @endif
     @field.root({ name: 'email' })
       @!field.label({ text: 'Email' })
       @!input.control({
