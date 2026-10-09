@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirme ton adresse email</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #222;">
+  <h1>Bienvenue sur Kadea Chat !</h1>
+
+  <p>Bonjour {{ user.fullName }},</p>
+
+  <p>
+    Merci d'avoir créé ton compte Kadea Chat.
+    Pour confirmer ton adresse email, clique sur le lien ci-dessous.
+  </p>
+
+  <p>
+    <a href="{{ verifyUrl }}">
+      Confirmer mon adresse email
+    </a>
+  </p>
+
+  <p>Ce lien expire dans 24 heures et ne peut être utilisé qu'une seule fois.</p>
+
+  <p>Si tu n'es pas à l'origine de cette inscription, ignore ce message.</p>
+
+  <p>L'équipe Kadea Chat</p>
+</body>
+</html>
