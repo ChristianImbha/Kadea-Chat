@@ -11,7 +11,19 @@ import { middleware } from '#start/kernel'
 import { controllers } from '#generated/controllers'
 import router from '@adonisjs/core/services/router'
 
+router
+  .on('/email/verification-notice')
+  .render('pages/auth/verify_notice')
+  .as('email.verification.notice')
+
 router.on('/').render('pages/home').as('home')
+
+router
+  .get('/email/verify/:token', [
+    controllers.EmailVerifications,
+    'verify',
+  ])
+  .as('email.verify')
 
 router
   .group(() => {
