@@ -41,3 +41,17 @@ router
     router.post('logout', [controllers.Session, 'destroy'])
   })
   .use(middleware.auth())
+
+  router
+  .get('/password/forgot', [
+    controllers.PasswordResets,
+    'create',
+  ])
+  .as('password_resets.create')
+
+router
+  .post('/password/forgot', [
+    controllers.PasswordResets,
+    'store',
+  ])
+  .as('password_resets.store')
