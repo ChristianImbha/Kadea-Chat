@@ -8,6 +8,7 @@ import type { HasMany } from '@adonisjs/lucid/types/relations'
 import EmailVerificationToken from '#models/email_verification_token'
 import Message from './message.js'
 import ConversationMember from './conversation_member.js'
+import PasswordResetToken from '#models/password_reset_token'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -28,7 +29,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare password: string
 
   @column.dateTime()
- declare emailVerifiedAt: DateTime | null
+  declare emailVerifiedAt: DateTime | null
 
   
 
@@ -45,5 +46,8 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare memberships: HasMany<typeof ConversationMember>
 
   @hasMany(() => EmailVerificationToken)
-declare emailVerificationTokens: HasMany<typeof EmailVerificationToken>
+  declare emailVerificationTokens: HasMany<typeof EmailVerificationToken>
+
+  @hasMany(() => PasswordResetToken)
+  declare passwordResetTokens: HasMany<typeof PasswordResetToken>
 }
