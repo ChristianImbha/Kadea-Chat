@@ -15,6 +15,8 @@ export type ScannedRoutes = {
     'session.destroy': { paramsTuple?: []; params?: {} }
     'password_resets.create': { paramsTuple?: []; params?: {} }
     'password_resets.store': { paramsTuple?: []; params?: {} }
+    'password_resets.show_reset_form': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
+    'password_resets.reset': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
   }
   GET: {
     'email.verification.notice': { paramsTuple?: []; params?: {} }
@@ -24,6 +26,7 @@ export type ScannedRoutes = {
     'session.create': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'password_resets.create': { paramsTuple?: []; params?: {} }
+    'password_resets.show_reset_form': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
   }
   HEAD: {
     'email.verification.notice': { paramsTuple?: []; params?: {} }
@@ -33,12 +36,14 @@ export type ScannedRoutes = {
     'session.create': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'password_resets.create': { paramsTuple?: []; params?: {} }
+    'password_resets.show_reset_form': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
   }
   POST: {
     'new_account.store': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
     'password_resets.store': { paramsTuple?: []; params?: {} }
+    'password_resets.reset': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
   }
 }
 declare module '@adonisjs/core/types/http' {

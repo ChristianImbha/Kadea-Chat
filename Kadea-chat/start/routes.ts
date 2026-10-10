@@ -55,3 +55,19 @@ router
     'store',
   ])
   .as('password_resets.store')
+
+  
+router
+  .get('/password/reset/:token', [
+    controllers.PasswordResets,
+    'showResetForm',
+  ])
+  .as('password_resets.show_reset_form')
+
+router
+  .post('/password/reset/:token', [
+    controllers.PasswordResets,
+    'reset',
+  ])
+  .as('password_resets.reset')
+
