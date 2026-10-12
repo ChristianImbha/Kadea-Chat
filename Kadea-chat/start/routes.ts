@@ -48,6 +48,10 @@ router
     router
       .post('/conversations', [controllers.Conversations, 'store'])
       .as('conversations.store')
+router
+      .get('/conversations/:id', [controllers.Conversations, 'show'])
+      .as('conversations.show')      
+      
   })
   .use(middleware.auth())
 

@@ -75,4 +75,39 @@ export default class ConversationsController {
     session.flash('success', 'Conversation privée créée.')
     return response.redirect().toRoute('dashboard')
   }
+
+  
+async show({ auth, params, response, session, view }: HttpContext) {
+  const currentUser = auth.user!
+  const conversationId = Number(params.id)
+
+  if (!Number.isInteger(conversationId) || conversationId <= 0) {
+    session.flash('error', 'Conversation invalide.')
+    return response.redirect().toRoute('dashboard')
+  }
+
+  const conversation = await Conversation.query()
+    .where('id', conversationId)
+    .whereHas('members', (query) => {
+      query.where('userId', currentUser.id)
+    })
+    .preload('members', (query) => {
+      query.preload('user')
+    })
+    .preload('messages', (query) => {
+      query.preload('author').orderBy('id', 'asc')
+    })
+    .first()
+
+  if (!conversation) {
+    session.flash(
+      'error',
+      'Conversation introuvable ou accès non autorisé.'
+    )
+    return response.redirect().toRoute('dashboard')
+  }
+
+  return view.render('pages/conversations/show', { conversation })
+}
+
 }

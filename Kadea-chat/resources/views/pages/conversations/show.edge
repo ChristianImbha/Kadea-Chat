@@ -1,0 +1,45 @@
+
+@layouts.app({ title: 'Conversation' })
+  @page()
+
+    <div class="empty">
+      <div class="empty__mark">
+        @svg('lucide:message-circle', { width: 22, height: 22 })
+      </div>
+
+      <h1>Conversation #{{ conversation.id }}</h1>
+
+      <p>
+        Type : {{ conversation.type }}
+      </p>
+
+      <h2>Participants</h2>
+
+      <ul>
+        @each(member in conversation.members)
+          <li>
+            {{ member.user.fullName }}
+          </li>
+        @end
+      </ul>
+
+      <h2>Messages</h2>
+
+      @if(conversation.messages.length > 0)
+        <ul>
+          @each(message in conversation.messages)
+            <li>
+              <strong>{{ message.author.fullName }}</strong>
+              <p>{{ message.content }}</p>
+            </li>
+          @end
+        </ul>
+      @else
+        <p>No messages yet. Start the conversation!</p>
+      @end
+
+      <a href="/dashboard">Back to dashboard</a>
+    </div>
+
+  @end
+@end

@@ -14,6 +14,7 @@ export type ScannedRoutes = {
     'dashboard': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
     'conversations.store': { paramsTuple?: []; params?: {} }
+    'conversations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'password_resets.create': { paramsTuple?: []; params?: {} }
     'password_resets.store': { paramsTuple?: []; params?: {} }
     'password_resets.show_reset_form': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
@@ -26,6 +27,7 @@ export type ScannedRoutes = {
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
+    'conversations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'password_resets.create': { paramsTuple?: []; params?: {} }
     'password_resets.show_reset_form': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
   }
@@ -36,6 +38,7 @@ export type ScannedRoutes = {
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
+    'conversations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'password_resets.create': { paramsTuple?: []; params?: {} }
     'password_resets.show_reset_form': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
   }
