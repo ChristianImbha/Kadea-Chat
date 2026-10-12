@@ -9,9 +9,7 @@
 
       <h1>Conversation #{{ conversation.id }}</h1>
 
-      <p>
-        Type : {{ conversation.type }}
-      </p>
+      <p>Type : {{ conversation.type }}</p>
 
       <h2>Participants</h2>
 
@@ -38,7 +36,31 @@
         <p>No messages yet. Start the conversation!</p>
       @end
 
-      <a href="/dashboard">Back to dashboard</a>
+      <h3>Send a message</h3>
+
+      <form
+        method="POST"
+        action="/conversations/{{ conversation.id }}/messages"
+      >
+        {{ csrfField() }}
+
+        <label for="content">Your message</label>
+
+        <textarea
+          id="content"
+          name="content"
+          rows="4"
+          maxlength="5000"
+          required
+          placeholder="Write your message..."
+        ></textarea>
+
+        <button type="submit">Send message</button>
+      </form>
+
+      <p>
+        <a href="/dashboard">Back to dashboard</a>
+      </p>
     </div>
 
   @end

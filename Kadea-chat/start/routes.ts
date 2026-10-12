@@ -51,8 +51,13 @@ router
 router
       .get('/conversations/:id', [controllers.Conversations, 'show'])
       .as('conversations.show')      
-      
-  })
+router
+  .post('/conversations/:id/messages', [
+    controllers.Conversations,
+    'sendMessage',
+  ])
+  .as('conversations.messages.store')
+})
   .use(middleware.auth())
 
 // Réinitialisation du mot de passe

@@ -4,6 +4,7 @@ import Conversation from '#models/conversation'
 import ConversationMember from '#models/conversation_member'
 import db from '@adonisjs/lucid/services/db'
 import type { HttpContext } from '@adonisjs/core/http'
+import Message from '#models/message'
 
 export default class ConversationsController {
   async store({ auth, request, response, session }: HttpContext) {
@@ -108,6 +109,56 @@ async show({ auth, params, response, session, view }: HttpContext) {
   }
 
   return view.render('pages/conversations/show', { conversation })
+}
+
+async sendMessage({ auth, params, request, response, session }: HttpContext) {
+  const currentUser = auth.user!
+  const conversationId = Number(params.id)
+
+  if (!Number.isInteger(conversationId) || conversationId <= 0) {
+    session.flash('error', 'Conversation invalide.')
+    return response.redirect().toRoute('dashboard')
+  }
+
+  // Vérifier que l'utilisateur connecté est membre
+  const membership = await ConversationMember.query()
+    .where('conversationId', conversationId)
+    .where('userId', currentUser.id)
+    .first()
+
+  if (!membership) {
+    session.flash(
+      'error',
+      'Tu n’as pas accès à cette conversation.'
+    )
+    return response.redirect().toRoute('dashboard')
+  }
+
+  // Valider le contenu du message
+  const content = String(request.input('content', '')).trim()
+
+  if (!content || content.length > 5000) {
+    session.flash(
+      'error',
+      'Le message doit contenir entre 1 et 5000 caractères.'
+    )
+    return response.redirect().toRoute('conversations.show', {
+      id: conversationId,
+    })
+  }
+
+  // Enregistrer le message dans PostgreSQL
+  await Message.create({
+    content,
+    userId: currentUser.id,
+    conversationId,
+  })
+
+  session.flash('success', 'Message envoyé.')
+
+  return response.redirect().toRoute('conversations.show', {
+    id: conversationId,
+  })
 }
 
 }

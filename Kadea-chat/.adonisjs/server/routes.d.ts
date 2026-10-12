@@ -15,6 +15,7 @@ export type ScannedRoutes = {
     'session.destroy': { paramsTuple?: []; params?: {} }
     'conversations.store': { paramsTuple?: []; params?: {} }
     'conversations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'conversations.messages.store': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'password_resets.create': { paramsTuple?: []; params?: {} }
     'password_resets.store': { paramsTuple?: []; params?: {} }
     'password_resets.show_reset_form': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
@@ -47,6 +48,7 @@ export type ScannedRoutes = {
     'session.store': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
     'conversations.store': { paramsTuple?: []; params?: {} }
+    'conversations.messages.store': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'password_resets.store': { paramsTuple?: []; params?: {} }
     'password_resets.reset': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
   }
