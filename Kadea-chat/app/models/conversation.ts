@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon'
 import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 
@@ -9,10 +10,19 @@ export default class Conversation extends BaseModel {
   declare id: number
 
   @column()
-  declare name: string
+  declare type: string
 
   @column()
-  declare isGroup: boolean
+  declare name: string | null
+
+  @column()
+  declare createdBy: number
+
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
 
   @hasMany(() => Message)
   declare messages: HasMany<typeof Message>

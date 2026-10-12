@@ -1,16 +1,15 @@
+
 /*
 |--------------------------------------------------------------------------
 | Routes file
 |--------------------------------------------------------------------------
-|
-| The routes file is used for defining the HTTP routes.
-|
 */
 
 import { middleware } from '#start/kernel'
 import { controllers } from '#generated/controllers'
 import router from '@adonisjs/core/services/router'
 
+// Page de vérification d'e-mail
 router
   .on('/email/verification-notice')
   .render('pages/auth/verify_notice')
@@ -18,6 +17,7 @@ router
 
 router.on('/').render('pages/home').as('home')
 
+// Vérification d'e-mail
 router
   .get('/email/verify/:token', [
     controllers.EmailVerifications,
@@ -25,6 +25,7 @@ router
   ])
   .as('email.verify')
 
+// Routes accessibles aux visiteurs non connectés
 router
   .group(() => {
     router.get('signup', [controllers.NewAccount, 'create'])
@@ -35,14 +36,21 @@ router
   })
   .use(middleware.guest())
 
+// Routes accessibles uniquement aux utilisateurs connectés
 router
   .group(() => {
     router.on('/dashboard').render('pages/dashboard').as('dashboard')
+
     router.post('logout', [controllers.Session, 'destroy'])
+
+    router
+      .post('/conversations', [controllers.Conversations, 'store'])
+      .as('conversations.store')
   })
   .use(middleware.auth())
 
-  router
+// Réinitialisation du mot de passe
+router
   .get('/password/forgot', [
     controllers.PasswordResets,
     'create',
@@ -56,7 +64,6 @@ router
   ])
   .as('password_resets.store')
 
-  
 router
   .get('/password/reset/:token', [
     controllers.PasswordResets,
