@@ -5,6 +5,7 @@
 
 export const controllers = {
   Conversations: () => import('#controllers/conversations_controller'),
+  Dashboard: () => import('#controllers/dashboard_controller'),
   EmailVerifications: () => import('#controllers/email_verifications_controller'),
   NewAccount: () => import('#controllers/new_account_controller'),
   PasswordResets: () => import('#controllers/password_resets_controller'),
