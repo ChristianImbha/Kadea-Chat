@@ -108,7 +108,9 @@ async show({ auth, params, response, session, view }: HttpContext) {
     return response.redirect().toRoute('dashboard')
   }
 
-  return view.render('pages/conversations/show', { conversation })
+  return view.render('pages/conversations/show', {
+    conversation, currentUserId:currentUser.id,
+  })
 }
 
 async sendMessage({ auth, params, request, response, session }: HttpContext) {
@@ -160,5 +162,69 @@ async sendMessage({ auth, params, request, response, session }: HttpContext) {
     id: conversationId,
   })
 }
+
+
+async createGroup({ auth, request, response, session }: HttpContext) {
+  const currentUser = auth.user!
+  const name = String(request.input('name', '')).trim()
+  const rawUserIds = request.input('userIds')
+
+  // Vérifier le nom du groupe
+  if (!name || name.length > 254) {
+    session.flash('error', 'Le nom du groupe doit contenir entre 1 et 254 caractères.')
+    return response.redirect().back()
+  }
+
+  // Vérifier la liste des participants
+  if (!Array.isArray(rawUserIds) || rawUserIds.length < 2) {
+    session.flash('error', 'Sélectionne au moins deux autres participants.')
+    return response.redirect().back()
+  }
+
+  const userIds = rawUserIds.map((id: unknown) => Number(id))
+
+  if (
+    userIds.some((id: number) => !Number.isInteger(id) || id <= 0) ||
+    new Set(userIds).size !== userIds.length ||
+    userIds.includes(currentUser.id)
+  ) {
+    session.flash('error', 'La liste des participants est invalide.')
+    return response.redirect().back()
+  }
+
+  const users = await User.query().whereIn('id', userIds)
+
+  if (users.length !== userIds.length) {
+    session.flash('error', 'Un ou plusieurs participants sont introuvables.')
+    return response.redirect().back()
+  }
+
+  // Créer le groupe et ses membres dans une seule transaction
+  await db.transaction(async (trx) => {
+    const conversation = await Conversation.create(
+      {
+        type: 'group',
+        name,
+        createdBy: currentUser.id,
+      },
+      { client: trx }
+    )
+
+    await ConversationMember.createMany(
+      [
+        { conversationId: conversation.id, userId: currentUser.id },
+        ...userIds.map((userId: number) => ({
+          conversationId: conversation.id,
+          userId,
+        })),
+      ],
+      { client: trx }
+    )
+  })
+
+  session.flash('success', 'Groupe créé avec succès.')
+  return response.redirect().toRoute('dashboard')
+}
+
 
 }

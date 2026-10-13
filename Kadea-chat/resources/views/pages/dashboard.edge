@@ -1,46 +1,85 @@
 
 @layouts.app({ title: 'Dashboard' })
   @page()
-
     <div class="empty">
       <div class="empty__mark">
         @svg('lucide:layout-grid', { width: 22, height: 22 })
       </div>
 
       <h1>Welcome to Kadea Chat</h1>
+      <p>You are successfully authenticated.</p>
 
-      <p>
-        You are successfully authenticated.
-      </p>
+      <!-- CONVERSATIONS EXISTANTES -->
 
-      <!-- SECTION 1 : CONVERSATIONS EXISTANTES -->
+          <h2>My conversations</h2>
 
-      <h2>My conversations</h2>
+          @if(conversations.length > 0)
+            <ul>
+              @each(conversation in conversations)
+                <li>
+                  <a href="/conversations/{{ conversation.id }}">
+                    <strong>
+                      @if(conversation.type === 'group')
+                        {{ conversation.name }}
+                      @else
+                        Conversation #{{ conversation.id }}
+                      @end
+                    </strong>
+                  </a>
 
-      @if(conversations.length > 0)
-        <ul>
-          @each(conversation in conversations)
-            <li>
-              <strong>
-                Conversation #{{ conversation.id }}
-              </strong>
-
-              <span>
-                @each(member in conversation.members)
-                  @if(member.userId !== conversation.createdBy)
-                    {{ member.user.fullName }}
-                  @end
-                @end
-              </span>
-            </li>
+                  <p>
+                    Participants:
+                    @each(member in conversation.members)
+                      <span>{{ member.user.fullName }} </span>
+                    @end
+                  </p>
+                </li>
+              @end
+            </ul>
+          @else
+            <p>You don't have any conversations yet.</p>
           @end
-        </ul>
-      @else
-        <p>You don't have any conversations yet.</p>
-      @end
 
-      <!-- SECTION 2 : DEMARRER UNE CONVERSATION -->
 
+
+<!-- CREER UN GROUPE -->
+          <h2>Create a group</h2>
+
+          <form method="POST" action="/conversations/groups">
+            {{ csrfField() }}
+
+            <div>
+              <label for="group-name">Group name</label>
+              <input
+                type="text"
+                id="group-name"
+                name="name"
+                maxlength="254"
+                required
+                placeholder="Enter a group name"
+              >
+            </div>
+
+            <p>Select at least two participants:</p>
+
+            @each(user in users)
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="userIds[]"
+                    value="{{ user.id }}"
+                  >
+                  {{ user.fullName }} ({{ user.email }})
+                </label>
+              </div>
+            @end
+
+            <button type="submit">Create group</button>
+          </form>
+
+
+      <!-- DEMARRER UNE CONVERSATION PRIVEE -->
       <h2>Start a private conversation</h2>
 
       @if(users.length > 0)
@@ -48,7 +87,7 @@
           @each(user in users)
             <li>
               <strong>{{ user.fullName }}</strong>
-              <span>{{ user.email }}</span>
+              <p>{{ user.email }}</p>
 
               <form method="POST" action="/conversations">
                 {{ csrfField() }}
@@ -70,18 +109,14 @@
         <p>No other users are registered yet.</p>
       @end
 
-      <!-- SECTION 3 : DECONNEXION -->
-
+      <!-- DECONNEXION -->
       <form method="POST" action="/logout">
         {{ csrfField() }}
-
-        <button type="submit">
-          Logout
-        </button>
+        <button type="submit">Logout</button>
       </form>
     </div>
-
   @end
 @end
+
 
 

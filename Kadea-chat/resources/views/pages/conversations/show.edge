@@ -1,40 +1,50 @@
 
 @layouts.app({ title: 'Conversation' })
   @page()
-
     <div class="empty">
       <div class="empty__mark">
         @svg('lucide:message-circle', { width: 22, height: 22 })
       </div>
 
-      <h1>Conversation #{{ conversation.id }}</h1>
+
+      <h1>
+        @if(conversation.type === 'group')
+          {{ conversation.name }}
+        @else
+          Conversation #{{ conversation.id }}
+        @end
+      </h1>
 
       <p>Type : {{ conversation.type }}</p>
 
       <h2>Participants</h2>
-
       <ul>
         @each(member in conversation.members)
-          <li>
-            {{ member.user.fullName }}
-          </li>
+          <li>{{ member.user.fullName }}</li>
         @end
       </ul>
 
       <h2>Messages</h2>
 
-      @if(conversation.messages.length > 0)
-        <ul>
+      <div class="chat-messages">
+        @if(conversation.messages.length > 0)
           @each(message in conversation.messages)
-            <li>
-              <strong>{{ message.author.fullName }}</strong>
-              <p>{{ message.content }}</p>
-            </li>
+            @if(message.userId === currentUserId)
+              <div class="chat-message chat-message--sent">
+                <strong>Moi</strong>
+                <p>{{ message.content }}</p>
+              </div>
+            @else
+              <div class="chat-message chat-message--received">
+                <strong>{{ message.author.fullName }}</strong>
+                <p>{{ message.content }}</p>
+              </div>
+            @end
           @end
-        </ul>
-      @else
-        <p>No messages yet. Start the conversation!</p>
-      @end
+        @else
+          <p>No messages yet. Start the conversation!</p>
+        @end
+      </div>
 
       <h3>Send a message</h3>
 
@@ -45,7 +55,6 @@
         {{ csrfField() }}
 
         <label for="content">Your message</label>
-
         <textarea
           id="content"
           name="content"
@@ -58,10 +67,7 @@
         <button type="submit">Send message</button>
       </form>
 
-      <p>
-        <a href="/dashboard">Back to dashboard</a>
-      </p>
+      <p><a href="/dashboard">Back to dashboard</a></p>
     </div>
-
   @end
 @end

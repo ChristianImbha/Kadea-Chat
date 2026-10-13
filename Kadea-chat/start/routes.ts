@@ -57,6 +57,9 @@ router
     'sendMessage',
   ])
   .as('conversations.messages.store')
+
+  router.post('/conversations/groups', [controllers.Conversations,'createGroup',])
+  .as('conversations.groups.store')
 })
   .use(middleware.auth())
 
