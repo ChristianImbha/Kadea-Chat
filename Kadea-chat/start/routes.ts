@@ -69,6 +69,13 @@ router
 
   router.post('/conversations/groups', [controllers.Conversations,'createGroup',])
   .as('conversations.groups.store')
+
+  router
+  .post('/conversations/:id/messages/:messageId/delete', [
+    controllers.Conversations,
+    'deleteMessage',
+  ])
+  .as('conversations.messages.delete')
   
 })
   .use(middleware.auth())

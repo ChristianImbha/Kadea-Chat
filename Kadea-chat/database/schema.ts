@@ -59,7 +59,7 @@ export class EmailVerificationTokenSchema extends BaseModel {
 }
 
 export class MessageSchema extends BaseModel {
-  static $columns = ['content', 'conversationId', 'createdAt', 'id', 'updatedAt', 'userId'] as const
+  static $columns = ['content', 'conversationId', 'createdAt', 'id', 'isDeleted', 'updatedAt', 'userId'] as const
   $columns = MessageSchema.$columns
   @column()
   declare content: string
@@ -69,6 +69,8 @@ export class MessageSchema extends BaseModel {
   declare createdAt: DateTime
   @column({ isPrimary: true })
   declare id: number
+  @column()
+  declare isDeleted: boolean
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
   @column()

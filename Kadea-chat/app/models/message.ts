@@ -18,6 +18,9 @@ export default class Message extends BaseModel {
   @column()
   declare conversationId: number
 
+  @column()
+  declare isDeleted: boolean
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

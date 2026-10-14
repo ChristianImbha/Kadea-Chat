@@ -195,6 +195,71 @@ async sendMessage({ auth, params, request, response, session }: HttpContext) {
 }
 
 
+async deleteMessage({ auth, params, response, session }: HttpContext) {
+  const currentUser = auth.user!
+  const conversationId = Number(params.id)
+  const messageId = Number(params.messageId)
+
+  if (
+    !Number.isInteger(conversationId) ||
+    conversationId <= 0 ||
+    !Number.isInteger(messageId) ||
+    messageId <= 0
+  ) {
+    session.flash('error', 'Identifiants invalides.')
+    return response.redirect().toRoute('dashboard')
+  }
+
+  const membership = await ConversationMember.query()
+    .where('conversationId', conversationId)
+    .where('userId', currentUser.id)
+    .first()
+
+  if (!membership) {
+    session.flash('error', 'Tu n’as pas accès à cette conversation.')
+    return response.redirect().toRoute('dashboard')
+  }
+
+  const message = await Message.query()
+    .where('id', messageId)
+    .where('conversationId', conversationId)
+    .where('userId', currentUser.id)
+    .first()
+
+  if (!message) {
+    session.flash(
+      'error',
+      'Message introuvable ou suppression non autorisée.'
+    )
+    return response.redirect().toRoute('conversations.show', {
+      id: conversationId,
+    })
+  }
+
+  if (!message.isDeleted) {
+    message.content = 'Ce message a été supprimé.'
+    message.isDeleted = true
+    await message.save()
+
+    transmit.broadcast(`conversations/${conversationId}/messages`, {
+      id: message.id,
+      content: message.content,
+      userId: message.userId,
+      conversationId,
+      author: message.author ? message.author.fullName : '',
+      createdAt: message.createdAt.toISO(),
+      isDeleted: true,
+    })
+  }
+
+  session.flash('success', 'Message supprimé.')
+  return response.redirect().toRoute('conversations.show', {
+    id: conversationId,
+  })
+}
+
+
+
 async createGroup({ auth, request, response, session }: HttpContext) {
   const currentUser = auth.user!
   const name = String(request.input('name', '')).trim()
