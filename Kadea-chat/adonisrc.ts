@@ -54,7 +54,8 @@ export default defineConfig({
     () => import('@adonisjs/static/static_provider'),
     () => import('@adonisjs/lucid/database_provider'),
     () => import('@adonisjs/auth/auth_provider'),
-    () => import('@adonisjs/mail/mail_provider')
+    () => import('@adonisjs/mail/mail_provider'),
+    () => import('@adonisjs/transmit/transmit_provider')
   ],
 
   /*
@@ -66,6 +67,7 @@ export default defineConfig({
   |
   */
   preloads: [
+    () => import('#start/transmit'),
     () => import('#start/routes'),
     () => import('#start/kernel'),
     () => import('#start/validator'),

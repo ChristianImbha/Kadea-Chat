@@ -5,6 +5,7 @@ import ConversationMember from '#models/conversation_member'
 import db from '@adonisjs/lucid/services/db'
 import type { HttpContext } from '@adonisjs/core/http'
 import Message from '#models/message'
+import transmit from '@adonisjs/transmit/services/main'
 
 export default class ConversationsController {
   async store({ auth, request, response, session }: HttpContext) {
@@ -149,18 +150,33 @@ async sendMessage({ auth, params, request, response, session }: HttpContext) {
     })
   }
 
-  // Enregistrer le message dans PostgreSQL
-  await Message.create({
-    content,
-    userId: currentUser.id,
-    conversationId,
-  })
+  
+    // Enregistrer le message dans PostgreSQL
+    const message = await Message.create({
+      content,
+      userId: currentUser.id,
+      conversationId,
+    })
+
+    // Charger les informations de l'auteur pour l'affichage
+    await message.load('author')
+
+    // Diffuser le message aux membres abonnés au canal
+    transmit.broadcast(`conversations/${conversationId}/messages`, {
+      id: message.id,
+      content: message.content,
+      userId: currentUser.id,
+      conversationId,
+      author: message.author.fullName,
+      createdAt: message.createdAt.toISO(),
+    })
 
   session.flash('success', 'Message envoyé.')
 
   return response.redirect().toRoute('conversations.show', {
     id: conversationId,
   })
+
 }
 
 

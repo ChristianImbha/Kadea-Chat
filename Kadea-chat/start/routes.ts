@@ -8,6 +8,7 @@
 import { middleware } from '#start/kernel'
 import { controllers } from '#generated/controllers'
 import router from '@adonisjs/core/services/router'
+import transmit from '@adonisjs/transmit/services/main'
 
 // Page de vérification d'e-mail
 router
@@ -91,4 +92,8 @@ router
     'reset',
   ])
   .as('password_resets.reset')
+
+transmit.registerRoutes((route) => {
+  route.use(middleware.auth())
+})  
 

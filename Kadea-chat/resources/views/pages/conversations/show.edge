@@ -26,7 +26,12 @@
 
       <h2>Messages</h2>
 
-      <div class="chat-messages">
+      <div
+        class="chat-messages"
+        id="chat-messages"
+        data-conversation-id="{{ conversation.id }}"
+        data-current-user-id="{{ currentUserId }}"
+      >
         @if(conversation.messages.length > 0)
           @each(message in conversation.messages)
             @if(message.userId === currentUserId)
@@ -49,6 +54,7 @@
       <h3>Send a message</h3>
 
       <form
+        id="chat-form"
         method="POST"
         action="/conversations/{{ conversation.id }}/messages"
       >
