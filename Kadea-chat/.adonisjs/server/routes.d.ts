@@ -12,6 +12,8 @@ export type ScannedRoutes = {
     'session.create': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
+    'profile.show': { paramsTuple?: []; params?: {} }
+    'profile.update': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
     'conversations.store': { paramsTuple?: []; params?: {} }
     'conversations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -21,6 +23,9 @@ export type ScannedRoutes = {
     'password_resets.store': { paramsTuple?: []; params?: {} }
     'password_resets.show_reset_form': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
     'password_resets.reset': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
+    'event_stream': { paramsTuple?: []; params?: {} }
+    'subscribe': { paramsTuple?: []; params?: {} }
+    'unsubscribe': { paramsTuple?: []; params?: {} }
   }
   GET: {
     'email.verification.notice': { paramsTuple?: []; params?: {} }
@@ -29,9 +34,11 @@ export type ScannedRoutes = {
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
+    'profile.show': { paramsTuple?: []; params?: {} }
     'conversations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'password_resets.create': { paramsTuple?: []; params?: {} }
     'password_resets.show_reset_form': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
+    'event_stream': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
     'email.verification.notice': { paramsTuple?: []; params?: {} }
@@ -40,19 +47,24 @@ export type ScannedRoutes = {
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
+    'profile.show': { paramsTuple?: []; params?: {} }
     'conversations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'password_resets.create': { paramsTuple?: []; params?: {} }
     'password_resets.show_reset_form': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
+    'event_stream': { paramsTuple?: []; params?: {} }
   }
   POST: {
     'new_account.store': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
+    'profile.update': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
     'conversations.store': { paramsTuple?: []; params?: {} }
     'conversations.messages.store': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'conversations.groups.store': { paramsTuple?: []; params?: {} }
     'password_resets.store': { paramsTuple?: []; params?: {} }
     'password_resets.reset': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
+    'subscribe': { paramsTuple?: []; params?: {} }
+    'unsubscribe': { paramsTuple?: []; params?: {} }
   }
 }
 declare module '@adonisjs/core/types/http' {

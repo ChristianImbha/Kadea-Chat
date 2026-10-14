@@ -44,7 +44,15 @@ router
   .get('/dashboard', [controllers.Dashboard, 'index'])
   .as('dashboard')
 
-    router.post('logout', [controllers.Session, 'destroy'])
+router
+  .get('/profile', [controllers.Profile, 'show'])
+  .as('profile.show')
+
+router
+  .post('/profile', [controllers.Profile, 'update'])
+  .as('profile.update')
+
+router.post('logout', [controllers.Session, 'destroy'])
 
     router
       .post('/conversations', [controllers.Conversations, 'store'])
@@ -61,6 +69,7 @@ router
 
   router.post('/conversations/groups', [controllers.Conversations,'createGroup',])
   .as('conversations.groups.store')
+  
 })
   .use(middleware.auth())
 
