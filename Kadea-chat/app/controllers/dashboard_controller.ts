@@ -13,14 +13,19 @@ export default class DashboardController {
       .select('id', 'fullName', 'email')
       .orderBy('fullName', 'asc')
 
-    const conversations = await Conversation.query()
-      .whereHas('members', (query) => {
-        query.where('userId', currentUser.id)
-      })
-      .preload('members', (query) => {
-        query.preload('user')
-      })
-      .orderBy('id', 'desc')
+   
+const conversations = await Conversation.query()
+    .whereHas('members', (query) => {
+      query.where('userId', currentUser.id)
+    })
+    .preload('members', (query) => {
+      query.preload('user')
+    })
+    .preload('messages', (query) => {
+      query.orderBy('createdAt', 'desc')
+    })
+    .orderBy('id', 'desc')
+
 
     return view.render('pages/dashboard', {
       users,

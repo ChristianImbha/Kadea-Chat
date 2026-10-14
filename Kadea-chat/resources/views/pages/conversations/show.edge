@@ -6,7 +6,6 @@
         @svg('lucide:message-circle', { width: 22, height: 22 })
       </div>
 
-
       <h1>
         @if(conversation.type === 'group')
           {{ conversation.name }}
@@ -26,50 +25,56 @@
 
       <h2>Messages</h2>
 
-     
-    <div
-      class="chat-messages"
-      id="chat-messages"
-      data-conversation-id="{{ conversation.id }}"
-      data-current-user-id="{{ currentUserId }}"
-    >
-      @if(conversation.messages.length > 0)
-        @each(message in conversation.messages)
-          @if(message.userId === currentUserId)
-            <div class="chat-message chat-message--sent">
-              <strong>Moi</strong>
+      <div
+        class="chat-messages"
+        id="chat-messages"
+        data-conversation-id="{{ conversation.id }}"
+        data-current-user-id="{{ currentUserId }}"
+      >
+        @if(conversation.messages.length > 0)
+          @each(message in conversation.messages)
+            @if(message.userId === currentUserId)
+              <div class="chat-message chat-message--sent">
+                <strong>Moi</strong>
 
-              @if(message.isDeleted)
-                <p>Ce message a été supprimé.</p>
-              @else
-                <p>{{ message.content }}</p>
+                @if(message.isDeleted)
+                  <p><em>Ce message a été supprimé.</em></p>
+                @else
+                  <p>{{ message.content }}</p>
 
-                <form
-                  method="POST"
-                  action="/conversations/{{ conversation.id }}/messages/{{ message.id }}/delete"
-                >
-                  {{ csrfField() }}
-                  <button type="submit">Supprimer</button>
-                </form>
-              @end
-            </div>
-          @else
-            <div class="chat-message chat-message--received">
-              <strong>{{ message.author.fullName }}</strong>
+                  <form
+                    method="POST"
+                    action="/conversations/{{ conversation.id }}/messages/{{ message.id }}/delete"
+                  >
+                    {{ csrfField() }}
+                    <button type="submit">Supprimer</button>
+                  </form>
+                @end
 
-              @if(message.isDeleted)
-                <p>Ce message a été supprimé.</p>
-              @else
-                <p>{{ message.content }}</p>
-              @end
-            </div>
+                <small>
+                  {{ message.createdAt.toFormat('dd/LL/yyyy HH:mm') }}
+                </small>
+              </div>
+            @else
+              <div class="chat-message chat-message--received">
+                <strong>{{ message.author.fullName }}</strong>
+
+                @if(message.isDeleted)
+                  <p><em>Ce message a été supprimé.</em></p>
+                @else
+                  <p>{{ message.content }}</p>
+                @end
+
+                <small>
+                  {{ message.createdAt.toFormat('dd/LL/yyyy HH:mm') }}
+                </small>
+              </div>
+            @end
           @end
+        @else
+          <p>No messages yet. Start the conversation!</p>
         @end
-      @else
-        <p>No messages yet. Start the conversation!</p>
-      @end
-    </div>
-
+      </div>
 
       <h3>Send a message</h3>
 
@@ -97,3 +102,4 @@
     </div>
   @end
 @end
+
