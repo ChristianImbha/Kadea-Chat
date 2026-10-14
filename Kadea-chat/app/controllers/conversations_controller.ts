@@ -150,32 +150,47 @@ async sendMessage({ auth, params, request, response, session }: HttpContext) {
     })
   }
 
-  
-    // Enregistrer le message dans PostgreSQL
-    const message = await Message.create({
-      content,
-      userId: currentUser.id,
-      conversationId,
-    })
+        
+   // Enregistrer le message dans PostgreSQL
+      const message = await Message.create({
+        content,
+        userId: currentUser.id,
+        conversationId,
+      })
 
-    // Charger les informations de l'auteur pour l'affichage
-    await message.load('author')
+  // Charger les informations de l'auteur
+      await message.load('author')
 
-    // Diffuser le message aux membres abonnés au canal
-    transmit.broadcast(`conversations/${conversationId}/messages`, {
-      id: message.id,
-      content: message.content,
-      userId: currentUser.id,
-      conversationId,
-      author: message.author.fullName,
-      createdAt: message.createdAt.toISO(),
-    })
+      // Diffuser le message aux membres abonnés
+      transmit.broadcast(`conversations/${conversationId}/messages`, {
+        id: message.id,
+        content: message.content,
+        userId: currentUser.id,
+        conversationId,
+        author: message.author.fullName,
+        createdAt: message.createdAt.toISO(),
+      })
 
-  session.flash('success', 'Message envoyé.')
+  // Réponse JSON pour JavaScript
+      if (request.accepts(['html', 'json']) === 'json') {
+        return response.created({
+          message: {
+            id: message.id,
+            content: message.content,
+            userId: currentUser.id,
+            conversationId,
+            author: message.author.fullName,
+            createdAt: message.createdAt.toISO(),
+          },
+        })
+      }
 
-  return response.redirect().toRoute('conversations.show', {
-    id: conversationId,
-  })
+      // Réponse classique pour le formulaire HTML
+      session.flash('success', 'Message envoyé.')
+
+      return response.redirect().toRoute('conversations.show', {
+        id: conversationId,
+      })
 
 }
 

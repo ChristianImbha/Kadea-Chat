@@ -103,3 +103,65 @@ if (chatMessages) {
   }, { once: true })
 }
 
+
+const chatForm = document.querySelector('#chat-form')
+
+if (chatForm && chatMessages) {
+  const contentInput = chatForm.querySelector('textarea[name="content"]')
+  const submitButton = chatForm.querySelector('button[type="submit"]')
+
+  chatForm.addEventListener('submit', async (event) => {
+    event.preventDefault()
+
+    const content = contentInput.value.trim()
+
+    if (!content || content.length > 5000) {
+      return
+    }
+
+    submitButton.disabled = true
+
+    try {
+      const csrfToken = document.querySelector(
+        'input[name="_csrf"]'
+      )?.value
+
+      const headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+
+      if (csrfToken) {
+        headers['x-csrf-token'] = csrfToken
+      }
+
+      const response = await fetch(chatForm.action, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ content }),
+        credentials: 'same-origin',
+      })
+
+      if (!response.ok) {
+        throw new Error(`Erreur HTTP ${response.status}`)
+      }
+
+      const result = await response.json()
+
+      // Le message est normalement affiché par Transmit.
+      // Nous ne l'ajoutons pas ici pour éviter les doublons.
+      if (!result.message) {
+        throw new Error('Réponse du serveur invalide.')
+      }
+
+      contentInput.value = ''
+      contentInput.focus()
+    } catch (error) {
+      console.error("Échec de l'envoi du message :", error)
+      alert("Impossible d'envoyer le message. Vérifie ta connexion et réessaie.")
+    } finally {
+      submitButton.disabled = false
+    }
+  })
+}
+
