@@ -28,7 +28,14 @@
                     </strong>
                   </a>
 
-                 
+                  @if(unreadCounts[conversation.id] > 0)
+                    <span class="unread-badge">
+                      {{ unreadCounts[conversation.id] }} non lu(s)
+                    </span>
+                  @end
+
+
+
           <p>
             Participants:
             @each(member in conversation.members)
@@ -114,7 +121,7 @@
       @if(users.length > 0)
         <ul>
           @each(user in users)
-            
+
           <li
             class="searchable-user"
             data-search="{{ user.fullName }} {{ user.email }}"
@@ -149,22 +156,6 @@
         <button type="submit">Logout</button>
       </form>
     </div>
-  
-    <script>
-      const searchInput = document.getElementById('user-search')
-      const searchableUsers = document.querySelectorAll('.searchable-user')
-
-      searchInput?.addEventListener('input', () => {
-        const searchTerm = searchInput.value.trim().toLowerCase()
-
-        searchableUsers.forEach((user) => {
-          const userInfo = user.dataset.search?.toLowerCase() || ''
-          user.style.display = userInfo.includes(searchTerm) ? '' : 'none'
-        })
-      })
-    </script>
-
-
   @end
 @end
 

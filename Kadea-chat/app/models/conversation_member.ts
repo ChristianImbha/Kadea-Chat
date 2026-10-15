@@ -15,6 +15,9 @@ export default class ConversationMember extends BaseModel {
   @column()
   declare conversationId: number
 
+  @column()
+  declare lastReadMessageId: number | null
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

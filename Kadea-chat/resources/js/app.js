@@ -165,3 +165,27 @@ if (chatForm && chatMessages) {
   })
 }
 
+
+/**
+ * Recherche des utilisateurs dans le tableau de bord.
+ * Filtre la liste selon le nom complet ou l'adresse e-mail.
+ */
+const userSearchInput = document.getElementById('user-search')
+const searchableUsers = document.querySelectorAll('.searchable-user')
+
+if (userSearchInput) {
+  userSearchInput.addEventListener('input', () => {
+    // Convertit la saisie en minuscules et retire les espaces inutiles.
+    const searchTerm = userSearchInput.value.trim().toLowerCase()
+
+    // Parcourt les utilisateurs affichés dans le tableau de bord.
+    searchableUsers.forEach((user) => {
+      // Récupère le nom et l'adresse e-mail associés à cet utilisateur.
+      const userInfo = (user.dataset.search || '').toLowerCase()
+
+      // Affiche l'utilisateur si ses informations correspondent à la recherche.
+      user.style.display = userInfo.includes(searchTerm) ? '' : 'none'
+    })
+  })
+}
+
