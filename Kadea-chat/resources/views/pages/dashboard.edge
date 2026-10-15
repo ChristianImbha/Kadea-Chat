@@ -28,12 +28,32 @@
                     </strong>
                   </a>
 
-                  <p>
-                    Participants:
-                    @each(member in conversation.members)
-                      <span>{{ member.user.fullName }} </span>
-                    @end
-                  </p>
+                 
+          <p>
+            Participants:
+            @each(member in conversation.members)
+              <span>{{ member.user.fullName }} </span>
+            @end
+          </p>
+
+          @if(conversation.messages.length > 0)
+            <p>
+                Dernier message :
+                @if(conversation.messages[0].isDeleted)
+                  <em>Ce message a été supprimé.</em>
+                @else
+                  {{ conversation.messages[0].content }}
+                @end
+            </p>
+
+            <p>
+              Envoyé le :
+              {{ conversation.messages[0].createdAt.toFormat('dd/LL/yyyy HH:mm') }}
+            </p>
+          @else
+            <p>Aucun message pour le moment.</p>
+          @end
+
                 </li>
               @end
             </ul>
@@ -83,27 +103,40 @@
       <!-- DEMARRER UNE CONVERSATION PRIVEE -->
       <h2>Start a private conversation</h2>
 
+      <label for="user-search">Rechercher un utilisateur</label>
+      <input
+        type="search"
+        id="user-search"
+        placeholder="Nom ou adresse e-mail..."
+        autocomplete="off"
+      >
+
       @if(users.length > 0)
         <ul>
           @each(user in users)
-            <li>
-              <strong>{{ user.fullName }}</strong>
-              <p>{{ user.email }}</p>
+            
+          <li
+            class="searchable-user"
+            data-search="{{ user.fullName }} {{ user.email }}"
+          >
+            <strong>{{ user.fullName }}</strong>
+            <p>{{ user.email }}</p>
 
-              <form method="POST" action="/conversations">
-                {{ csrfField() }}
+            <form method="POST" action="/conversations">
+              {{ csrfField() }}
 
-                <input
-                  type="hidden"
-                  name="userId"
-                  value="{{ user.id }}"
-                >
+              <input
+                type="hidden"
+                name="userId"
+                value="{{ user.id }}"
+              >
 
-                <button type="submit">
-                  Start conversation
-                </button>
-              </form>
-            </li>
+              <button type="submit">
+                Start conversation
+              </button>
+            </form>
+          </li>
+
           @end
         </ul>
       @else
@@ -116,6 +149,22 @@
         <button type="submit">Logout</button>
       </form>
     </div>
+  
+    <script>
+      const searchInput = document.getElementById('user-search')
+      const searchableUsers = document.querySelectorAll('.searchable-user')
+
+      searchInput?.addEventListener('input', () => {
+        const searchTerm = searchInput.value.trim().toLowerCase()
+
+        searchableUsers.forEach((user) => {
+          const userInfo = user.dataset.search?.toLowerCase() || ''
+          user.style.display = userInfo.includes(searchTerm) ? '' : 'none'
+        })
+      })
+    </script>
+
+
   @end
 @end
 
