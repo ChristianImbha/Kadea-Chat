@@ -16,12 +16,57 @@
 
       <p>Type : {{ conversation.type }}</p>
 
-      <h2>Participants</h2>
-      <ul>
-        @each(member in conversation.members)
-          <li>{{ member.user.fullName }}</li>
+      
+<h2>Participants</h2>
+
+<ul>
+  @each(member in conversation.members)
+    <li>
+      {{ member.user.fullName }}
+
+      @if(
+        conversation.type === 'group' &&
+        conversation.createdBy === currentUserId &&
+        member.userId !== conversation.createdBy
+      )
+        <form
+          method="POST"
+          action="/conversations/{{ conversation.id }}/members/{{ member.userId }}/remove"
+        >
+          {{ csrfField() }}
+          <button type="submit">Retirer du groupe</button>
+        </form>
+      @end
+    </li>
+  @end
+</ul>
+
+  @if(
+    conversation.type === 'group' &&
+    conversation.createdBy === currentUserId
+  )
+    <h2>Ajouter un membre</h2>
+
+    <form
+      method="POST"
+      action="/conversations/{{ conversation.id }}/members"
+    >
+      {{ csrfField() }}
+
+      <label for="userId">Choisir un utilisateur</label>
+      <select id="userId" name="userId" required>
+        <option value="">Sélectionner un utilisateur</option>
+        @each(user in users)
+          <option value="{{ user.id }}">
+            {{ user.fullName }} — {{ user.email }}
+          </option>
         @end
-      </ul>
+      </select>
+
+      <button type="submit">Ajouter au groupe</button>
+    </form>
+  @end
+
 
       <h2>Messages</h2>
 

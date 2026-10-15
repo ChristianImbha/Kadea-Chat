@@ -109,9 +109,25 @@ async show({ auth, params, response, session, view }: HttpContext) {
     return response.redirect().toRoute('dashboard')
   }
 
-  return view.render('pages/conversations/show', {
-    conversation, currentUserId:currentUser.id,
-  })
+  
+const users = await User.query()
+  .whereNot('id', currentUser.id)
+  .orderBy('fullName', 'asc')
+
+const existingMemberIds = conversation.members.map(
+  (member) => member.userId
+)
+
+const availableUsers = users.filter(
+  (user) => !existingMemberIds.includes(user.id)
+)
+
+return view.render('pages/conversations/show', {
+  conversation,
+  currentUserId: currentUser.id,
+  users: availableUsers,
+})
+
 }
 
 async sendMessage({ auth, params, request, response, session }: HttpContext) {
@@ -321,6 +337,113 @@ async createGroup({ auth, request, response, session }: HttpContext) {
   session.flash('success', 'Groupe créé avec succès.')
   return response.redirect().toRoute('dashboard')
 }
+
+
+async addMember({ auth, params, request, response, session }: HttpContext) {
+  const currentUser = auth.user!
+  const conversationId = Number(params.id)
+  const userId = Number(request.input('userId'))
+
+  if (
+    !Number.isInteger(conversationId) ||
+    conversationId <= 0 ||
+    !Number.isInteger(userId) ||
+    userId <= 0
+  ) {
+    session.flash('error', 'Identifiants invalides.')
+    return response.redirect().back()
+  }
+
+  const conversation = await Conversation.find(conversationId)
+
+  if (!conversation || conversation.type !== 'group') {
+    session.flash('error', 'Groupe introuvable.')
+    return response.redirect().back()
+  }
+
+  if (conversation.createdBy !== currentUser.id) {
+    session.flash('error', 'Seul le créateur du groupe peut gérer ses membres.')
+    return response.redirect().back()
+  }
+
+  const user = await User.find(userId)
+
+  if (!user) {
+    session.flash('error', 'Utilisateur introuvable.')
+    return response.redirect().back()
+  }
+
+  const existingMember = await ConversationMember.query()
+    .where('conversationId', conversationId)
+    .where('userId', userId)
+    .first()
+
+  if (existingMember) {
+    session.flash('error', 'Cet utilisateur est déjà membre du groupe.')
+    return response.redirect().back()
+  }
+
+  await ConversationMember.create({
+    conversationId,
+    userId,
+  })
+
+  session.flash('success', 'Membre ajouté au groupe.')
+  return response.redirect().toRoute('conversations.show', {
+    id: conversationId,
+  })
+}
+
+async removeMember({ auth, params, response, session }: HttpContext) {
+  const currentUser = auth.user!
+  const conversationId = Number(params.id)
+  const userId = Number(params.userId)
+
+  if (
+    !Number.isInteger(conversationId) ||
+    conversationId <= 0 ||
+    !Number.isInteger(userId) ||
+    userId <= 0
+  ) {
+    session.flash('error', 'Identifiants invalides.')
+    return response.redirect().back()
+  }
+
+  const conversation = await Conversation.find(conversationId)
+
+  if (!conversation || conversation.type !== 'group') {
+    session.flash('error', 'Groupe introuvable.')
+    return response.redirect().back()
+  }
+
+  if (conversation.createdBy !== currentUser.id) {
+    session.flash('error', 'Seul le créateur du groupe peut gérer ses membres.')
+    return response.redirect().back()
+  }
+
+  if (userId === conversation.createdBy) {
+    session.flash('error', 'Le créateur ne peut pas être retiré du groupe.')
+    return response.redirect().back()
+  }
+
+  const member = await ConversationMember.query()
+    .where('conversationId', conversationId)
+    .where('userId', userId)
+    .first()
+
+  if (!member) {
+    session.flash('error', 'Ce membre ne fait pas partie du groupe.')
+    return response.redirect().back()
+  }
+
+  await member.delete()
+
+  session.flash('success', 'Membre retiré du groupe.')
+  return response.redirect().toRoute('conversations.show', {
+    id: conversationId,
+  })
+}
+
 
 
 }

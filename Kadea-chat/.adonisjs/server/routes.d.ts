@@ -20,6 +20,8 @@ export type ScannedRoutes = {
     'conversations.messages.store': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'conversations.groups.store': { paramsTuple?: []; params?: {} }
     'conversations.messages.delete': { paramsTuple: [ParamValue,ParamValue]; params: {'id': ParamValue,'messageId': ParamValue} }
+    'conversations.members.add': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'conversations.members.remove': { paramsTuple: [ParamValue,ParamValue]; params: {'id': ParamValue,'userId': ParamValue} }
     'password_resets.create': { paramsTuple?: []; params?: {} }
     'password_resets.store': { paramsTuple?: []; params?: {} }
     'password_resets.show_reset_form': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
@@ -63,6 +65,8 @@ export type ScannedRoutes = {
     'conversations.messages.store': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'conversations.groups.store': { paramsTuple?: []; params?: {} }
     'conversations.messages.delete': { paramsTuple: [ParamValue,ParamValue]; params: {'id': ParamValue,'messageId': ParamValue} }
+    'conversations.members.add': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'conversations.members.remove': { paramsTuple: [ParamValue,ParamValue]; params: {'id': ParamValue,'userId': ParamValue} }
     'password_resets.store': { paramsTuple?: []; params?: {} }
     'password_resets.reset': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
     'subscribe': { paramsTuple?: []; params?: {} }

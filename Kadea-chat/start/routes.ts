@@ -76,6 +76,22 @@ router
     'deleteMessage',
   ])
   .as('conversations.messages.delete')
+
+  
+router
+  .post('/conversations/:id/members', [
+    controllers.Conversations,
+    'addMember',
+  ])
+  .as('conversations.members.add')
+
+router
+  .post('/conversations/:id/members/:userId/remove', [
+    controllers.Conversations,
+    'removeMember',
+  ])
+  .as('conversations.members.remove')
+
   
 })
   .use(middleware.auth())
