@@ -52,6 +52,10 @@ router
   .post('/profile', [controllers.Profile, 'update'])
   .as('profile.update')
 
+router
+  .post('/profile/password', [controllers.Profile, 'updatePassword'])
+  .as('profile.update_password')  
+
 router.post('logout', [controllers.Session, 'destroy'])
 
     router

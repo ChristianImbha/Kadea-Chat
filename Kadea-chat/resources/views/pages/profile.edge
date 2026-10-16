@@ -1,21 +1,68 @@
-
+{{-- Layout principal de l'application avec le titre de la page --}}
 @layouts.app({ title: 'Mon profil' })
+
+  {{-- Contenu principal de la page --}}
   @page()
     <div class="empty">
+
+      {{-- Titre et introduction --}}
       <h1>Mon profil</h1>
       <p>Consultez et modifiez vos informations personnelles.</p>
 
+      {{-- Afficher un message de succès après une opération --}}
       @if(flashMessages.has('success'))
         <p>{{ flashMessages.get('success') }}</p>
       @end
 
+      {{-- Afficher un message d'erreur si une opération échoue --}}
       @if(flashMessages.has('error'))
         <p>{{ flashMessages.get('error') }}</p>
       @end
 
-      <form method="POST" action="/profile">
+
+      
+      {{-- SECTION 1 : MODIFICATION DU PROFIL        --}}
+   
+
+      <hr>
+
+      <h2>Mes informations personnelles</h2>
+
+      {{-- Formulaire de modification du profil et d'envoi de la photo --}}
+      <form method="POST" action="/profile" enctype="multipart/form-data">
+
+        {{-- Jeton CSRF pour protéger le formulaire contre les requêtes falsifiées --}}
         {{ csrfField() }}
 
+
+      {{-- Photo de profil : affichage de la photo actuelle si elle existe --}}
+      <div>
+        <label for="avatar">Photo de profil</label>
+
+
+      {{-- Afficher la photo de profil actuelle --}}
+      @if(user.avatarPath)
+        <div class="profile-avatar">
+          <img
+            src="{{ user.avatarPath }}"
+            alt="Photo de profil"
+            class="profile-avatar__image"
+          >
+        </div>
+
+        {{-- Permet de choisir une image depuis l'ordinateur --}}
+        <input
+          type="file"
+          id="avatar"
+          name="avatar"
+          accept="image/jpeg,image/png,image/webp"
+        >
+
+        <p>Formats acceptés : JPG, PNG et WebP. Taille maximale : 2 Mo.</p>
+      </div>
+  
+
+        {{-- Champ du nom complet --}}
         <div>
           <label for="fullName">Nom complet</label>
           <input
@@ -24,10 +71,12 @@
             name="fullName"
             value="{{ user.fullName }}"
             maxlength="254"
+            autocomplete="name"
             required
           >
         </div>
 
+        {{-- Adresse e-mail affichée en lecture seule --}}
         <div>
           <label for="email">Adresse e-mail</label>
           <input
@@ -36,13 +85,97 @@
             value="{{ user.email }}"
             disabled
           >
+
           <p>L'adresse e-mail ne peut pas être modifiée ici.</p>
         </div>
 
-        <button type="submit">Enregistrer les modifications</button>
+        {{-- Bouton de sauvegarde des informations personnelles --}}
+        <button type="submit">
+          Enregistrer les modifications
+        </button>
+
       </form>
 
-      <p><a href="/dashboard">Retour au dashboard</a></p>
+
+      {{-- SECTION 2 : CHANGEMENT DU MOT DE PASSE    --}}
+  
+
+      <hr>
+
+      <h2>Changer mon mot de passe</h2>
+
+      <p>
+        Pour votre sécurité, saisissez votre mot de passe actuel,
+        puis choisissez un nouveau mot de passe.
+      </p>
+
+      {{-- Envoyer les données à la méthode updatePassword du contrôleur --}}
+      <form method="POST" action="/profile/password">
+
+        {{-- Jeton CSRF de sécurité --}}
+        {{ csrfField() }}
+
+        {{-- Vérifier l'identité avec le mot de passe actuel --}}
+        <div>
+          <label for="currentPassword">Mot de passe actuel</label>
+          <input
+            type="password"
+            id="currentPassword"
+            name="currentPassword"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        {{-- Saisir le nouveau mot de passe --}}
+        <div>
+          <label for="password">Nouveau mot de passe</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            minlength="8"
+            maxlength="32"
+            autocomplete="new-password"
+            required
+          >
+        </div>
+
+        {{-- Vérifier que le nouveau mot de passe est correctement confirmé --}}
+        <div>
+          <label for="passwordConfirmation">
+            Confirmer le nouveau mot de passe
+          </label>
+
+          <input
+            type="password"
+            id="passwordConfirmation"
+            name="passwordConfirmation"
+            minlength="8"
+            maxlength="32"
+            autocomplete="new-password"
+            required
+          >
+        </div>
+
+        {{-- Bouton de validation du changement de mot de passe --}}
+        <button type="submit">
+          Modifier mon mot de passe
+        </button>
+
+      </form>
+
+
+      {{-- ========================================= --}}
+      {{-- SECTION 3 : NAVIGATION                    --}}
+      {{-- ========================================= --}}
+
+      {{-- Permet de retourner au tableau de bord --}}
+      <p>
+        <a href="/dashboard">Retour au dashboard</a>
+      </p>
+
     </div>
   @end
+
 @end

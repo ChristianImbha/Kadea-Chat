@@ -1656,3 +1656,22 @@ input {
     transition: none;
   }
 }
+
+
+/* Conteneur circulaire de la photo de profil */
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  margin: 12px auto;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+/* Recadrer et centrer la photo dans le cercle */
+.profile-avatar__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
