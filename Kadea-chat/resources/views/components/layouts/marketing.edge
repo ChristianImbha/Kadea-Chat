@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html
-  lang="en-us"
+  lang="fr"
   data-theme="{{
     request.plainCookie('app_theme', {
-      defaultValue: 'light',
+      defaultValue: 'dark',
       encoded: false,
     })
   }}"
@@ -11,31 +11,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AdonisJS — Starter Kit</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <title>Kadea Chat — La messagerie qui garde le fil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    @vite(['resources/css/app.css', 'resources/css/landing.css', 'resources/js/app.js'])
     @stack('dumper')
   </head>
   <body>
-    <header class="header header--floating">
-      <div class="header__inner">
-        @!logo({ size: 28 })
-        <div class="header__right">
-          @!themeToggle()
-          @if(auth.user)
-            @link({ route: 'dashboard', class: 'btn btn--primary btn--sm' })
-              Dashboard
-            @end
-          @else
-            @link({ route: 'session.create', class: 'btn btn--ghost btn--sm' })
-              Sign in
-            @end
-            @link({ route: 'new_account.create', class: 'btn btn--primary btn--sm' })
-              Get started
-            @end
-          @end
-        </div>
-      </div>
-    </header>
     {{{ await $slots.main() }}}
     @include('partials/flash_alerts')
   </body>

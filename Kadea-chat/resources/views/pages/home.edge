@@ -1,134 +1,241 @@
-@layouts.marketing()
-  <div class="home">
-    <article class="prose-card">
-      <div class="pc-top">
-        <span class="pc-status mono tag" style="color: var(--ok);">
-          <span class="dot"></span>
-          Server ready
-        </span>
+ @layouts.marketing()
+
+  {{-- Navigation principale --}}
+  <header class="landing-nav">
+    <a href="/" class="landing-brand" aria-label="Kadea Chat, accueil">
+      <span class="landing-brand-mark">K</span>
+      <span>Kadea <strong>Chat</strong></span>
+    </a>
+
+    <nav class="landing-nav-links" aria-label="Navigation principale">
+      <a href="#fonctionnalites">Fonctionnalités</a>
+      <a href="#comment-ca-marche">Comment ça marche</a>
+    </nav>
+
+    <div class="landing-nav-actions">
+      <a href="/login" class="landing-login">Se connecter</a>
+      <a href="/signup" class="landing-button landing-button-small">
+        Créer un compte <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="landing-page">
+    {{-- Hero : présentation à gauche, aperçu du chat à droite --}}
+    <section class="landing-hero">
+      <div class="landing-hero-copy">
+        <p class="landing-eyebrow">
+          <span class="landing-status-dot"></span>
+          VOTRE ESPACE DE CONVERSATION
+        </p>
+
+        <h1>
+          Les conversations importantes,
+          <span>au même endroit.</span>
+        </h1>
+
+        <p class="landing-description">
+          Échangez en privé ou en groupe, retrouvez vos messages
+          et gardez le fil de vos discussions avec Kadea Chat.
+        </p>
+
+        <div class="landing-hero-actions">
+          <a href="/signup" class="landing-button">
+            Commencer gratuitement <span aria-hidden="true">→</span>
+          </a>
+          <a href="/login" class="landing-secondary-link">
+            J’ai déjà un compte
+          </a>
+        </div>
+
+        <div class="landing-trust-note">
+          <span aria-hidden="true">✓</span>
+          Un espace simple pour vos échanges quotidiens
+        </div>
       </div>
 
-      <div class="pc-lead">Welcome to the power of a Hypermedia app.</div>
+      {{-- Aperçu illustratif de l'interface de messagerie --}}
+      <div class="landing-preview-wrap" aria-label="Aperçu illustratif de Kadea Chat">
+        <div class="landing-preview-glow"></div>
 
-      <p class="pc-para">
-        A lightweight foundation for building modern web interfaces. Straightforward, flexible, and true to the web's core simplicity.
-      </p>
+        <div class="landing-preview">
+          <aside class="landing-preview-sidebar">
+            <div class="landing-preview-brand">
+              <span class="landing-brand-mark">K</span>
+              <span>Kadea <strong>Chat</strong></span>
+            </div>
 
-      <p class="pc-para">
-        This page is simply proof the engine started. Everything from here is yours to build.
-      </p>
+            <div class="landing-preview-section-title">
+              CONVERSATIONS
+              <span>＋</span>
+            </div>
 
-      <ul class="links">
-        <li>
-          <a class="lrow" href="https://docs.adonisjs.com" target="_blank" rel="noreferrer">
-            <span class="lrow__bullet"></span>
-            <span class="lrow__title">Documentation</span>
-            <span class="lrow__desc">Guides & API reference</span>
-            <span class="lrow__arrow">
-              @svg('lucide:arrow-up-right', { width: 16, height: 16 })
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="lrow" href="https://plus.adonisjs.com" target="_blank" rel="noreferrer">
-            <span class="lrow__bullet"></span>
-            <span class="lrow__title">AdonisJS Plus</span>
-            <span class="lrow__desc">Feature packs and Flow AI</span>
-            <span class="lrow__arrow">
-              @svg('lucide:arrow-up-right', { width: 16, height: 16 })
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="lrow" href="https://discord.com/invite/vDcEjq6" target="_blank" rel="noreferrer">
-            <span class="lrow__bullet"></span>
-            <span class="lrow__title">Discord</span>
-            <span class="lrow__desc">Meet fellow AdonisJS developers</span>
-            <span class="lrow__arrow">
-              @svg('lucide:arrow-up-right', { width: 16, height: 16 })
-            </span>
-          </a>
-        </li>
-      </ul>
+            <div class="landing-conversation landing-conversation-active">
+              <span class="landing-avatar landing-avatar-violet">JM</span>
+              <span class="landing-conversation-info">
+                <strong>Jean Michel</strong>
+                <small>Tu as vu le document ?</small>
+              </span>
+              <span class="landing-unread-dot"></span>
+            </div>
 
-      <div class="stack">
-        <span class="tag">Built with</span>
-        <div class="pile" role="list" aria-label="Tech stack">
-          <span class="tile" role="listitem" title="AdonisJS" style="background: #5A45FF;">
-            <svg viewBox="0 0 160 160" fill="#fff" aria-hidden="true">
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M0 80.0001C0 144.521 15.4786 160 79.9999 160 144.521 160 160 144.521 160 80.0001 160 15.4786 144.521 0 79.9999 0 15.4786 0 0 15.4786 0 80.0001zm32.2607 16.6191l25.0918-57.0266c4.2361-9.613 12.3825-14.8268 22.6474-14.8268 10.265 0 18.4113 5.2138 22.6481 14.8268l25.091 57.0266c1.141 2.77 2.118 6.3538 2.118 9.4498 0 14.175-9.939 24.114-24.114 24.114-4.828 0-8.6629-1.232-12.5444-2.479-3.9771-1.278-8.0036-2.572-13.1987-2.572-5.1349 0-9.2597 1.306-13.3154 2.589-3.9233 1.241-7.7814 2.462-12.4279 2.462-14.1752 0-24.1141-9.939-24.1141-24.114 0-3.096.9776-6.6798 2.1182-9.4498zm47.7392-47.0871L55.2344 105.581c7.332-3.422 15.8043-5.051 24.7655-5.051 8.6358 0 17.434 1.629 24.4401 5.051L79.9999 49.5321z"
-              />
-            </svg>
-          </span>
-          <span class="tile" role="listitem" title="Edge" style="background: #4F46E5;">
-            <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
-              <path d="M6 4l6 16 6-16-3 0-3 9-3-9z" />
-            </svg>
-          </span>
-          <span class="tile" role="listitem" title="Alpine.js" style="background: #2D3748;">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3 7l6 6-6 6h6l6-6-6-6z" fill="#77C1D2" />
-              <path d="M9 7l6 6-6 6h6l6-6-6-6z" fill="#2D3441" />
-            </svg>
-          </span>
-          <span class="tile" role="listitem" title="TypeScript" style="background: #3178C6;">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <text
-                x="12"
-                y="17"
-                text-anchor="middle"
-                font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
-                font-weight="700"
-                font-size="10"
-                fill="#fff"
-                letter-spacing="-0.5"
-              >
-                TS
-              </text>
-            </svg>
-          </span>
-          <span class="tile" role="listitem" title="Vite" style="background: #1E1B2E;">
-            <svg viewBox="0 0 410 404" aria-hidden="true">
-              <defs>
-                <linearGradient
-                  id="viteA"
-                  x1="6"
-                  y1="33"
-                  x2="235"
-                  y2="344"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stop-color="#41D1FF" />
-                  <stop offset="1" stop-color="#BD34FE" />
-                </linearGradient>
-                <linearGradient
-                  id="viteB"
-                  x1="194"
-                  y1="8"
-                  x2="236"
-                  y2="292"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stop-color="#FFEA83" />
-                  <stop offset=".083" stop-color="#FFDD35" />
-                  <stop offset="1" stop-color="#FFA800" />
-                </linearGradient>
-              </defs>
-              <path
-                d="M399.641 59.5246L215.643 388.545C211.844 395.338 202.084 395.378 198.228 388.618L10.5817 59.5563C6.38087 52.1896 12.6802 43.2665 21.0281 44.7586L205.223 77.6824C206.398 77.8924 207.601 77.8904 208.776 77.6763L389.119 44.8058C397.439 43.2894 403.768 52.1434 399.641 59.5246Z"
-                fill="url(#viteA)"
-              />
-              <path
-                d="M292.965 1.5744L156.801 28.2552C154.563 28.6937 152.906 30.5903 152.771 32.8664L144.395 174.33C144.198 177.662 147.258 180.248 150.51 179.498L188.42 170.749C191.967 169.931 195.172 173.055 194.443 176.622L183.18 231.775C182.422 235.487 185.907 238.661 189.532 237.56L212.947 230.446C216.577 229.344 220.065 232.527 219.297 236.242L201.398 322.875C200.278 328.294 207.486 331.249 210.492 326.603L212.5 323.5L323.454 102.072C325.312 98.3645 322.108 94.137 318.036 94.9233L279.014 102.452C275.347 103.159 272.227 99.7398 273.262 96.1457L298.731 7.66608C299.767 4.06956 296.642 0.649737 292.965 1.5744Z"
-                fill="url(#viteB)"
-              />
-            </svg>
+            <div class="landing-conversation">
+              <span class="landing-avatar landing-avatar-green">ÉQ</span>
+              <span class="landing-conversation-info">
+                <strong>Équipe projet</strong>
+                <small>Marie : Très bien !</small>
+              </span>
+            </div>
+
+            <div class="landing-conversation">
+              <span class="landing-avatar landing-avatar-orange">AN</span>
+              <span class="landing-conversation-info">
+                <strong>André N.</strong>
+                <small>Merci pour ton aide.</small>
+              </span>
+            </div>
+          </aside>
+
+          <section class="landing-preview-chat" aria-label="Exemple de conversation">
+            <header class="landing-chat-header">
+              <span class="landing-avatar landing-avatar-violet">JM</span>
+              <span>
+                <strong>Jean Michel</strong>
+                <small><span class="landing-status-dot"></span> En ligne</small>
+              </span>
+              <span class="landing-chat-menu" aria-hidden="true">···</span>
+            </header>
+
+            <div class="landing-chat-date">AUJOURD’HUI</div>
+
+            <div class="landing-message landing-message-received">
+              Salut ! Tu as pu regarder le document ?
+              <small>10:32</small>
+            </div>
+
+            <div class="landing-message landing-message-sent">
+              Oui, je viens de le consulter.
+              <small>10:33 <span aria-label="Envoyé">✓✓</span></small>
+            </div>
+
+            <div class="landing-message landing-message-received">
+              Super, on en discute cet après-midi ?
+              <small>10:34</small>
+            </div>
+
+            <div class="landing-message landing-message-sent landing-message-short">
+              Avec plaisir !
+              <small>10:34 <span aria-label="Envoyé">✓✓</span></small>
+            </div>
+
+            <div class="landing-chat-composer">
+              <span>Écrire un message…</span>
+              <span class="landing-send-icon" aria-hidden="true">↑</span>
+            </div>
+          </section>
+        </div>
+
+        <div class="landing-floating-note">
+          <span class="landing-floating-check">✓</span>
+          <span>
+            <strong>La discussion continue</strong>
+            <small>Vos échanges au même endroit</small>
           </span>
         </div>
       </div>
-    </article>
-  </div>
+    </section>
+
+    {{-- Bandeau de présentation --}}
+    <section class="landing-benefits" id="fonctionnalites">
+      <div class="landing-section-heading">
+        <p class="landing-eyebrow">PENSÉ POUR VOS ÉCHANGES</p>
+        <h2>Simple à utiliser. Facile à retrouver.</h2>
+        <p>Les outils essentiels pour communiquer sans compliquer les choses.</p>
+      </div>
+
+      <div class="landing-feature-grid">
+        <article class="landing-feature-card">
+          <span class="landing-feature-icon">↗</span>
+          <h3>Messages privés</h3>
+          <p>Échangez directement avec les personnes de votre choix.</p>
+        </article>
+
+        <article class="landing-feature-card">
+          <span class="landing-feature-icon">◎</span>
+          <h3>Conversations de groupe</h3>
+          <p>Réunissez les membres d’une équipe dans une même discussion.</p>
+        </article>
+
+        <article class="landing-feature-card">
+          <span class="landing-feature-icon">◷</span>
+          <h3>Un historique conservé</h3>
+          <p>Retrouvez le fil de vos échanges lorsque vous revenez discuter.</p>
+        </article>
+      </div>
+    </section>
+
+    {{-- Parcours de démarrage --}}
+    <section class="landing-how" id="comment-ca-marche">
+      <div>
+        <p class="landing-eyebrow">POUR COMMENCER</p>
+        <h2>Vos conversations commencent ici.</h2>
+        <p>Quelques étapes pour rejoindre votre espace de messagerie.</p>
+        <a href="/signup" class="landing-text-link">
+          Créer mon compte <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <div class="landing-steps">
+        <article class="landing-step">
+          <span>01</span>
+          <div>
+            <h3>Créez votre compte</h3>
+            <p>Renseignez vos informations et confirmez votre adresse e-mail.</p>
+          </div>
+        </article>
+
+        <article class="landing-step">
+          <span>02</span>
+          <div>
+            <h3>Retrouvez vos contacts</h3>
+            <p>Accédez à votre espace et démarrez une conversation.</p>
+          </div>
+        </article>
+
+        <article class="landing-step">
+          <span>03</span>
+          <div>
+            <h3>Échangez librement</h3>
+            <p>Discutez en privé ou rassemblez votre équipe dans un groupe.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    {{-- Appel à l'action final --}}
+    <section class="landing-cta">
+      <div>
+        <p class="landing-eyebrow">VOTRE PROCHAINE CONVERSATION</p>
+        <h2>On garde le fil ensemble ?</h2>
+        <p>Créez votre compte et commencez à échanger avec Kadea Chat.</p>
+      </div>
+      <a href="/signup" class="landing-button">
+        Rejoindre Kadea Chat <span aria-hidden="true">→</span>
+      </a>
+    </section>
+  </main>
+
+  <footer class="landing-footer">
+    <a href="/" class="landing-brand">
+      <span class="landing-brand-mark">K</span>
+      <span>Kadea <strong>Chat</strong></span>
+    </a>
+    <p>Une messagerie pour garder le fil.</p>
+    <div>
+      <a href="/login">Connexion</a>
+      <a href="/signup">Inscription</a>
+    </div>
+    <small>© 2026 Kadea Chat</small>
+  </footer>
+
 @end
