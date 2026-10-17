@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html
-  lang="en-us"
+  lang="fr"
   data-theme="{{
     request.plainCookie('app_theme', {
-      defaultValue: 'light',
+      defaultValue: 'dark',
       encoded: false,
     })
   }}"
@@ -11,7 +11,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AdonisJS — Starter Kit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <title>Kadea Chat — Votre messagerie</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('dumper')
   </head>
@@ -25,24 +28,13 @@
 
       <aside class="auth__aside">
         <div class="auth__aside-top">
-          @!themeToggle()
+        @!themeToggle({ defaultTheme: 'dark' })
         </div>
 
-        <p class="auth__quote">Auth, kept intentionally minimal so you can build it your way.</p>
-
-        <div>
-          <div class="pitch__t">Looking for production-ready auth?</div>
-          <p class="pitch__p">
-            Check out Feature packs, production-ready full-stack components from the creator of AdonisJS.
-          </p>
-          <a
-            class="il pitch__a"
-            href="https://plus.adonisjs.com/feature-packs"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Explore Feature packs →
-          </a>
+        <div class="auth__brand-panel">
+          <span class="auth__brand-kicker">KADEA CHAT · MESSAGERIE PRIVÉE</span>
+          <p class="auth__quote">Vos conversations, simplement. En privé, en groupe, à votre rythme.</p>
+          <p class="auth__brand-note">Une messagerie claire pour garder le fil de ce qui compte.</p>
         </div>
       </aside>
     </div>
