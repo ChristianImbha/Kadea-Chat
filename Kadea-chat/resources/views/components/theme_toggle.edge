@@ -1,5 +1,6 @@
+@let(defaultTheme = $props.get('defaultTheme', 'light'))
 @let(currentTheme = request.plainCookie('app_theme', {
-  defaultValue: 'light',
+  defaultValue: defaultTheme,
   encoded: false,
 }))
 

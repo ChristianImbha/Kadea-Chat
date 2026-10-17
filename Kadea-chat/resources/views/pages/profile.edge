@@ -3,7 +3,7 @@
 
   {{-- Contenu principal de la page --}}
   @page()
-    <div class="empty">
+    <div class="empty profile-page">
 
       {{-- Titre et introduction --}}
       <h1>Mon profil</h1>
@@ -34,21 +34,20 @@
         {{-- Jeton CSRF pour protéger le formulaire contre les requêtes falsifiées --}}
         {{ csrfField() }}
 
-
-      {{-- Photo de profil : affichage de la photo actuelle si elle existe --}}
+            {{-- Photo de profil : affichage de la photo actuelle si elle existe --}}
       <div>
         <label for="avatar">Photo de profil</label>
 
-
-      {{-- Afficher la photo de profil actuelle --}}
-      @if(user.avatarPath)
-        <div class="profile-avatar">
-          <img
-            src="{{ user.avatarPath }}"
-            alt="Photo de profil"
-            class="profile-avatar__image"
-          >
-        </div>
+        {{-- Afficher la photo de profil actuelle --}}
+        @if(user.avatarPath)
+          <div class="profile-avatar">
+            <img
+              src="{{ user.avatarPath }}"
+              alt="Photo de profil"
+              class="profile-avatar__image"
+            >
+          </div>
+        @end
 
         {{-- Permet de choisir une image depuis l'ordinateur --}}
         <input
@@ -59,7 +58,9 @@
         >
 
         <p>Formats acceptés : JPG, PNG et WebP. Taille maximale : 2 Mo.</p>
-        @end
+      </div>
+
+        <p>Formats acceptés : JPG, PNG et WebP. Taille maximale : 2 Mo.</p>
       </div>
   
 

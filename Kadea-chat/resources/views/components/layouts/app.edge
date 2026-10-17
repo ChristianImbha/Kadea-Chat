@@ -2,14 +2,14 @@
   Top-level app navigation. Add an entry here for every new area of your
   app, and it shows up in the navigation bar with its active state handled.
 --}}
-@let(nav = [{ label: 'Dashboard', route: 'dashboard', icon: 'lucide:house' }])
+@let(nav = [{ label: 'Tableau de bord', route: 'dashboard', icon: 'lucide:house' }])
 @let(pageTitle = $props.get('title'))
 <!DOCTYPE html>
 <html
-  lang="en-us"
+  lang="fr"
   data-theme="{{
     request.plainCookie('app_theme', {
-      defaultValue: 'light',
+      defaultValue: 'dark',
       encoded: false,
     })
   }}"
@@ -17,7 +17,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ pageTitle ? `${pageTitle} - AdonisJS` : 'AdonisJS — Starter Kit' }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <title>{{ pageTitle ? `${pageTitle} — Kadea Chat` : 'Kadea Chat' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('dumper')
   </head>
@@ -26,11 +29,11 @@
       <div class="header__inner">
         @!logo({ size: 28 })
         <div class="header__right">
-          @!themeToggle()
+        @!themeToggle({ defaultTheme: 'dark' })
           @form({ route: 'session.destroy', method: 'POST' })
             <button type="submit" class="btn btn--secondary btn--sm">
               @svg('lucide:log-out', { width: 15, height: 15 })
-              Log out
+              Déconnexion
             </button>
           @end
         </div>
