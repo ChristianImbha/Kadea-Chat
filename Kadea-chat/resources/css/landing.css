@@ -11,13 +11,13 @@
   --landing-muted: var(--muted);
   --landing-line: var(--line);
   --landing-primary: var(--brand-accent);
-  --landing-primary-dark: #b9d56b;
+  --landing-primary-dark: #1d4ed8;
   --landing-primary-soft: var(--app-surface-soft);
   --landing-green: var(--ok);
 }
 
 :root[data-theme='dark'] {
-  --landing-primary-dark: #c9e77d;
+  --landing-primary-dark: #60a5fa;
 }
 /* Base de la page */
 body:has(.landing-page) {
@@ -650,6 +650,7 @@ body:has(.landing-page) a {
   line-height: 1.75;
 }
 
+
 /* Appel à l'action final */
 .landing-cta {
   display: flex;
@@ -658,9 +659,9 @@ body:has(.landing-page) a {
   gap: 30px;
   margin-block: 25px 70px;
   padding: clamp(28px, 5vw, 54px);
-  border: 1px solid #e3e0ff;
+  border: 1px solid var(--landing-line);
   border-radius: 20px;
-  background: linear-gradient(115deg, #f0efff, #faf9ff 72%);
+  background: var(--landing-primary-soft);
 }
 
 .landing-cta h2 {
@@ -670,6 +671,7 @@ body:has(.landing-page) a {
 .landing-cta .landing-button {
   flex: 0 0 auto;
 }
+
 
 /* Pied de page */
 .landing-footer {

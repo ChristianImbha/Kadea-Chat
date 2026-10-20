@@ -1,11 +1,14 @@
 import Alpine from 'alpinejs'
 import { Transmit } from '@adonisjs/transmit-client'
+// Enregistre les commandes d'affichage et de fermeture des alertes temporaires.
 Alpine.data('alert', function () {
   return {
     isVisible: false,
+    // Masque la notification lorsqu'on clique sur sa commande de fermeture.
     dismiss() {
       this.isVisible = false
     },
+    // Affiche la notification après son entrée puis la masque automatiquement.
     init() {
       setTimeout(() => {
         this.isVisible = true
@@ -17,20 +20,36 @@ Alpine.data('alert', function () {
   }
 })
 
+// Enregistre le contrôle du thème clair/sombre et sa persistance entre visites.
+
 Alpine.data('themeToggle', function () {
   return {
-    theme: 'light',
+    theme: 'dark',
+
     init() {
-      this.theme = this.$el.dataset.initialTheme || 'light'
+      const savedTheme = this.$el.dataset.initialTheme
+      const theme =
+        savedTheme === 'light' || savedTheme === 'dark'
+          ? savedTheme
+          : 'dark'
+
+      this.applyTheme(theme)
     },
+
+    applyTheme(theme) {
+      this.theme = theme
+      document.documentElement.setAttribute('data-theme', theme)
+    },
+
     toggle() {
       const next = this.theme === 'dark' ? 'light' : 'dark'
-      this.theme = next
-      document.documentElement.setAttribute('data-theme', next)
+
+      this.applyTheme(next)
       document.cookie = `app_theme=${next}; path=/; max-age=${60 * 60 * 24 * 365}; samesite=lax`
     },
   }
 })
+
 
 Alpine.start()
 
@@ -43,6 +62,7 @@ if (chatMessages) {
 
   const transmit = new Transmit({
     baseUrl: window.location.origin,
+    // Génère l'identifiant unique requis pour la connexion au canal temps réel.
     uidGenerator: () => {
       return Array.from({ length: 16 }, () =>
         Math.floor(Math.random() * 256)
@@ -56,6 +76,7 @@ if (chatMessages) {
     `conversations/${conversationId}/messages`
   )
 
+  // Reçoit les nouveaux messages et les ajoute à l'historique sans doublon.
   subscription.onMessage((message) => {
     if (!message || typeof message !== 'object') return
 
@@ -97,6 +118,7 @@ if (chatMessages) {
     console.error('Impossible de rejoindre le canal de discussion :', error)
   })
 
+  // Ferme proprement la souscription quand l'utilisateur quitte la page.
   window.addEventListener('pagehide', () => {
     void subscription.delete()
     transmit.close()
@@ -110,6 +132,7 @@ if (chatForm && chatMessages) {
   const contentInput = chatForm.querySelector('textarea[name="content"]')
   const submitButton = chatForm.querySelector('button[type="submit"]')
 
+  // Envoie le message au serveur et laisse Transmit mettre à jour l'historique.
   chatForm.addEventListener('submit', async (event) => {
     event.preventDefault()
 
@@ -174,6 +197,7 @@ const userSearchInput = document.getElementById('user-search')
 const searchableUsers = document.querySelectorAll('.searchable-user')
 
 if (userSearchInput) {
+  // Actualise les résultats à chaque modification du champ de recherche.
   userSearchInput.addEventListener('input', () => {
     // Convertit la saisie en minuscules et retire les espaces inutiles.
     const searchTerm = userSearchInput.value.trim().toLowerCase()
