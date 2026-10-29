@@ -10,11 +10,7 @@ export default class extends BaseSchema {
       table.string('type', 20).notNullable()
       table.string('name', 254).nullable()
 
-      table
-        .integer('created_by')
-        .notNullable()
-        .references('id')
-        .inTable('users')
+      table.integer('created_by').notNullable().references('id').inTable('users')
 
       table.timestamp('created_at').notNullable()
       table.timestamp('updated_at').nullable()

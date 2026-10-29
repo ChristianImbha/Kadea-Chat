@@ -1,4 +1,3 @@
-
 import { createHash, randomBytes } from 'node:crypto'
 import { DateTime } from 'luxon'
 import db from '@adonisjs/lucid/services/db'
@@ -56,9 +55,7 @@ export default class PasswordResetService {
         return false
       }
 
-      const user = await User.query({ client: trx })
-        .where('id', resetToken.userId)
-        .first()
+      const user = await User.query({ client: trx }).where('id', resetToken.userId).first()
 
       if (!user) return false
 

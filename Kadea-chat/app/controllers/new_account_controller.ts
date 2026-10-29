@@ -1,4 +1,3 @@
-
 import User from '#models/user'
 import { signupValidator } from '#validators/user'
 import EmailVerificationService from '#services/email_verification_service'
@@ -11,8 +10,7 @@ export default class NewAccountController {
   }
 
   async store({ request, response }: HttpContext) {
-    const { fullName, email, password } =
-      await request.validateUsing(signupValidator)
+    const { fullName, email, password } = await request.validateUsing(signupValidator)
 
     const user = await User.create({
       fullName,

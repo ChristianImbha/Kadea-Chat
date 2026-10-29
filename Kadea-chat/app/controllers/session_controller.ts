@@ -1,4 +1,3 @@
-
 import User from '#models/user'
 import { loginValidator } from '#validators/user'
 import type { HttpContext } from '@adonisjs/core/http'
@@ -20,10 +19,7 @@ export default class SessionController {
     const user = await User.verifyCredentials(email, password)
 
     if (!user.emailVerifiedAt) {
-      session.flash(
-        'error',
-        'Confirme ton adresse email avant de te connecter.'
-      )
+      session.flash('error', 'Confirme ton adresse email avant de te connecter.')
 
       return response.redirect().toRoute('session.create')
     }

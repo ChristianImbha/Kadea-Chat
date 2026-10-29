@@ -1,4 +1,3 @@
-
 import transmit from '@adonisjs/transmit/services/main'
 import ConversationMember from '#models/conversation_member'
 import type { HttpContext } from '@adonisjs/core/http'

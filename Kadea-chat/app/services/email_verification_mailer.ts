@@ -1,4 +1,3 @@
-
 import mail from '@adonisjs/mail/services/main'
 import env from '#start/env'
 import User from '#models/user'
@@ -17,8 +16,8 @@ export default class EmailVerificationMailer {
         })
         .text(
           `Bonjour ${user.fullName},\n\n` +
-          `Confirme ton adresse email en cliquant sur ce lien : ${verifyUrl}\n\n` +
-          `Ce lien expire dans 24 heures.`
+            `Confirme ton adresse email en cliquant sur ce lien : ${verifyUrl}\n\n` +
+            `Ce lien expire dans 24 heures.`
         )
     })
   }

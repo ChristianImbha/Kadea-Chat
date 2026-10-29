@@ -9,20 +9,19 @@
       <h1>Mon profil</h1>
       <p>Consultez et modifiez vos informations personnelles.</p>
 
-      {{-- Afficher un message de succès après une opération --}}
+      {{-- Afficher un message de succÃ¨s aprÃ¨s une opÃ©ration --}}
       @if(flashMessages.has('success'))
         <p>{{ flashMessages.get('success') }}</p>
       @end
 
-      {{-- Afficher un message d'erreur si une opération échoue --}}
+      {{-- Afficher un message d'erreur si une opÃ©ration Ã©choue --}}
       @if(flashMessages.has('error'))
         <p>{{ flashMessages.get('error') }}</p>
       @end
 
 
-      
-      {{-- SECTION 1 : MODIFICATION DU PROFIL        --}}
-   
+
+      {{-- SECTION 1 : MODIFICATION DU PROFIL --}}
 
       <hr>
 
@@ -31,38 +30,46 @@
       {{-- Formulaire de modification du profil et d'envoi de la photo --}}
       <form method="POST" action="/profile" enctype="multipart/form-data">
 
-        {{-- Jeton CSRF pour protéger le formulaire contre les requêtes falsifiées --}}
+        {{-- Jeton CSRF pour protÃ©ger le formulaire contre les requÃªtes falsifiÃ©es --}}
         {{ csrfField() }}
 
             {{-- Photo de profil : affichage de la photo actuelle si elle existe --}}
-      <div>
-        <label for="avatar">Photo de profil</label>
 
-        {{-- Afficher la photo de profil actuelle --}}
-        @if(user.avatarPath)
-          <div class="profile-avatar">
-            <img
-              src="{{ user.avatarPath }}"
-              alt="Photo de profil"
-              class="profile-avatar__image"
-            >
-          </div>
-        @end
+        {{-- Photo de profil --}}
+        <div class="profile-avatar-section">
+          <label for="avatar" class="profile-avatar-section__title">
+            Photo de profil
+          </label>
 
-        {{-- Permet de choisir une image depuis l'ordinateur --}}
-        <input
-          type="file"
-          id="avatar"
-          name="avatar"
-          accept="image/jpeg,image/png,image/webp"
-        >
+          @if(user.avatarPath)
+            <div class="profile-avatar">
+              <img
+                src="{{ user.avatarPath }}"
+                alt="Photo de profil"
+                class="profile-avatar__image"
+              >
+            </div>
+          @end
 
-        <p>Formats acceptés : JPG, PNG et WebP. Taille maximale : 2 Mo.</p>
-      </div>
 
-        <p>Formats acceptés : JPG, PNG et WebP. Taille maximale : 2 Mo.</p>
-      </div>
-  
+          <label for="avatar" class="profile-file__button">
+            Choisir une photo
+          </label>
+          <input
+            type="file"
+            id="avatar"
+            name="avatar"
+            class="profile-file__input"
+            accept="image/jpeg,image/png,image/webp"
+          >
+          <span id="avatar-file-name" class="profile-file__name">
+            Aucune photo sÃ©lectionnÃ©e
+          </span>
+
+        </div>
+
+
+
 
         {{-- Champ du nom complet --}}
         <div>
@@ -78,7 +85,7 @@
           >
         </div>
 
-        {{-- Adresse e-mail affichée en lecture seule --}}
+        {{-- Adresse e-mail affichÃ©e en lecture seule --}}
         <div>
           <label for="email">Adresse e-mail</label>
           <input
@@ -88,7 +95,7 @@
             disabled
           >
 
-          <p>L'adresse e-mail ne peut pas être modifiée ici.</p>
+          <p>L'adresse e-mail ne peut pas Ãªtre modifiÃ©e ici.</p>
         </div>
 
         {{-- Bouton de sauvegarde des informations personnelles --}}
@@ -100,24 +107,24 @@
 
 
       {{-- SECTION 2 : CHANGEMENT DU MOT DE PASSE    --}}
-  
+
 
       <hr>
 
       <h2>Changer mon mot de passe</h2>
 
       <p>
-        Pour votre sécurité, saisissez votre mot de passe actuel,
+        Pour votre sÃ©curitÃ©, saisissez votre mot de passe actuel,
         puis choisissez un nouveau mot de passe.
       </p>
 
-      {{-- Envoyer les données à la méthode updatePassword du contrôleur --}}
+      {{-- Envoyer les donnÃ©es Ã  la mÃ©thode updatePassword du contrÃ´leur --}}
       <form method="POST" action="/profile/password">
 
-        {{-- Jeton CSRF de sécurité --}}
+        {{-- Jeton CSRF de sÃ©curitÃ© --}}
         {{ csrfField() }}
 
-        {{-- Vérifier l'identité avec le mot de passe actuel --}}
+        {{-- VÃ©rifier l'identitÃ© avec le mot de passe actuel --}}
         <div>
           <label for="currentPassword">Mot de passe actuel</label>
           <input
@@ -143,7 +150,7 @@
           >
         </div>
 
-        {{-- Vérifier que le nouveau mot de passe est correctement confirmé --}}
+        {{-- VÃ©rifier que le nouveau mot de passe est correctement confirmÃ© --}}
         <div>
           <label for="passwordConfirmation">
             Confirmer le nouveau mot de passe
@@ -168,9 +175,19 @@
       </form>
 
 
-    
+    <script>
+      const avatarInput = document.getElementById('avatar');
+      const avatarFileName = document.getElementById('avatar-file-name');
+
+      avatarInput?.addEventListener('change', () => {
+        avatarFileName.textContent = avatarInput.files?.[0]?.name
+          || 'Aucune photo sÃ©lectionnÃ©e';
+      });
+    </script>
+
+
       {{-- SECTION 3 : NAVIGATION                    --}}
-   
+
 
       {{-- Permet de retourner au tableau de bord --}}
       <p>

@@ -14,12 +14,7 @@ export default class extends BaseSchema {
         .inTable('conversations')
         .onDelete('CASCADE')
 
-      table
-        .integer('user_id')
-        .notNullable()
-        .references('id')
-        .inTable('users')
-        .onDelete('CASCADE')
+      table.integer('user_id').notNullable().references('id').inTable('users').onDelete('CASCADE')
 
       table.timestamp('created_at').notNullable()
       table.timestamp('updated_at').nullable()

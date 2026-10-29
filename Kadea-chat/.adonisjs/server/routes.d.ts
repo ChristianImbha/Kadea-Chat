@@ -14,8 +14,10 @@ export type ScannedRoutes = {
     'dashboard': { paramsTuple?: []; params?: {} }
     'profile.show': { paramsTuple?: []; params?: {} }
     'profile.update': { paramsTuple?: []; params?: {} }
+    'profile.update_password': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
     'conversations.store': { paramsTuple?: []; params?: {} }
+    'conversations.messages.edit': { paramsTuple: [ParamValue,ParamValue]; params: {'id': ParamValue,'messageId': ParamValue} }
     'conversations.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'conversations.messages.store': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'conversations.groups.store': { paramsTuple?: []; params?: {} }
@@ -60,8 +62,10 @@ export type ScannedRoutes = {
     'new_account.store': { paramsTuple?: []; params?: {} }
     'session.store': { paramsTuple?: []; params?: {} }
     'profile.update': { paramsTuple?: []; params?: {} }
+    'profile.update_password': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
     'conversations.store': { paramsTuple?: []; params?: {} }
+    'conversations.messages.edit': { paramsTuple: [ParamValue,ParamValue]; params: {'id': ParamValue,'messageId': ParamValue} }
     'conversations.messages.store': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'conversations.groups.store': { paramsTuple?: []; params?: {} }
     'conversations.messages.delete': { paramsTuple: [ParamValue,ParamValue]; params: {'id': ParamValue,'messageId': ParamValue} }

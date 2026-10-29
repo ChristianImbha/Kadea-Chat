@@ -27,7 +27,6 @@ export const plugins: Config['plugins'] = [
   authBrowserClient(app),
 ]
 
-
 /**
  * Configure lifecycle function to run before and after all the
  * tests.

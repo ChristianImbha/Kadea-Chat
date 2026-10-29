@@ -9,7 +9,7 @@
   lang="fr"
   data-theme="{{
     request.plainCookie('app_theme', {
-      defaultValue: 'dark',
+      defaultValue: 'light',
       encoded: false,
     })
   }}"
@@ -29,7 +29,7 @@
       <div class="header__inner">
         @!logo({ size: 28 })
         <div class="header__right">
-        @!themeToggle({ defaultTheme: 'dark' })
+        @!themeToggle({ defaultTheme: 'light' })
           @form({ route: 'session.destroy', method: 'POST' })
             <button type="submit" class="btn btn--secondary btn--sm">
               @svg('lucide:log-out', { width: 15, height: 15 })

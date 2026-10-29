@@ -17,10 +17,7 @@ export default class ProfileController {
 
     // Vérifier que le nom est renseigné et ne dépasse pas 254 caractères
     if (!fullName || fullName.length > 254) {
-      session.flash(
-        'error',
-        'Le nom est obligatoire et ne doit pas dépasser 254 caractères.'
-      )
+      session.flash('error', 'Le nom est obligatoire et ne doit pas dépasser 254 caractères.')
       return response.redirect('/profile')
     }
 
@@ -29,16 +26,6 @@ export default class ProfileController {
       size: '2mb',
       extnames: ['jpg', 'jpeg', 'png', 'webp'],
     })
-
-    // Diagnostic temporaire : vérifier si une photo est reçue
-  console.log('Photo reçue :', avatar ? 'oui' : 'non')
-
-  if (avatar) {
-    console.log('État du fichier :', avatar.isValid)
-    console.log('Nom du fichier :', avatar.clientName)
-    console.log('Erreurs :', avatar.errors)
-  }
-
     // Vérifier si le fichier envoyé est valide
     if (avatar && !avatar.isValid) {
       session.flash(
@@ -83,14 +70,10 @@ export default class ProfileController {
     })
 
     // Vérifier les données reçues
-    const { currentPassword, password } =
-      await request.validateUsing(passwordValidator)
+    const { currentPassword, password } = await request.validateUsing(passwordValidator)
 
     // Vérifier que l'ancien mot de passe est correct
-    const isCurrentPasswordValid = await hash.verify(
-      user.password,
-      currentPassword
-    )
+    const isCurrentPasswordValid = await hash.verify(user.password, currentPassword)
 
     if (!isCurrentPasswordValid) {
       session.flash('error', 'Votre mot de passe actuel est incorrect.')

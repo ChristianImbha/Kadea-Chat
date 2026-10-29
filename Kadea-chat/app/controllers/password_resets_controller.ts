@@ -1,4 +1,3 @@
-
 import User from '#models/user'
 import PasswordResetService from '#services/password_reset_service'
 import PasswordResetMailer from '#services/password_reset_mailer'
@@ -77,10 +76,7 @@ export default class PasswordResetsController {
       return response.redirect().toRoute('session.create')
     }
 
-    session.flash(
-      'success',
-      'Ton mot de passe a été modifié. Tu peux maintenant te connecter.'
-    )
+    session.flash('success', 'Ton mot de passe a été modifié. Tu peux maintenant te connecter.')
 
     return response.redirect().toRoute('session.create')
   }

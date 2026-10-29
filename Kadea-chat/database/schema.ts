@@ -8,7 +8,14 @@ import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
 export class ConversationMemberSchema extends BaseModel {
-  static $columns = ['conversationId', 'createdAt', 'id', 'lastReadMessageId', 'updatedAt', 'userId'] as const
+  static $columns = [
+    'conversationId',
+    'createdAt',
+    'id',
+    'lastReadMessageId',
+    'updatedAt',
+    'userId',
+  ] as const
   $columns = ConversationMemberSchema.$columns
   @column()
   declare conversationId: number
@@ -42,7 +49,15 @@ export class ConversationSchema extends BaseModel {
 }
 
 export class EmailVerificationTokenSchema extends BaseModel {
-  static $columns = ['createdAt', 'expiresAt', 'id', 'tokenHash', 'updatedAt', 'usedAt', 'userId'] as const
+  static $columns = [
+    'createdAt',
+    'expiresAt',
+    'id',
+    'tokenHash',
+    'updatedAt',
+    'usedAt',
+    'userId',
+  ] as const
   $columns = EmailVerificationTokenSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -61,7 +76,15 @@ export class EmailVerificationTokenSchema extends BaseModel {
 }
 
 export class MessageSchema extends BaseModel {
-  static $columns = ['content', 'conversationId', 'createdAt', 'id', 'isDeleted', 'updatedAt', 'userId'] as const
+  static $columns = [
+    'content',
+    'conversationId',
+    'createdAt',
+    'id',
+    'isDeleted',
+    'updatedAt',
+    'userId',
+  ] as const
   $columns = MessageSchema.$columns
   @column()
   declare content: string
@@ -80,7 +103,15 @@ export class MessageSchema extends BaseModel {
 }
 
 export class PasswordResetTokenSchema extends BaseModel {
-  static $columns = ['createdAt', 'expiresAt', 'id', 'tokenHash', 'updatedAt', 'usedAt', 'userId'] as const
+  static $columns = [
+    'createdAt',
+    'expiresAt',
+    'id',
+    'tokenHash',
+    'updatedAt',
+    'usedAt',
+    'userId',
+  ] as const
   $columns = PasswordResetTokenSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -99,7 +130,16 @@ export class PasswordResetTokenSchema extends BaseModel {
 }
 
 export class UserSchema extends BaseModel {
-  static $columns = ['avatarPath', 'createdAt', 'email', 'emailVerifiedAt', 'fullName', 'id', 'password', 'updatedAt'] as const
+  static $columns = [
+    'avatarPath',
+    'createdAt',
+    'email',
+    'emailVerifiedAt',
+    'fullName',
+    'id',
+    'password',
+    'updatedAt',
+  ] as const
   $columns = UserSchema.$columns
   @column()
   declare avatarPath: string | null

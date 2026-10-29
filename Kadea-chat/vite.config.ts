@@ -1,4 +1,3 @@
-
 import { defineConfig } from 'vite'
 import adonisjs from '@adonisjs/vite/client'
 import tailwindcss from '@tailwindcss/vite'
@@ -7,7 +6,9 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     adonisjs({
-      entryPoints: ['resources/css/app.css', 'resources/js/app.js'],
+      // Fichiers CSS et JavaScript compilés par Vite.
+      entryPoints: ['resources/css/app.css', 'resources/css/landing.css', 'resources/js/app.js'],
+      // Recharge les pages Edge lors de leurs modifications.
       reload: ['resources/views/**/*.edge'],
     }),
   ],

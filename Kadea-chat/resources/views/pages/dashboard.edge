@@ -1,163 +1,148 @@
-
-@layouts.app({ title: 'Dashboard' })
+@layouts.app({ title: 'Tableau de bord' })
   @page()
-    <div class="empty">
-      <div class="empty__mark">
-        @svg('lucide:layout-grid', { width: 22, height: 22 })
-      </div>
+    <section class="dashboard-page">
+      <header class="dashboard-intro">
+        <div>
+          <span class="dashboard-kicker">VOTRE ESPACE KADEA</span>
+          <h1>Bonjour, {{ auth.user.fullName }}</h1>
+          <p>Retrouvez vos échanges et reprenez la conversation.</p>
+        </div>
+        <a class="dashboard-profile-link" href="/profile">
+          @svg('lucide:user-round', { width: 17, height: 17 })
+          Mon profil
+        </a>
+      </header>
 
-      <h1>Welcome to Kadea Chat</h1>
-      <p><a href="/profile">Mon profil</a></p>
-      <p>You are successfully authenticated.</p>
-
-      <!-- CONVERSATIONS EXISTANTES -->
-
-          <h2>My conversations</h2>
+      <div class="dashboard-grid">
+        {{-- Liste des conversations existantes et aperçu du dernier message. --}}
+        <section class="dashboard-section dashboard-section--conversations">
+          <div class="dashboard-section__heading">
+            <div>
+              <span class="dashboard-kicker">VOS ÉCHANGES</span>
+              <h2>Conversations</h2>
+            </div>
+            <span class="dashboard-count">{{ conversations.length }}</span>
+          </div>
 
           @if(conversations.length > 0)
-            <ul>
+            <div class="dashboard-conversations">
               @each(conversation in conversations)
-                <li>
-                  <a href="/conversations/{{ conversation.id }}">
-                    <strong>
-                      @if(conversation.type === 'group')
-                        {{ conversation.name }}
-                      @else
-                        Conversation #{{ conversation.id }}
+                <a class="dashboard-conversation" href="/conversations/{{ conversation.id }}">
+                  <span class="dashboard-conversation__icon">
+                    @if(conversation.type === 'group')
+                      @svg('lucide:users-round', { width: 19, height: 19 })
+                    @else
+                      @svg('lucide:message-circle', { width: 19, height: 19 })
+                    @end
+                  </span>
+                  <span class="dashboard-conversation__content">
+                    <span class="dashboard-conversation__title">
+                      <strong>
+                        @if(conversation.type === 'group')
+                          {{ conversation.name }}
+                        @else
+                          @each(member in conversation.members)
+                            @if(member.userId !== auth.user.id)
+                              {{ member.user.fullName }}
+                            @end
+                          @end
+                        @end
+                      </strong>
+                      @if(unreadCounts[conversation.id] > 0)
+                        <span class="dashboard-unread">{{ unreadCounts[conversation.id] }}</span>
                       @end
-                    </strong>
-                  </a>
-
-                  @if(unreadCounts[conversation.id] > 0)
-                    <span class="unread-badge">
-                      {{ unreadCounts[conversation.id] }} non lu(s)
                     </span>
-                  @end
-
-
-
-          <p>
-            Participants:
-            @each(member in conversation.members)
-              <span>{{ member.user.fullName }} </span>
-            @end
-          </p>
-
-          @if(conversation.messages.length > 0)
-            <p>
-                Dernier message :
-                @if(conversation.messages[0].isDeleted)
-                  <em>Ce message a été supprimé.</em>
-                @else
-                  {{ conversation.messages[0].content }}
-                @end
-            </p>
-
-            <p>
-              Envoyé le :
-              {{ conversation.messages[0].createdAt.toFormat('dd/LL/yyyy HH:mm') }}
-            </p>
-          @else
-            <p>Aucun message pour le moment.</p>
-          @end
-
-                </li>
+                    <span class="dashboard-conversation__preview">
+                      @if(conversation.messages.length > 0)
+                        @if(conversation.messages[0].isDeleted)
+                          Message supprimé
+                        @else
+                          {{ conversation.messages[0].content }}
+                        @end
+                      @else
+                        Aucun message pour le moment
+                      @end
+                    </span>
+                  </span>
+                  <span class="dashboard-conversation__arrow">
+                    @svg('lucide:arrow-up-right', { width: 17, height: 17 })
+                  </span>
+                </a>
               @end
-            </ul>
-          @else
-            <p>You don't have any conversations yet.</p>
-          @end
-
-
-
-<!-- CREER UN GROUPE -->
-          <h2>Create a group</h2>
-
-          <form method="POST" action="/conversations/groups">
-            {{ csrfField() }}
-
-            <div>
-              <label for="group-name">Group name</label>
-              <input
-                type="text"
-                id="group-name"
-                name="name"
-                maxlength="254"
-                required
-                placeholder="Enter a group name"
-              >
             </div>
+          @else
+            <div class="dashboard-empty">
+              <span class="dashboard-conversation__icon">
+                @svg('lucide:messages-square', { width: 21, height: 21 })
+              </span>
+              <strong>Vos conversations apparaîtront ici</strong>
+              <p>Créez un groupe ou démarrez un échange privé pour commencer.</p>
+            </div>
+          @end
+        </section>
 
-            <p>Select at least two participants:</p>
+        {{-- Formulaires de création de groupe et de discussion privée. --}}
+        <aside class="dashboard-section dashboard-section--new">
+          <div class="dashboard-section__heading">
+            <div>
+              <span class="dashboard-kicker">NOUVEL ÉCHANGE</span>
+              <h2>Créer une conversation</h2>
+            </div>
+          </div>
 
-            @each(user in users)
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    name="userIds[]"
-                    value="{{ user.id }}"
-                  >
-                  {{ user.fullName }} ({{ user.email }})
+          {{-- Envoie le nom du groupe et les membres choisis au contrôleur. --}}
+          <form class="dashboard-form" method="POST" action="/conversations/groups">
+            {{ csrfField() }}
+            <h3>
+              @svg('lucide:users-round', { width: 18, height: 18 })
+              <span>Nouveau groupe</span>
+            </h3>
+            <label for="group-name">Nom du groupe</label>
+            <input type="text" id="group-name" name="name" maxlength="254" required placeholder="Ex. Équipe projet">
+            <fieldset class="dashboard-user-list">
+              <legend>Choisissez au moins deux personnes</legend>
+              @each(user in users)
+                <label class="dashboard-user-option">
+                  <input type="checkbox" name="userIds[]" value="{{ user.id }}">
+                  <span><strong>{{ user.fullName }}</strong><small>{{ user.email }}</small></span>
                 </label>
-              </div>
-            @end
-
-            <button type="submit">Create group</button>
+              @end
+            </fieldset>
+            <button class="dashboard-primary-button" type="submit">
+              <span>Créer le groupe</span>
+              @svg('lucide:arrow-right', { width: 16, height: 16 })
+            </button>
           </form>
 
-
-      <!-- DEMARRER UNE CONVERSATION PRIVEE -->
-      <h2>Start a private conversation</h2>
-
-      <label for="user-search">Rechercher un utilisateur</label>
-      <input
-        type="search"
-        id="user-search"
-        placeholder="Nom ou adresse e-mail..."
-        autocomplete="off"
-      >
-
-      @if(users.length > 0)
-        <ul>
-          @each(user in users)
-
-          <li
-            class="searchable-user"
-            data-search="{{ user.fullName }} {{ user.email }}"
-          >
-            <strong>{{ user.fullName }}</strong>
-            <p>{{ user.email }}</p>
-
-            <form method="POST" action="/conversations">
-              {{ csrfField() }}
-
-              <input
-                type="hidden"
-                name="userId"
-                value="{{ user.id }}"
-              >
-
-              <button type="submit">
-                Start conversation
-              </button>
-            </form>
-          </li>
-
-          @end
-        </ul>
-      @else
-        <p>No other users are registered yet.</p>
-      @end
-
-      <!-- DECONNEXION -->
-      <form method="POST" action="/logout">
-        {{ csrfField() }}
-        <button type="submit">Logout</button>
-      </form>
-    </div>
+          {{-- Filtre les utilisateurs et ouvre une conversation privée. --}}
+          <div class="dashboard-private">
+            <h3>
+              @svg('lucide:message-circle', { width: 18, height: 18 })
+              <span>Discussion privée</span>
+            </h3>
+            <label for="user-search">Rechercher une personne</label>
+            <input type="search" id="user-search" placeholder="Nom ou e-mail…" autocomplete="off">
+            @if(users.length > 0)
+              <div class="dashboard-private-list">
+                @each(user in users)
+                  <div class="dashboard-private-user searchable-user" data-search="{{ user.fullName }} {{ user.email }}">
+                    <span><strong>{{ user.fullName }}</strong><small>{{ user.email }}</small></span>
+                    <form method="POST" action="/conversations">
+                      {{ csrfField() }}
+                      <input type="hidden" name="userId" value="{{ user.id }}">
+                      <button type="submit" aria-label="Écrire à {{ user.fullName }}">
+                        @svg('lucide:arrow-up-right', { width: 17, height: 17 })
+                      </button>
+                    </form>
+                  </div>
+                @end
+              </div>
+            @else
+              <p class="dashboard-muted">Aucun autre compte n’est encore disponible.</p>
+            @end
+          </div>
+        </aside>
+      </div>
+    </section>
   @end
 @end
-
-
-

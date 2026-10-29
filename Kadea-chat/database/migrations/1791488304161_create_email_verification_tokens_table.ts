@@ -7,12 +7,7 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
 
-      table
-        .integer('user_id')
-        .notNullable()
-        .references('id')
-        .inTable('users')
-        .onDelete('CASCADE')
+      table.integer('user_id').notNullable().references('id').inTable('users').onDelete('CASCADE')
 
       table.string('token_hash', 64).notNullable().unique()
 

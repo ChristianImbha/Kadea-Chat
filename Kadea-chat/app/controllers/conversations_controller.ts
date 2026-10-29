@@ -19,10 +19,7 @@ export default class ConversationsController {
     }
 
     if (targetUserId === currentUser.id) {
-      session.flash(
-        'error',
-        'Tu ne peux pas créer une conversation avec toi-même.'
-      )
+      session.flash('error', 'Tu ne peux pas créer une conversation avec toi-même.')
       return response.redirect().back()
     }
 
@@ -101,25 +98,16 @@ export default class ConversationsController {
       .first()
 
     if (!conversation) {
-      session.flash(
-        'error',
-        'Conversation introuvable ou accès non autorisé.'
-      )
+      session.flash('error', 'Conversation introuvable ou accès non autorisé.')
       return response.redirect().toRoute('dashboard')
     }
 
     // Charger les utilisateurs pouvant être ajoutés au groupe
-    const users = await User.query()
-      .whereNot('id', currentUser.id)
-      .orderBy('fullName', 'asc')
+    const users = await User.query().whereNot('id', currentUser.id).orderBy('fullName', 'asc')
 
-    const existingMemberIds = conversation.members.map(
-      (member) => member.userId
-    )
+    const existingMemberIds = conversation.members.map((member) => member.userId)
 
-    const availableUsers = users.filter(
-      (user) => !existingMemberIds.includes(user.id)
-    )
+    const availableUsers = users.filter((user) => !existingMemberIds.includes(user.id))
 
     // Charger toutes les conversations de l'utilisateur
     const conversations = await Conversation.query()
@@ -177,13 +165,7 @@ export default class ConversationsController {
     })
   }
 
-  async sendMessage({
-    auth,
-    params,
-    request,
-    response,
-    session,
-  }: HttpContext) {
+  async sendMessage({ auth, params, request, response, session }: HttpContext) {
     const currentUser = auth.user!
     const conversationId = Number(params.id)
 
@@ -199,10 +181,7 @@ export default class ConversationsController {
       .first()
 
     if (!membership) {
-      session.flash(
-        'error',
-        'Tu n’as pas accès à cette conversation.'
-      )
+      session.flash('error', 'Tu n’as pas accès à cette conversation.')
       return response.redirect().toRoute('dashboard')
     }
 
@@ -210,10 +189,7 @@ export default class ConversationsController {
     const content = String(request.input('content', '')).trim()
 
     if (!content || content.length > 5000) {
-      session.flash(
-        'error',
-        'Le message doit contenir entre 1 et 5000 caractères.'
-      )
+      session.flash('error', 'Le message doit contenir entre 1 et 5000 caractères.')
       return response.redirect().toRoute('conversations.show', {
         id: conversationId,
       })
@@ -261,15 +237,12 @@ export default class ConversationsController {
     })
   }
 
-  async deleteMessage({
-    auth,
-    params,
-    response,
-    session,
-  }: HttpContext) {
+  /* Verification acces a la conversations */
+  async editMessage({ auth, params, request, response, session }: HttpContext) {
     const currentUser = auth.user!
     const conversationId = Number(params.id)
     const messageId = Number(params.messageId)
+    const wantsJson = request.accepts(['html', 'json']) === 'json'
 
     if (
       !Number.isInteger(conversationId) ||
@@ -277,6 +250,10 @@ export default class ConversationsController {
       !Number.isInteger(messageId) ||
       messageId <= 0
     ) {
+      if (wantsJson) {
+        return response.badRequest({ error: 'Identifiants invalides.' })
+      }
+
       session.flash('error', 'Identifiants invalides.')
       return response.redirect().toRoute('dashboard')
     }
@@ -287,10 +264,111 @@ export default class ConversationsController {
       .first()
 
     if (!membership) {
-      session.flash(
-        'error',
-        'Tu n’as pas accès à cette conversation.'
-      )
+      if (wantsJson) {
+        return response.forbidden({
+          error: 'Tu n’as pas accès à cette conversation.',
+        })
+      }
+
+      session.flash('error', 'Tu n’as pas accès à cette conversation.')
+      return response.redirect().toRoute('dashboard')
+    }
+
+    const message = await Message.query()
+      .where('id', messageId)
+      .where('conversationId', conversationId)
+      .where('userId', currentUser.id)
+      .first()
+
+    if (!message || message.isDeleted) {
+      if (wantsJson) {
+        return response.notFound({
+          error: 'Message introuvable ou modification non autorisée.',
+        })
+      }
+
+      session.flash('error', 'Message introuvable ou modification non autorisée.')
+      return response.redirect().toRoute('conversations.show', {
+        id: conversationId,
+      })
+    }
+
+    const content = String(request.input('content', '')).trim()
+
+    if (!content || content.length > 5000) {
+      const error = 'Le message doit contenir entre 1 et 5000 caractères.'
+
+      if (wantsJson) {
+        return response.unprocessableEntity({ error })
+      }
+
+      session.flash('error', error)
+      return response.redirect().toRoute('conversations.show', {
+        id: conversationId,
+      })
+    }
+
+    message.content = content
+    await message.save()
+    await message.load('author')
+
+    const updatedMessage = {
+      id: message.id,
+      content: message.content,
+      userId: message.userId,
+      conversationId,
+      author: message.author.fullName,
+      createdAt: message.createdAt.toISO(),
+      isEdited: true,
+      isDeleted: false,
+    }
+
+    transmit.broadcast(`conversations/${conversationId}/messages`, updatedMessage)
+
+    if (wantsJson) {
+      return response.ok({ message: updatedMessage })
+    }
+
+    session.flash('success', 'Message modifié.')
+    return response.redirect().toRoute('conversations.show', {
+      id: conversationId,
+    })
+  }
+  /*prise en charge JSON de la suppression */
+
+  async deleteMessage({ auth, params, request, response, session }: HttpContext) {
+    const currentUser = auth.user!
+    const conversationId = Number(params.id)
+    const messageId = Number(params.messageId)
+    const wantsJson = request.accepts(['html', 'json']) === 'json'
+
+    if (
+      !Number.isInteger(conversationId) ||
+      conversationId <= 0 ||
+      !Number.isInteger(messageId) ||
+      messageId <= 0
+    ) {
+      if (wantsJson) {
+        return response.badRequest({ error: 'Identifiants invalides.' })
+      }
+
+      session.flash('error', 'Identifiants invalides.')
+      return response.redirect().toRoute('dashboard')
+    }
+
+    const membership = await ConversationMember.query()
+      .where('conversationId', conversationId)
+      .where('userId', currentUser.id)
+      .first()
+
+    if (!membership) {
+      if (wantsJson) {
+        return response.forbidden({
+          error: 'Tu n’as pas accès à cette conversation.',
+        })
+      }
+
+      session.flash('error', 'Tu n’as pas accès à cette conversation.')
       return response.redirect().toRoute('dashboard')
     }
 
@@ -301,10 +379,13 @@ export default class ConversationsController {
       .first()
 
     if (!message) {
-      session.flash(
-        'error',
-        'Message introuvable ou suppression non autorisée.'
-      )
+      if (wantsJson) {
+        return response.notFound({
+          error: 'Message introuvable ou suppression non autorisée.',
+        })
+      }
+
+      session.flash('error', 'Message introuvable ou suppression non autorisée.')
       return response.redirect().toRoute('conversations.show', {
         id: conversationId,
       })
@@ -314,8 +395,6 @@ export default class ConversationsController {
       message.content = 'Ce message a été supprimé.'
       message.isDeleted = true
       await message.save()
-
-      // Charger l'auteur pour la diffusion temps réel
       await message.load('author')
 
       transmit.broadcast(`conversations/${conversationId}/messages`, {
@@ -329,38 +408,38 @@ export default class ConversationsController {
       })
     }
 
-    session.flash('success', 'Message supprimé.')
+    if (wantsJson) {
+      return response.ok({
+        message: {
+          id: message.id,
+          content: message.content,
+          userId: message.userId,
+          conversationId,
+          isDeleted: true,
+        },
+      })
+    }
 
+    session.flash('success', 'Message supprimé.')
     return response.redirect().toRoute('conversations.show', {
       id: conversationId,
     })
   }
 
-  async createGroup({
-    auth,
-    request,
-    response,
-    session,
-  }: HttpContext) {
+  async createGroup({ auth, request, response, session }: HttpContext) {
     const currentUser = auth.user!
     const name = String(request.input('name', '')).trim()
     const rawUserIds = request.input('userIds')
 
     // Vérifier le nom du groupe
     if (!name || name.length > 254) {
-      session.flash(
-        'error',
-        'Le nom du groupe doit contenir entre 1 et 254 caractères.'
-      )
+      session.flash('error', 'Le nom du groupe doit contenir entre 1 et 254 caractères.')
       return response.redirect().back()
     }
 
     // Vérifier la liste des participants
     if (!Array.isArray(rawUserIds) || rawUserIds.length < 2) {
-      session.flash(
-        'error',
-        'Sélectionne au moins deux autres participants.'
-      )
+      session.flash('error', 'Sélectionne au moins deux autres participants.')
       return response.redirect().back()
     }
 
@@ -378,10 +457,7 @@ export default class ConversationsController {
     const users = await User.query().whereIn('id', userIds)
 
     if (users.length !== userIds.length) {
-      session.flash(
-        'error',
-        'Un ou plusieurs participants sont introuvables.'
-      )
+      session.flash('error', 'Un ou plusieurs participants sont introuvables.')
       return response.redirect().back()
     }
 
@@ -415,13 +491,7 @@ export default class ConversationsController {
     return response.redirect().toRoute('dashboard')
   }
 
-  async addMember({
-    auth,
-    params,
-    request,
-    response,
-    session,
-  }: HttpContext) {
+  async addMember({ auth, params, request, response, session }: HttpContext) {
     const currentUser = auth.user!
     const conversationId = Number(params.id)
     const userId = Number(request.input('userId'))
@@ -444,10 +514,7 @@ export default class ConversationsController {
     }
 
     if (conversation.createdBy !== currentUser.id) {
-      session.flash(
-        'error',
-        'Seul le créateur du groupe peut gérer ses membres.'
-      )
+      session.flash('error', 'Seul le créateur du groupe peut gérer ses membres.')
       return response.redirect().back()
     }
 
@@ -464,10 +531,7 @@ export default class ConversationsController {
       .first()
 
     if (existingMember) {
-      session.flash(
-        'error',
-        'Cet utilisateur est déjà membre du groupe.'
-      )
+      session.flash('error', 'Cet utilisateur est déjà membre du groupe.')
       return response.redirect().back()
     }
 
@@ -483,12 +547,7 @@ export default class ConversationsController {
     })
   }
 
-  async removeMember({
-    auth,
-    params,
-    response,
-    session,
-  }: HttpContext) {
+  async removeMember({ auth, params, response, session }: HttpContext) {
     const currentUser = auth.user!
     const conversationId = Number(params.id)
     const userId = Number(params.userId)
@@ -511,18 +570,12 @@ export default class ConversationsController {
     }
 
     if (conversation.createdBy !== currentUser.id) {
-      session.flash(
-        'error',
-        'Seul le créateur du groupe peut gérer ses membres.'
-      )
+      session.flash('error', 'Seul le créateur du groupe peut gérer ses membres.')
       return response.redirect().back()
     }
 
     if (userId === conversation.createdBy) {
-      session.flash(
-        'error',
-        'Le créateur ne peut pas être retiré du groupe.'
-      )
+      session.flash('error', 'Le créateur ne peut pas être retiré du groupe.')
       return response.redirect().back()
     }
 
@@ -532,10 +585,7 @@ export default class ConversationsController {
       .first()
 
     if (!member) {
-      session.flash(
-        'error',
-        'Ce membre ne fait pas partie du groupe.'
-      )
+      session.flash('error', 'Ce membre ne fait pas partie du groupe.')
       return response.redirect().back()
     }
 

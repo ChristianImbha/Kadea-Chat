@@ -1,4 +1,3 @@
-
 import mail from '@adonisjs/mail/services/main'
 import env from '#start/env'
 import User from '#models/user'
@@ -17,8 +16,8 @@ export default class PasswordResetMailer {
         })
         .text(
           `Bonjour ${user.fullName},\n\n` +
-          `Réinitialise ton mot de passe en ouvrant ce lien : ${resetUrl}\n\n` +
-          `Ce lien expire dans 30 minutes.`
+            `Réinitialise ton mot de passe en ouvrant ce lien : ${resetUrl}\n\n` +
+            `Ce lien expire dans 30 minutes.`
         )
     })
   }

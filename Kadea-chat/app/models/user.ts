@@ -82,4 +82,3 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @hasMany(() => PasswordResetToken)
   declare passwordResetTokens: HasMany<typeof PasswordResetToken>
 }
-
