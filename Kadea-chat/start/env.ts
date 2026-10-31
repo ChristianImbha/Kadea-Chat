@@ -1,7 +1,6 @@
-
 import { Env } from '@adonisjs/core/env'
 
-export default await Env.create(new URL('../', import.meta.url), {
+const env = await Env.create(new URL('../', import.meta.url), {
   NODE_ENV: Env.schema.enum(['development', 'production', 'test'] as const),
   PORT: Env.schema.number(),
   HOST: Env.schema.string({ format: 'host' }),
@@ -23,4 +22,8 @@ export default await Env.create(new URL('../', import.meta.url), {
   MAIL_FROM_ADDRESS: Env.schema.string(),
   BREVO_API_KEY: Env.schema.secret(),
 })
+
+console.log('BREVO_API_KEY présente :', Boolean(env.get('BREVO_API_KEY')))
+
+export default env
 
