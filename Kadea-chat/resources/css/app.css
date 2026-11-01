@@ -781,80 +781,6 @@ input {
    Chat messages et formulaire
    ========================================================================== */
 
-.chat-messages {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  width: 100%;
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  background: var(--card);
-  border: 1px solid var(--line-2);
-  border-radius: var(--r-lg);
-  text-align: left;
-}
-
-.chat-message {
-  max-width: 80%;
-  padding: 12px 16px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  overflow-wrap: anywhere;
-}
-
-.chat-message--sent {
-  align-self: flex-end;
-  background: var(--paper);
-  border-color: var(--line-2);
-}
-
-.chat-message--received {
-  align-self: flex-start;
-  background: var(--card);
-}
-
-.chat-message strong {
-  display: block;
-  margin-bottom: 4px;
-  font-size: 13px;
-}
-
-.chat-message p {
-  margin: 0 0 8px;
-  color: var(--ink);
-  font-size: 14px;
-  white-space: pre-wrap;
-}
-
-.chat-message small {
-  display: block;
-  margin-top: 8px;
-  color: var(--muted);
-  font-size: 11px;
-  text-align: right;
-}
-
-.chat-message form {
-  margin-top: 8px;
-}
-
-.chat-message button,
-#chat-form button {
-  padding: 7px 12px;
-  border: 1px solid var(--line-2);
-  border-radius: var(--r);
-  background: var(--card);
-  color: var(--ink);
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.chat-message button:hover,
-#chat-form button:hover {
-  background: var(--paper);
-}
-
 #chat-form {
   display: flex;
   flex-direction: column;
@@ -865,9 +791,20 @@ input {
   text-align: left;
 }
 
-#chat-form textarea {
+/* Ligne contenant le champ et le bouton */
+.chat-composer__row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
   width: 100%;
-  min-height: 100px;
+}
+
+/* Champ de saisie */
+#chat-form textarea {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  max-height: 120px;
   padding: 12px;
   border: 1px solid var(--line-2);
   border-radius: var(--r);
@@ -877,18 +814,62 @@ input {
   resize: vertical;
 }
 
+/* Bouton d'envoi */
+.chat-send-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.chat-send-button:hover {
+  background: var(--card);
+}
+
 #chat-form textarea:focus {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
 @media (max-width: 600px) {
+  .chat-main {
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .chat-messages {
+    min-width: 0;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 0;
+  }
+
+  .chat-message {
+    max-width: 90%;
+  }
+
   #chat-form {
     padding: 10px;
+    margin: 0;
+    background: var(--card);
   }
 
   .chat-composer__row {
     gap: 8px;
+  }
+
+  #chat-form textarea {
+    min-height: 48px;
+    max-height: 100px;
+    resize: none;
   }
 }
 /* Compteur de messages non lus */
