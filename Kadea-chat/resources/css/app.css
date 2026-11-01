@@ -883,12 +883,12 @@ input {
 }
 
 @media (max-width: 600px) {
-  .chat-messages {
-    padding: 12px;
+  #chat-form {
+    padding: 10px;
   }
 
-  .chat-message {
-    max-width: 92%;
+  .chat-composer__row {
+    gap: 8px;
   }
 }
 /* Compteur de messages non lus */
