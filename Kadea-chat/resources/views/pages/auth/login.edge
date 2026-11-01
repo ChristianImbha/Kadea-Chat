@@ -1,6 +1,7 @@
 @layouts.auth()
   <h1 class="auth__title">Ravi de vous retrouver</h1>
   <p class="auth__sub">Connectez-vous pour retrouver vos conversations.</p>
+
   @form({
     route: 'session.store',
     method: 'POST',
@@ -8,7 +9,6 @@
     'x-data': '{ submitting: false }',
     'x-on:submit': 'submitting = true',
   })
-
     @if (flashMessages.has('error'))
       <p class="error">{{ flashMessages.get('error') }}</p>
     @endif
@@ -16,6 +16,7 @@
     @if (flashMessages.has('success'))
       <p class="success">{{ flashMessages.get('success') }}</p>
     @endif
+
     @field.root({ name: 'email' })
       @!field.label({ text: 'Adresse e-mail' })
       @!input.control({
@@ -25,6 +26,7 @@
       })
       @!field.error()
     @end
+
     @field.root({ name: 'password' })
       @!field.label({ text: 'Mot de passe' })
       @!input.control({
@@ -34,6 +36,7 @@
       })
       @!field.error()
     @end
+
     @!button({
       text: 'Se connecter',
       type: 'submit',
@@ -45,11 +48,7 @@
   @end
 
   <p class="auth__foot">
-    
-
     Nouveau sur Kadea Chat ?
-
-
     @link({ route: 'new_account.create', class: 'il' })
       Créer un compte
     @end
