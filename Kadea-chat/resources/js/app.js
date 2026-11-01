@@ -121,7 +121,7 @@ if (chatMessages) {
   })
   const transmit = new Transmit({
     baseUrl: window.location.origin,
-    // GÃ©nÃ¨re l'identifiant unique requis pour la connexion au canal temps rÃ©el.
+    // Genetatrice l'identifiant unique requis pour la connexion au canal temps reel.
     uidGenerator: () => {
       return Array.from({ length: 16 }, () =>
         Math.floor(Math.random() * 256)
@@ -134,7 +134,7 @@ if (chatMessages) {
   const subscription = transmit.subscription(
     `conversations/${conversationId}/messages`
   )
-  // Met Ã  jour un message existant ou ajoute un nouveau message.
+  // Met a  jour un message existant ou ajoute un nouveau message.
   subscription.onMessage((message) => {
     if (!message || typeof message !== 'object') return
 

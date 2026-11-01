@@ -1,22 +1,14 @@
+
 import app from '@adonisjs/core/services/app'
 import env from '#start/env'
 import { defineConfig } from '@adonisjs/lucid'
 
 const dbConfig = defineConfig({
-  /**
-   * Default connection used for all queries.
-   */
   connection: 'pg',
 
-  /**
-   * Pretty-print SQL debug output in development logs.
-   */
   prettyPrintDebugQueries: true,
 
   connections: {
-    /**
-     * PostgreSQL connection.
-     */
     pg: {
       client: 'pg',
       connection: {
@@ -25,6 +17,11 @@ const dbConfig = defineConfig({
         user: env.get('DB_USER'),
         password: env.get('DB_PASSWORD'),
         database: env.get('DB_DATABASE'),
+
+        // Configuration SSL pour Render
+        ssl: {
+          rejectUnauthorized: false,
+        },
       },
       migrations: {
         naturalSort: true,
@@ -36,3 +33,4 @@ const dbConfig = defineConfig({
 })
 
 export default dbConfig
+

@@ -9,12 +9,12 @@
       <h1>Mon profil</h1>
       <p>Consultez et modifiez vos informations personnelles.</p>
 
-      {{-- Afficher un message de succÃ¨s aprÃ¨s une opÃ©ration --}}
+      {{-- Afficher un message de succes apras une operation --}}
       @if(flashMessages.has('success'))
         <p>{{ flashMessages.get('success') }}</p>
       @end
 
-      {{-- Afficher un message d'erreur si une opÃ©ration Ã©choue --}}
+      {{-- Afficher un message d'erreur si une operation a echoue --}}
       @if(flashMessages.has('error'))
         <p>{{ flashMessages.get('error') }}</p>
       @end
@@ -30,7 +30,7 @@
       {{-- Formulaire de modification du profil et d'envoi de la photo --}}
       <form method="POST" action="/profile" enctype="multipart/form-data">
 
-        {{-- Jeton CSRF pour protÃ©ger le formulaire contre les requÃªtes falsifiÃ©es --}}
+        {{-- Jeton CSRF pour proteger le formulaire contre les requettes falsifiees --}}
         {{ csrfField() }}
 
             {{-- Photo de profil : affichage de la photo actuelle si elle existe --}}
@@ -63,7 +63,7 @@
             accept="image/jpeg,image/png,image/webp"
           >
           <span id="avatar-file-name" class="profile-file__name">
-            Aucune photo sÃ©lectionnÃ©e
+           Aucune photo sélectionnée
           </span>
 
         </div>
@@ -85,7 +85,7 @@
           >
         </div>
 
-        {{-- Adresse e-mail affichÃ©e en lecture seule --}}
+        {{-- Adresse e-mail affiche en lecture seule --}}
         <div>
           <label for="email">Adresse e-mail</label>
           <input
@@ -95,7 +95,7 @@
             disabled
           >
 
-          <p>L'adresse e-mail ne peut pas Ãªtre modifiÃ©e ici.</p>
+          <p>L'adresse e-mail ne peut pas etre modifiée ici.</p>
         </div>
 
         {{-- Bouton de sauvegarde des informations personnelles --}}
@@ -114,8 +114,7 @@
       <h2>Changer mon mot de passe</h2>
 
       <p>
-        Pour votre sÃ©curitÃ©, saisissez votre mot de passe actuel,
-        puis choisissez un nouveau mot de passe.
+        Pour votre sécurité, saisissez votre mot de passe actuel,
       </p>
 
       {{-- Envoyer les donnÃ©es Ã  la mÃ©thode updatePassword du contrÃ´leur --}}

@@ -321,9 +321,7 @@
         >
           {{-- Protection CSRF contre certaines requêtes non autorisées --}}
           {{ csrfField() }}
-
-          <label for="content">Votre message</label>
-
+        
           <div class="chat-composer__row">
 
             {{-- Champ de saisie : obligatoire, limité à 5 000 caractères --}}
@@ -340,18 +338,11 @@
             {{-- Bouton qui déclenche l'envoi du message --}}
             <button type="submit" class="chat-send-button">
               @svg('lucide:send', { width: 17, height: 17 })
-              <span>Envoyer</span>
             </button>
-          </div>
-
-          {{-- Indication destinée à l'utilisateur --}}
-          <p class="chat-composer__hint">
-            Entrée pour envoyer · Maximum 5 000 caractères
-          </p>
+          </div>          
         </form>
 
       </main>
     </div>
   </div>
 @end
-```
