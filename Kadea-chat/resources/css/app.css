@@ -2775,3 +2775,162 @@ a {
   color: #93c5fd;
 }
 
+/*landing mentions legale */
+
+.landing-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 2rem clamp(1.25rem, 5vw, 5rem);
+  border-top: 1px solid var(--border-color, #e5e7eb);
+}
+
+.landing-footer p {
+  margin: 0;
+}
+
+.landing-footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+}
+
+.landing-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.landing-footer a:hover {
+  text-decoration: underline;
+}
+
+.landing-footer small {
+  color: var(--text-muted, #6b7280);
+}
+
+@media (max-width: 700px) {
+  .landing-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .landing-footer-links {
+    justify-content: flex-start;
+  }
+}
+
+/*mot de passe oublier */
+
+.auth__forgot {
+  margin: -0.5rem 0 1rem;
+  text-align: right;
+}
+
+.auth__forgot a {
+  color: var(--text-muted, #9ca3af);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.auth__forgot a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================
+   PAGE « MOT DE PASSE OUBLIÉ »
+    ========================================= */
+ .auth-standalone {
+  width: min(100% - 2rem, 520px);
+  margin: 3rem auto;
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+  border: 1px solid var(--border-color, #3b4a60);
+  border-radius: 14px;
+  box-sizing: border-box;
+}
+
+.auth-standalone__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 2rem;
+  text-decoration: none;
+}
+
+.auth-standalone__brand .brand-mark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #3b82f6;
+  color: #fff;
+  font-weight: 700;
+}
+
+.auth-standalone .dashboard-kicker {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.auth-standalone h1 {
+  margin: 0 0 0.75rem;
+  line-height: 1.15;
+}
+
+.auth-standalone > p {
+  margin: 0 0 1.75rem;
+  line-height: 1.6;
+}
+
+.auth-standalone form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.auth-standalone form label {
+  margin-top: 0.25rem;
+}
+
+.auth-standalone form input {
+  width: 100%;
+  min-height: 48px;
+  box-sizing: border-box;
+}
+
+.auth-standalone form button {
+  min-height: 48px;
+  margin-top: 0.25rem;
+}
+
+.auth-standalone__back {
+  display: inline-block;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 480px) {
+  .auth-standalone {
+    margin: 1rem auto;
+    border-radius: 12px;
+  }
+} 
+
+/* bouton suppression conversation*/
+
+.chat-conversation-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chat-conversation-row > a {
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-conversation-row form {
+  flex-shrink: 0;
+}

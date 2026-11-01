@@ -46,9 +46,11 @@
       'x-text': "submitting ? 'Connexion…' : 'Se connecter'",
     })
   @end
-
+     @link({ route: 'password_resets.create', class: 'il' })
+        Mot de passe oublié ?
+     @end
   <p class="auth__foot">
-    Nouveau sur Kadea Chat ?
+        Nouveau sur Kadea Chat ?
     @link({ route: 'new_account.create', class: 'il' })
       Créer un compte
     @end

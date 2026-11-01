@@ -24,6 +24,7 @@ export type ScannedRoutes = {
     'conversations.messages.delete': { paramsTuple: [ParamValue,ParamValue]; params: {'id': ParamValue,'messageId': ParamValue} }
     'conversations.members.add': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'conversations.members.remove': { paramsTuple: [ParamValue,ParamValue]; params: {'id': ParamValue,'userId': ParamValue} }
+    'conversations.delete': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'password_resets.create': { paramsTuple?: []; params?: {} }
     'password_resets.store': { paramsTuple?: []; params?: {} }
     'password_resets.show_reset_form': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
@@ -71,6 +72,7 @@ export type ScannedRoutes = {
     'conversations.messages.delete': { paramsTuple: [ParamValue,ParamValue]; params: {'id': ParamValue,'messageId': ParamValue} }
     'conversations.members.add': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'conversations.members.remove': { paramsTuple: [ParamValue,ParamValue]; params: {'id': ParamValue,'userId': ParamValue} }
+    'conversations.delete': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'password_resets.store': { paramsTuple?: []; params?: {} }
     'password_resets.reset': { paramsTuple: [ParamValue]; params: {'token': ParamValue} }
     'subscribe': { paramsTuple?: []; params?: {} }
