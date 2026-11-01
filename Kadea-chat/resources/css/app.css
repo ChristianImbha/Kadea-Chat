@@ -841,46 +841,38 @@ input {
 
 /* Adaptation de la conversation sur téléphone */
 @media (max-width: 600px) {
-
   .chat-page {
-    height: calc(100dvh - 108px);
+    height: auto;
     min-height: 0;
     padding: 0;
-    margin: 0;
   }
 
   .chat-workspace {
     display: flex;
     flex-direction: column;
-    height: 100%;
     min-height: 0;
-    border-radius: 0;
+    overflow: visible;
   }
 
   .chat-main {
     display: flex;
     flex-direction: column;
-    flex: 1;
-    height: 100%;
     min-height: 0;
-    overflow: hidden;
+    height: auto;
+    overflow: visible;
   }
 
-  /* Zone de défilement des messages */
   .chat-messages {
     flex: 1;
-    min-height: 0;
+    min-height: 200px;
     overflow-y: auto;
-    margin: 0;
   }
 
-  /* Formulaire toujours en bas de la conversation */
   #chat-form {
+    position: relative;
     flex-shrink: 0;
-    position: sticky;
-    bottom: 0;
-    z-index: 10;
-    background: var(--card);
+    width: 100%;
+    margin: 0;
     padding: 10px;
   }
 }
@@ -2928,36 +2920,3 @@ a {
   flex-shrink: 0;
 }
 
-@media (max-width: 600px) {
-  #chat-form {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background: var(--card);
-  }
-
-  .chat-composer__row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  #chat-form textarea {
-    display: block;
-    flex: 1;
-    width: 100%;
-    min-width: 0;
-    min-height: 48px;
-    height: 48px;
-    visibility: visible;
-    opacity: 1;
-    resize: none;
-  }
-
-  .chat-send-button {
-    display: flex;
-    flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-  }
-}
