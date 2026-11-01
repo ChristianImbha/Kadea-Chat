@@ -839,37 +839,49 @@ input {
   outline-offset: 2px;
 }
 
+/* Adaptation de la conversation sur téléphone */
 @media (max-width: 600px) {
-  .chat-main {
-    min-width: 0;
+
+  .chat-page {
+    height: calc(100dvh - 108px);
     min-height: 0;
+    padding: 0;
+    margin: 0;
   }
 
-  .chat-messages {
-    min-width: 0;
-    padding: 12px;
-    margin: 10px 0;
+  .chat-workspace {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
     border-radius: 0;
   }
 
-  .chat-message {
-    max-width: 90%;
+  .chat-main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
   }
 
-  #chat-form {
-    padding: 10px;
+  /* Zone de défilement des messages */
+  .chat-messages {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
     margin: 0;
+  }
+
+  /* Formulaire toujours en bas de la conversation */
+  #chat-form {
+    flex-shrink: 0;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
     background: var(--card);
-  }
-
-  .chat-composer__row {
-    gap: 8px;
-  }
-
-  #chat-form textarea {
-    min-height: 48px;
-    max-height: 100px;
-    resize: none;
+    padding: 10px;
   }
 }
 /* Compteur de messages non lus */
@@ -2915,3 +2927,4 @@ a {
 .chat-conversation-row form {
   flex-shrink: 0;
 }
+
