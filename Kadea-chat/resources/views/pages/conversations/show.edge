@@ -28,71 +28,80 @@
           </a>
         </div>
 
-        {{-- Parcourt toutes les conversations chargées par le contrôleur --}}
+              {{-- Parcourt toutes les conversations chargées par le contrôleur --}}
         <div class="chat-sidebar__list">
           @each(item in conversations)
+            <div class="chat-conversation-row">
 
-            {{-- Chaque conversation est un lien vers sa discussion --}}
-            <a
-              href="/conversations/{{ item.id }}"
-              class="chat-conversation {{ item.id === conversation.id ? 'chat-conversation--active' : '' }}"
-            >
-
-              {{-- Icône différente selon le type de conversation --}}
-              <div class="chat-avatar">
-                @if(item.type === 'group')
-                  @svg('lucide:users', { width: 20, height: 20 })
-                @else
-                  @each(member in item.members)
-                    @if(member.userId !== currentUserId)
-                      @if(member.user.avatarPath)
-                        <img
-                          src="{{ member.user.avatarPath }}"
-                          alt="Photo de {{ member.user.fullName }}"
-                          class="chat-avatar__image"
-                        />
-                      @else
-                        @svg('lucide:user-round', { width: 20, height: 20 })
-                      @end
-                    @end
-                  @end
-                @end
-              </div>
-
-              <div class="chat-conversation__body">
-                <div class="chat-conversation__top">
-
-                  {{-- Affiche le nom du groupe ou celui de l'autre participant --}}
-                  <strong>
-                    @if(item.type === 'group')
-                      {{ item.name }}
-                    @else
-                      @each(member in item.members)
-                        @if(member.userId !== currentUserId)
-                          {{ member.user.fullName }}
+              {{-- Le lien ouvre la discussion --}}
+              <a
+                href="/conversations/{{ item.id }}"
+                class="chat-conversation {{ item.id === conversation.id ? 'chat-conversation--active' : '' }}"
+              >
+                <div class="chat-avatar">
+                  @if(item.type === 'group')
+                    @svg('lucide:users', { width: 20, height: 20 })
+                  @else
+                    @each(member in item.members)
+                      @if(member.userId !== currentUserId)
+                        @if(member.user.avatarPath)
+                          <img
+                            src="{{ member.user.avatarPath }}"
+                            alt="Photo de {{ member.user.fullName }}"
+                            class="chat-avatar__image"
+                          />
+                        @else
+                          @svg('lucide:user-round', { width: 20, height: 20 })
                         @end
                       @end
                     @end
-                  </strong>
-
-                  {{-- Affiche le nombre de messages non lus si nécessaire --}}
-                  @if(unreadCounts[item.id] && unreadCounts[item.id] > 0)
-                    <span class="unread-badge">
-                      {{ unreadCounts[item.id] }}
-                    </span>
                   @end
                 </div>
 
-                {{-- Affiche un aperçu du dernier message de la conversation --}}
-                <p>
-                  @if(item.messages.length > 0)
-                    {{ item.messages[0].isDeleted ? 'Message supprimé' : item.messages[0].content }}
-                  @else
-                    Aucun message pour le moment
-                  @end
-                </p>
-              </div>
-            </a>
+                <div class="chat-conversation__body">
+                  <div class="chat-conversation__top">
+                    <strong>
+                      @if(item.type === 'group')
+                        {{ item.name }}
+                      @else
+                        @each(member in item.members)
+                          @if(member.userId !== currentUserId)
+                            {{ member.user.fullName }}
+                          @end
+                        @end
+                      @end
+                    </strong>
+
+                    @if(unreadCounts[item.id] && unreadCounts[item.id] > 0)
+                      <span class="unread-badge">
+                        {{ unreadCounts[item.id] }}
+                      </span>
+                    @end
+                  </div>
+
+                  <p>
+                    @if(item.messages.length > 0)
+                      {{ item.messages[0].isDeleted ? 'Message supprimé' : item.messages[0].content }}
+                    @else
+                      Aucun message pour le moment
+                    @end
+                  </p>
+                </div>
+              </a>
+
+              {{-- Le formulaire est séparé du lien --}}
+              <form
+                method="POST"
+                action="/conversations/{{ item.id }}/delete"
+                onsubmit="return confirm('Supprimer cette conversation de ta liste ?')"
+              >
+                {{ csrfField() }}
+                <button type="submit" class="chat-delete-conversation">
+                  Supprimer
+                </button>
+              </form>
+
+            </div>
           @end
         </div>
       </aside>

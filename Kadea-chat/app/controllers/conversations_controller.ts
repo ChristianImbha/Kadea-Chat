@@ -597,4 +597,30 @@ export default class ConversationsController {
       id: conversationId,
     })
   }
+/* suppression de conversation*/
+
+  async deleteConversation({ auth, params, response, session }: HttpContext) {
+  const currentUser = auth.user!
+  const conversationId = Number(params.id)
+
+  if (!Number.isInteger(conversationId) || conversationId <= 0) {
+    session.flash('error', 'Conversation invalide.')
+    return response.redirect().toRoute('dashboard')
+  }
+
+  const membership = await ConversationMember.query()
+    .where('conversationId', conversationId)
+    .where('userId', currentUser.id)
+    .first()
+
+  if (!membership) {
+    session.flash('error', 'Conversation introuvable ou accès non autorisé.')
+    return response.redirect().toRoute('dashboard')
+  }
+
+  await membership.delete()
+
+  session.flash('success', 'Conversation supprimée de ta liste.')
+  return response.redirect().toRoute('dashboard')
+}
 }

@@ -81,7 +81,15 @@ router
       ])
       .as('conversations.members.remove')
   })
-  .use(middleware.auth())
+
+   //suppression conversation
+ 
+    router
+      .post('/conversations/:id/delete', [controllers.Conversations, 'deleteConversation'])
+      .as('conversations.delete')
+  
+      .use(middleware.auth())
+    
 
 // Réinitialisation du mot de passe
 router.get('/password/forgot', [controllers.PasswordResets, 'create']).as('password_resets.create')
