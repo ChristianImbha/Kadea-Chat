@@ -81,7 +81,7 @@
 
                   <p>
                     @if(item.messages.length > 0)
-                      {{ item.messages[0].isDeleted ?: item.messages[0].content }}
+                      {{ item.messages[0].isDeleted ? 'Message supprimé' : item.messages[0].content }}
                     @else
                       Aucun message pour le moment
                     @end
