@@ -433,4 +433,37 @@ if (userSearchInput) {
       user.style.display = userInfo.includes(searchTerm) ? '' : 'none'
     })
   })
+
+  // gestion du clavier sur mobile
+
+  function updateChatHeight() {
+  const chatPage = document.querySelector('.chat-page')
+
+  if (!chatPage) return
+
+  const viewport = window.visualViewport
+
+  if (!viewport) return
+
+  const pageTop = chatPage.getBoundingClientRect().top
+
+  const availableHeight = viewport.height - pageTop
+
+  chatPage.style.setProperty(
+    '--chat-available-height',
+    `${availableHeight}px`
+  )
+}
+
+window.addEventListener('load', updateChatHeight)
+
+window.visualViewport?.addEventListener(
+  'resize',
+  updateChatHeight
+)
+
+window.visualViewport?.addEventListener(
+  'scroll',
+  updateChatHeight
+)
 }
