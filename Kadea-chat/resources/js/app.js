@@ -434,20 +434,27 @@ if (userSearchInput) {
     })
   })
 
-  // Gestion de la hauteur de la conversation sur mobile
+  // ============================================================
+// KADEA CHAT — Gestion du clavier mobile
+// ============================================================
 
 function updateChatHeight() {
+  const appMain = document.querySelector('.app-main')
   const chatPage = document.querySelector('.chat-page')
   const viewport = window.visualViewport
 
-  if (!chatPage || !viewport) return
+  // Ne rien faire si la page n'est pas une conversation
+  if (!appMain || !chatPage || !viewport) return
 
-  const pageTop = chatPage.getBoundingClientRect().top
+  // Position réelle du conteneur principal
+  const appTop = appMain.getBoundingClientRect().top
 
+  // Hauteur disponible au-dessus du clavier
   const availableHeight =
-    viewport.height + viewport.offsetTop - pageTop
+    viewport.height + viewport.offsetTop - appTop
 
-  chatPage.style.setProperty(
+  // Appliquer la hauteur calculée
+  appMain.style.setProperty(
     '--chat-available-height',
     `${Math.max(0, availableHeight)}px`
   )
@@ -456,18 +463,16 @@ function updateChatHeight() {
 // Calcul initial
 window.addEventListener('load', updateChatHeight)
 
-// Adaptation lorsque le clavier s'ouvre ou se ferme
+// Mise à jour lorsque la fenêtre change de taille
+window.addEventListener('resize', updateChatHeight)
+
+// Mise à jour lorsque le clavier s'ouvre ou se ferme
 window.visualViewport?.addEventListener(
   'resize',
   updateChatHeight
 )
 
-// Adaptation lorsque la zone visible se déplace
-window.visualViewport?.addEventListener(
-  'scroll',
-  updateChatHeight
-)
-
+// Mise à jour lorsque la zone visible se déplace
 window.visualViewport?.addEventListener(
   'scroll',
   updateChatHeight
