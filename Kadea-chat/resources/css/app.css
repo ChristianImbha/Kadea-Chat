@@ -2094,17 +2094,44 @@ body:has(.chat-page) {
   text-align: right;
 }
 
-/* Boutons et options d'action (Modifier / Supprimer) */
-.chat-main .chat-delete-button,
-.chat-main .chat-edit-button {
+/* Conteneur des boutons d'action du message */
+.chat-message__actions {
+  display: flex;
+  flex-direction: column; /* Aligne les boutons en colonne */
+  align-items: flex-end;   /* Aligne les boutons à droite */
+  gap: 4px;                /* Espace vertical entre les boutons */
+  margin-top: 8px;
+  
+  /* Optionnel : Masqué par défaut, apparaît au survol de la bulle */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 160ms ease, visibility 160ms ease;
+}
+
+/* La bulle de message affiche ses actions au survol (desktop) */
+.chat-message:hover .chat-message__actions {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Style des boutons individuels */
+.chat-message__actions .chat-edit-button,
+.chat-message__actions .chat-delete-button {
   padding: 4px 8px;
   color: var(--muted);
-  background: transparent;
+  background: var(--paper);
   border: 1px solid var(--line-2);
   border-radius: var(--r);
   font-size: 11px;
   cursor: pointer;
+  width: fit-content;
   transition: all 120ms ease;
+}
+
+.chat-message__actions .chat-edit-button:hover,
+.chat-message__actions .chat-delete-button:hover {
+  color: var(--ink);
+  background: var(--card);
 }
 
 .chat-main .chat-delete-button:hover,

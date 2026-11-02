@@ -10,8 +10,8 @@
     <div class="chat-workspace">
 
       {{-- =====================================================
-           2. BARRE LATÉRALE : LISTE DES CONVERSATIONS
-           Affiche les conversations accessibles à l'utilisateur.
+            2. BARRE LATÉRALE : LISTE DES CONVERSATIONS
+            Affiche les conversations accessibles à l'utilisateur.
       ====================================================== --}}
       <aside class="chat-sidebar">
 
@@ -28,7 +28,7 @@
           </a>
         </div>
 
-              {{-- Parcourt toutes les conversations chargées par le contrôleur --}}
+            {{-- Parcourt toutes les conversations chargées par le contrôleur --}}
         <div class="chat-sidebar__list">
           @each(item in conversations)
             <div class="chat-conversation-row">
@@ -107,9 +107,9 @@
       </aside>
 
       {{-- =====================================================
-           3. ZONE PRINCIPALE DE DISCUSSION
-           Contient l'en-tête, les outils du groupe,
-           les messages et le formulaire d'envoi.
+            3. ZONE PRINCIPALE DE DISCUSSION
+            Contient l'en-tête, les outils du groupe,
+            les messages et le formulaire d'envoi.
       ====================================================== --}}
       <main class="chat-main">
 
@@ -287,10 +287,10 @@
                     </button>
 
                     <div class="chat-message__actions-menu" hidden>
-                      <button type="button" data-message-action="edit">
+                      <button type="button" class="chat-edit-button" data-message-action="edit">
                         Modifier
                       </button>
-                      <button type="button" data-message-action="delete">
+                      <button type="button" class="chat-delete-button" data-message-action="delete">
                         Supprimer
                       </button>
                     </div>
@@ -357,3 +357,5 @@
     </div>
   </div>
 @end
+
+<FollowUp label="Veux-tu que l'on ajoute le code JavaScript associé pour gérer l'ouverture du menu des options au clic sur l'icône ellipsis ?" query="Oui, montre-moi le code JavaScript pour ouvrir le menu d'actions au clic."/>
