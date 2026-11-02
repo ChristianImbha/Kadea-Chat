@@ -434,31 +434,37 @@ if (userSearchInput) {
     })
   })
 
-  // gestion du clavier sur mobile
+  // Gestion de la hauteur de la conversation sur mobile
 
-  function updateChatHeight() {
+function updateChatHeight() {
   const chatPage = document.querySelector('.chat-page')
-
-  if (!chatPage) return
-
   const viewport = window.visualViewport
 
-  if (!viewport) return
+  if (!chatPage || !viewport) return
 
   const pageTop = chatPage.getBoundingClientRect().top
 
-  const availableHeight = viewport.height - pageTop
+  const availableHeight =
+    viewport.height + viewport.offsetTop - pageTop
 
   chatPage.style.setProperty(
     '--chat-available-height',
-    `${availableHeight}px`
+    `${Math.max(0, availableHeight)}px`
   )
 }
 
+// Calcul initial
 window.addEventListener('load', updateChatHeight)
 
+// Adaptation lorsque le clavier s'ouvre ou se ferme
 window.visualViewport?.addEventListener(
   'resize',
+  updateChatHeight
+)
+
+// Adaptation lorsque la zone visible se déplace
+window.visualViewport?.addEventListener(
+  'scroll',
   updateChatHeight
 )
 
