@@ -434,8 +434,8 @@ if (userSearchInput) {
     })
   })
 
- // ============================================================
-// KADEA CHAT — Gestion du clavier mobile
+// ============================================================
+// KADEA CHAT — Gestion robuste du clavier mobile (Visual Viewport)
 // ============================================================
 
 function updateChatHeight() {
@@ -443,38 +443,42 @@ function updateChatHeight() {
   const chatPage = document.querySelector('.chat-page')
   const viewport = window.visualViewport
 
-  // Ne rien faire si la page n'est pas une conversation
   if (!appMain || !chatPage || !viewport) return
 
-  // Position réelle du conteneur principal
-  const appTop = appMain.getBoundingClientRect().top
+  // Sur mobile (largeur <= 700px), on fixe la hauteur exactement sur la zone visible
+  if (window.innerWidth <= 700) {
+    appMain.style.position = 'fixed'
+    appMain.style.top = `${viewport.offsetTop}px`
+    appMain.style.left = '0'
+    appMain.style.width = '100vw'
+    appMain.style.height = `${viewport.height}px`
+  } else {
+    // Mode Desktop / Tablette large : réinitialisation
+    appMain.style.position = ''
+    appMain.style.top = ''
+    appMain.style.left = ''
+    appMain.style.width = ''
 
-  // Hauteur disponible au-dessus du clavier
-  const availableHeight =
-    viewport.height + viewport.offsetTop - appTop
-
-  // Appliquer la hauteur calculée
-  appMain.style.setProperty(
-    '--chat-available-height',
-    `${Math.max(0, availableHeight)}px`
-  )
+    // Calcul de la hauteur disponible
+    const appTop = appMain.getBoundingClientRect().top
+    const availableHeight = viewport.height + viewport.offsetTop - appTop
+    appMain.style.setProperty(
+      '--chat-available-height',
+      `${Math.max(0, availableHeight)}px`
+    )
+  }
 }
 
-// Calcul initial
+// Gestionnaire optimisé pour éviter les saccades lors de l'ouverture du clavier
+let rafId
+function triggerUpdate() {
+  cancelAnimationFrame(rafId)
+  rafId = requestAnimationFrame(updateChatHeight)
+}
+
+// Écouteurs d'événements
 window.addEventListener('load', updateChatHeight)
-
-// Mise à jour lorsque la fenêtre change de taille
-window.addEventListener('resize', updateChatHeight)
-
-// Mise à jour lorsque le clavier s'ouvre ou se ferme
-window.visualViewport?.addEventListener(
-  'resize',
-  updateChatHeight
-)
-
-// Mise à jour lorsque la zone visible se déplace
-window.visualViewport?.addEventListener(
-  'scroll',
-  updateChatHeight
-)
+window.addEventListener('resize', triggerUpdate)
+window.visualViewport?.addEventListener('resize', triggerUpdate)
+window.visualViewport?.addEventListener('scroll', triggerUpdate)
 }

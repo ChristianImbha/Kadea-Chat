@@ -1735,7 +1735,6 @@ input {
    Version consolidée : ordinateur, tablette et mobile
    ============================================================ */
 
-
 /* ============================================================
    1. STRUCTURE GÉNÉRALE
    ============================================================ */
@@ -2016,7 +2015,7 @@ body:has(.chat-page) {
 
 
 /* ============================================================
-   5. HISTORIQUE DES MESSAGES
+   5. HISTORIQUE DES MESSAGES ET OPTIONS (Édition/Suppression)
    ============================================================ */
 
 .chat-main .chat-messages {
@@ -2095,7 +2094,9 @@ body:has(.chat-page) {
   text-align: right;
 }
 
-.chat-main .chat-delete-button {
+/* Boutons et options d'action (Modifier / Supprimer) */
+.chat-main .chat-delete-button,
+.chat-main .chat-edit-button {
   padding: 4px 8px;
   color: var(--muted);
   background: transparent;
@@ -2103,9 +2104,11 @@ body:has(.chat-page) {
   border-radius: var(--r);
   font-size: 11px;
   cursor: pointer;
+  transition: all 120ms ease;
 }
 
-.chat-main .chat-delete-button:hover {
+.chat-main .chat-delete-button:hover,
+.chat-main .chat-edit-button:hover {
   color: var(--ink);
   background: var(--paper);
 }
