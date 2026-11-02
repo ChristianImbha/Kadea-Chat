@@ -2405,3 +2405,18 @@ body:has(.chat-page) {
     transition: none;
   }
 }
+
+/*calcule hauteur clavier*/
+
+body:has(.chat-page) {
+  overflow: hidden;
+  height: 100dvh;
+}
+
+.app-main:has(.chat-page) {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh; /* S'adapte automatiquement au clavier avec la meta viewport */
+  min-height: 0;
+  overflow: hidden;
+}
