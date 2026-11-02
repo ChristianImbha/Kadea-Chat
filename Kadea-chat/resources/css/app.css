@@ -2407,22 +2407,51 @@ body:has(.chat-page) {
 }
 
 /*calcule hauteur clavier*/
+/* Empêche le body de scroller en arrière-plan */
 body:has(.chat-page) {
   margin: 0;
   height: 100vh;
   height: 100dvh;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
 }
 
+/* Le conteneur principal prend exactement la hauteur dynamique de l'écran */
 .app-main:has(.chat-page) {
   display: flex;
   flex-direction: column;
-  height: 100dvh; /* S'adapte automatiquement au clavier avec la meta viewport */
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+/* La page de chat remplit l'espace */
+.chat-page {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 1440px;
+  height: 100%;
+  min-height: 0;
+  margin: 0 auto;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* La zone des messages doit impérativement avoir min-height: 0 pour rétrécir quand le clavier s'ouvre */
+.chat-main .chat-messages {
   flex: 1;
   min-height: 0;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 24px;
+}
+
+/* Le formulaire en bas ne rétrécit jamais et reste visible au-dessus du clavier */
+.chat-main #chat-form.chat-composer {
+  flex: 0 0 auto;
+  background: var(--card);
+  border-top: 1px solid var(--line-2);
+  padding: 12px 16px;
 }
 
 /* Force la visibilité des trois points (icône Lucide) */
