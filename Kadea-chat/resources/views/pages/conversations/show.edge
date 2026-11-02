@@ -259,10 +259,12 @@
               data-user-id="{{ message.userId }}"
               data-deleted="{{ message.isDeleted ? 'true' : 'false' }}"
             >
-              @if(message.userId !== currentUserId)
-                <strong>{{ message.author.fullName }}</strong>
-              @else
-                <strong>Moi</strong>
+              @if(conversation.type === 'group')
+                @if(message.userId !== currentUserId)
+                  <strong>{{ message.author.fullName }}</strong>
+                @else
+                  <strong>Moi</strong>
+                @end
               @end
 
               @if(message.isDeleted)
