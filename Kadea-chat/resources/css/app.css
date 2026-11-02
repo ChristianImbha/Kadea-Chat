@@ -2407,16 +2407,38 @@ body:has(.chat-page) {
 }
 
 /*calcule hauteur clavier*/
-
 body:has(.chat-page) {
-  overflow: hidden;
+  margin: 0;
+  height: 100vh;
   height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .app-main:has(.chat-page) {
   display: flex;
   flex-direction: column;
   height: 100dvh; /* S'adapte automatiquement au clavier avec la meta viewport */
+  flex: 1;
   min-height: 0;
   overflow: hidden;
+}
+
+/* Force la visibilité des trois points (icône Lucide) */
+.chat-message__actions-trigger {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--ink, #21201c); /* Utilise la couleur du texte principal par défaut */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-message__actions-trigger svg {
+  stroke: currentColor; /* S'assure que l'icône épouse la couleur du texte */
+  width: 18px;
+  height: 18px;
 }
