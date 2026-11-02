@@ -2441,11 +2441,22 @@ body:has(.chat-page) {
   padding: 24px;
 }
 
-/* 5. Le formulaire reste bien en bas, le clavier viendra se poser juste en dessous */
+/* Le formulaire de saisie */
 .chat-main #chat-form.chat-composer {
+  flex: 0 0 auto;
   background: var(--card);
   border-top: 1px solid var(--line-2);
-  padding: 12px 16px;
+  padding: 14px 16px 24px 16px; /* <-- Augmente le dernier chiffre (padding-bottom) pour le remonter */
+  width: 100%;
+  box-sizing: border-box;
+}
+.chat-main #chat-form.chat-composer {
+  flex: 0 0 auto;
+  background: var(--card);
+  border-top: 1px solid var(--line-2);
+  padding: 14px 16px calc(16px + env(safe-area-inset-bottom, 0px)) 16px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Force la visibilité des trois points (icône Lucide) */
