@@ -1740,12 +1740,6 @@ input {
    1. STRUCTURE GÉNÉRALE
    ============================================================ */
 
-/*
-  La messagerie utilise l'espace disponible sous la navigation.
-  La hauteur peut être adaptée par JavaScript lorsque le clavier
-  mobile s'ouvre ou se ferme.
-*/
-
 body:has(.chat-page) {
   overflow: hidden;
 }
@@ -1767,8 +1761,6 @@ body:has(.chat-page) {
   margin: 0 auto;
   padding: 16px;
 }
-
-/* Conteneur principal : liste des conversations + discussion */
 
 .chat-workspace {
   display: grid;
@@ -1839,8 +1831,6 @@ body:has(.chat-page) {
   box-shadow: inset 3px 0 0 var(--brand-accent);
 }
 
-/* Avatar des conversations */
-
 .chat-avatar {
   display: flex;
   flex: 0 0 42px;
@@ -1867,8 +1857,6 @@ body:has(.chat-page) {
   width: 46px;
   height: 46px;
 }
-
-/* Nom et aperçu du dernier message */
 
 .chat-conversation__body {
   flex: 1;
@@ -1913,8 +1901,6 @@ body:has(.chat-page) {
   background: var(--card);
 }
 
-/* En-tête de la conversation ouverte */
-
 .chat-header {
   display: flex;
   flex: 0 0 auto;
@@ -1941,8 +1927,6 @@ body:has(.chat-page) {
   color: var(--muted);
   font-size: 12px;
 }
-
-/* Liens de navigation */
 
 .chat-text-link,
 .chat-back-link {
@@ -2035,14 +2019,6 @@ body:has(.chat-page) {
    5. HISTORIQUE DES MESSAGES
    ============================================================ */
 
-/*
-  La zone des messages occupe tout l'espace disponible entre
-  l'en-tête et le formulaire.
-
-  min-height: 0 est essentiel pour permettre à cette zone
-  de rétrécir lorsque le clavier mobile est ouvert.
-*/
-
 .chat-main .chat-messages {
   display: flex;
   flex: 1 1 0;
@@ -2061,8 +2037,6 @@ body:has(.chat-page) {
   border-radius: 0;
 }
 
-/* Bulles de messages */
-
 .chat-main .chat-message {
   position: relative;
   display: flex;
@@ -2076,36 +2050,24 @@ body:has(.chat-page) {
   overflow-wrap: anywhere;
 }
 
-/* Messages reçus : alignés à gauche */
-
 .chat-main .chat-message--received {
   align-self: flex-start;
   background: var(--card);
   border-bottom-left-radius: 4px;
 }
 
-/* Messages envoyés : alignés à droite */
-
 .chat-main .chat-message--sent {
   align-self: flex-end;
   background: var(--app-surface-soft);
-  border-color: color-mix(
-    in srgb,
-    var(--brand-accent) 34%,
-    var(--line-2)
-  );
+  border-color: color-mix(in srgb, var(--brand-accent) 34%, var(--line-2));
   border-bottom-right-radius: 4px;
 }
-
-/* Nom de l'auteur : affiché uniquement en groupe */
 
 .chat-main .chat-message strong {
   display: block;
   margin-bottom: 5px;
   font-size: 12px;
 }
-
-/* Contenu du message */
 
 .chat-main .chat-message p {
   max-width: 100%;
@@ -2117,8 +2079,6 @@ body:has(.chat-page) {
   overflow-wrap: anywhere;
 }
 
-/* Message supprimé */
-
 .chat-main .chat-message .chat-message__deleted {
   display: flex;
   align-items: center;
@@ -2127,8 +2087,6 @@ body:has(.chat-page) {
   font-style: italic;
 }
 
-/* Date et heure */
-
 .chat-main .chat-message small {
   display: block;
   margin-top: 8px;
@@ -2136,8 +2094,6 @@ body:has(.chat-page) {
   font-size: 11px;
   text-align: right;
 }
-
-/* Bouton de suppression */
 
 .chat-main .chat-delete-button {
   padding: 4px 8px;
@@ -2199,11 +2155,6 @@ body:has(.chat-page) {
    7. FORMULAIRE DE SAISIE
    ============================================================ */
 
-/*
-  Le formulaire ne doit jamais rétrécir.
-  Il reste sous les messages et conserve sa propre hauteur.
-*/
-
 .chat-main #chat-form.chat-composer {
   display: flex;
   flex: 0 0 auto;
@@ -2218,15 +2169,11 @@ body:has(.chat-page) {
   text-align: left;
 }
 
-/* Libellé du champ */
-
 .chat-composer > label {
   color: var(--muted);
   font-size: 12px;
   font-weight: 600;
 }
-
-/* Ligne contenant le champ et le bouton */
 
 .chat-composer__row {
   display: flex;
@@ -2234,8 +2181,6 @@ body:has(.chat-page) {
   gap: 12px;
   width: 100%;
 }
-
-/* Champ de saisie */
 
 .chat-main #chat-form textarea {
   flex: 1;
@@ -2256,8 +2201,6 @@ body:has(.chat-page) {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
-
-/* Bouton d'envoi */
 
 .chat-send-button {
   display: inline-flex;
@@ -2284,8 +2227,6 @@ body:has(.chat-page) {
 .chat-send-button:active {
   transform: scale(0.98);
 }
-
-/* Indication sous le formulaire */
 
 .chat-composer__hint {
   margin: 0;
@@ -2337,14 +2278,6 @@ body:has(.chat-page) {
 /* ============================================================
    10. MOBILES
    ============================================================ */
-
-/*
-  Sur mobile, la liste des conversations reste accessible depuis
-  le tableau de bord. La discussion utilise toute la largeur.
-
-  La hauteur du conteneur est gérée par JavaScript via
-  --chat-available-height lorsque le clavier est ouvert.
-*/
 
 @media (max-width: 700px) {
   .chat-page {
