@@ -2407,48 +2407,42 @@ body:has(.chat-page) {
 }
 
 /*calcule hauteur clavier*/
-/* Empêche le body de scroller en arrière-plan */
+/* 1. On autorise le body à vivre normalement sur mobile */
 body:has(.chat-page) {
   margin: 0;
-  height: 100vh;
-  height: 100dvh;
-  overflow: hidden;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--card);
 }
 
-/* Le conteneur principal prend exactement la hauteur dynamique de l'écran */
+/* 2. Le conteneur principal s'adapte à l'écran sans bloquer le viewport */
 .app-main:has(.chat-page) {
   display: flex;
   flex-direction: column;
-  height: 100dvh;
-  max-height: 100dvh;
-  overflow: hidden;
+  min-height: calc(100vh - 80px); /* Ajuste selon la hauteur de ta navbar du haut */
 }
 
-/* La page de chat remplit l'espace */
+/* 3. La page de chat prend l'espace disponible */
 .chat-page {
   display: flex;
   flex: 1;
   width: 100%;
   max-width: 1440px;
-  height: 100%;
-  min-height: 0;
   margin: 0 auto;
   padding: 16px;
   box-sizing: border-box;
 }
 
-/* La zone des messages doit impérativement avoir min-height: 0 pour rétrécir quand le clavier s'ouvre */
+/* 4. La zone des messages scrolle en interne */
 .chat-main .chat-messages {
   flex: 1;
-  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 24px;
 }
 
-/* Le formulaire en bas ne rétrécit jamais et reste visible au-dessus du clavier */
+/* 5. Le formulaire reste bien en bas, le clavier viendra se poser juste en dessous */
 .chat-main #chat-form.chat-composer {
-  flex: 0 0 auto;
   background: var(--card);
   border-top: 1px solid var(--line-2);
   padding: 12px 16px;
