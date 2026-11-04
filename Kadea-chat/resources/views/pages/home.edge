@@ -1,244 +1,49 @@
- @layouts.marketing()
+@layouts.marketing()
 
-  {{-- Navigation principale --}}
-  <header class="landing-nav">
-    <a href="/" class="landing-brand" aria-label="Kadea Chat, accueil">
-      <span class="landing-brand-mark">K</span>
-      <span>Kadea <strong>Chat</strong></span>
-    </a>
-
-    <nav class="landing-nav-links" aria-label="Navigation principale">
-      <a href="#fonctionnalites">Fonctionnalités</a>
-      <a href="#comment-ca-marche">Comment ça marche</a>
-    </nav>
-
-    <div class="landing-nav-actions">
-      <a href="/login" class="landing-login">Se connecter</a>
-      <a href="/dashboard">Ouvrir Kadea Chat</a>
-    </div>
-  </header>
-
-  <main class="landing-page">
-    {{-- Hero : présentation à gauche, aperçu du chat à droite --}}
-    <section class="landing-hero">
-      <div class="landing-hero-copy">
-        <p class="landing-eyebrow">
-          <span class="landing-status-dot"></span>
-          VOTRE ESPACE DE CONVERSATION
-        </p>
-
-        <h1>
-          Les conversations importantes,
-          <span>au même endroit.</span>
-        </h1>
-
-        <p class="landing-description">
-          Échangez en privé ou en groupe, retrouvez vos messages
-          et gardez le fil de vos discussions avec Kadea Chat.
-        </p>
-
-        <div class="landing-hero-actions">
-          <a href="/signup" class="landing-button landing-button-small">
-        Créer un compte <span aria-hidden="true">↗</span>
-      </a>
-          <a href="/login" class="landing-secondary-link">
-            J’ai déjà un compte
-          </a>
-        </div>
-
-        <div class="landing-trust-note">
-          <span aria-hidden="true">✓</span>
-          Un espace simple pour vos échanges quotidiens
-        </div>
-      </div>
-
-      {{-- Aperçu illustratif de l'interface de messagerie --}}
-      <div class="landing-preview-wrap" aria-label="Aperçu illustratif de Kadea Chat">
-        <div class="landing-preview-glow"></div>
-
-        <div class="landing-preview">
-          <aside class="landing-preview-sidebar">
-            <div class="landing-preview-brand">
-              <span class="landing-brand-mark">K</span>
-              <span>Kadea <strong>Chat</strong></span>
-            </div>
-
-            <div class="landing-preview-section-title">
-              CONVERSATIONS
-              <span>＋</span>
-            </div>
-
-            <div class="landing-conversation landing-conversation-active">
-              <span class="landing-avatar landing-avatar-violet">JM</span>
-              <span class="landing-conversation-info">
-                <strong>Jean Michel</strong>
-                <small>Tu as vu le document ?</small>
-              </span>
-              <span class="landing-unread-dot"></span>
-            </div>
-
-            <div class="landing-conversation">
-              <span class="landing-avatar landing-avatar-green">ÉQ</span>
-              <span class="landing-conversation-info">
-                <strong>Équipe projet</strong>
-                <small>Marie : Très bien !</small>
-              </span>
-            </div>
-
-            <div class="landing-conversation">
-              <span class="landing-avatar landing-avatar-orange">AN</span>
-              <span class="landing-conversation-info">
-                <strong>André N.</strong>
-                <small>Merci pour ton aide.</small>
-              </span>
-            </div>
-          </aside>
-
-          <section class="landing-preview-chat" aria-label="Exemple de conversation">
-            <header class="landing-chat-header">
-              <span class="landing-avatar landing-avatar-violet">JM</span>
-              <span>
-                <strong>Jean Michel</strong>
-                <small><span class="landing-status-dot"></span> En ligne</small>
-              </span>
-              <span class="landing-chat-menu" aria-hidden="true">···</span>
-            </header>
-
-            <div class="landing-chat-date">AUJOURD’HUI</div>
-
-            <div class="landing-message landing-message-received">
-              Salut ! Tu as pu regarder le document ?
-              <small>10:32</small>
-            </div>
-
-            <div class="landing-message landing-message-sent">
-              Oui, je viens de le consulter.
-              <small>10:33 <span aria-label="Envoyé">✓✓</span></small>
-            </div>
-
-            <div class="landing-message landing-message-received">
-              Super, on en discute cet après-midi ?
-              <small>10:34</small>
-            </div>
-
-            <div class="landing-message landing-message-sent landing-message-short">
-              Avec plaisir !
-              <small>10:34 <span aria-label="Envoyé">✓✓</span></small>
-            </div>
-
-            <div class="landing-chat-composer">
-              <span>Écrire un message…</span>
-              <span class="landing-send-icon" aria-hidden="true">↑</span>
-            </div>
-          </section>
-        </div>
-
-        <div class="landing-floating-note">
-          <span class="landing-floating-check">✓</span>
-          <span>
-            <strong>La discussion continue</strong>
-            <small>Vos échanges au même endroit</small>
-          </span>
-        </div>
-      </div>
-    </section>
-
-    {{-- Bandeau de présentation --}}
-    <section class="landing-benefits" id="fonctionnalites">
-      <div class="landing-section-heading">
-        <p class="landing-eyebrow">PENSÉ POUR VOS ÉCHANGES</p>
-        <h2>Simple à utiliser. Facile à retrouver.</h2>
-        <p>Les outils essentiels pour communiquer sans compliquer les choses.</p>
-      </div>
-
-      <div class="landing-feature-grid">
-        <article class="landing-feature-card">
-          <span class="landing-feature-icon">↗</span>
-          <h3>Messages privés</h3>
-          <p>Échangez directement avec les personnes de votre choix.</p>
-        </article>
-
-        <article class="landing-feature-card">
-          <span class="landing-feature-icon">◎</span>
-          <h3>Conversations de groupe</h3>
-          <p>Réunissez les membres d’une équipe dans une même discussion.</p>
-        </article>
-
-        <article class="landing-feature-card">
-          <span class="landing-feature-icon">◷</span>
-          <h3>Un historique conservé</h3>
-          <p>Retrouvez le fil de vos échanges lorsque vous revenez discuter.</p>
-        </article>
-      </div>
-    </section>
-
-    {{-- Parcours de démarrage --}}
-    <section class="landing-how" id="comment-ca-marche">
-      <div>
-        <p class="landing-eyebrow">POUR COMMENCER</p>
-        <h2>Vos conversations commencent ici.</h2>
-        <p>Quelques étapes pour rejoindre votre espace de messagerie.</p>
-        <a href="/signup" class="landing-text-link">
-          Créer mon compte <span aria-hidden="true">→</span>
-        </a>
-      </div>
-
-      <div class="landing-steps">
-        <article class="landing-step">
-          <span>01</span>
-          <div>
-            <h3>Créez votre compte</h3>
-            <p>Renseignez vos informations et confirmez votre adresse e-mail.</p>
-          </div>
-        </article>
-
-        <article class="landing-step">
-          <span>02</span>
-          <div>
-            <h3>Retrouvez vos contacts</h3>
-            <p>Accédez à votre espace et démarrez une conversation.</p>
-          </div>
-        </article>
-
-        <article class="landing-step">
-          <span>03</span>
-          <div>
-            <h3>Échangez librement</h3>
-            <p>Discutez en privé ou rassemblez votre équipe dans un groupe.</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    {{-- Appel à l'action final --}}
-    <section class="landing-cta">
-      <div>
-        <p class="landing-eyebrow">VOTRE PROCHAINE CONVERSATION</p>
-        <h2>On garde le fil ensemble ?</h2>
-        <p>Créez votre compte et commencez à échanger avec Kadea Chat.</p>
-      </div>
-      <a href="/signup" class="landing-button">
-        Rejoindre Kadea Chat <span aria-hidden="true">→</span>
-      </a>
-    </section>
-  </main>
-
- <footer class="landing-footer">
+<header class="landing-nav">
   <a href="/" class="landing-brand" aria-label="Kadea Chat, accueil">
     <span class="landing-brand-mark">K</span>
     <span>Kadea <strong>Chat</strong></span>
   </a>
 
-  <p>Une messagerie pour garder le fil.</p>
+  <div class="landing-nav-actions">
+    <a href="/login" class="landing-login">Se connecter</a>
+    <a href="/signup">Créer un compte</a>
+  </div>
+</header>
 
-  <nav class="landing-footer-links" aria-label="Liens légaux et navigation">
-    <a href="/login">Connexion</a>
-    <a href="/signup">Inscription</a>
-    <a href="/mentions-legales">Mentions légales</a>
-    <a href="/politique-confidentialite">Politique de confidentialité</a>
-  </nav>
+<main class="landing-page">
+  <section class="landing-hero">
+    <div class="landing-hero-copy">
+      <h1>
+        Kadea Chat
+        <span>Restez en contact.</span>
+      </h1>
 
-  <small>© 2026 Kadea Chat</small>
+      <p class="landing-description">
+        Discutez avec vos contacts, en privé ou en groupe.
+      </p>
+
+      <div class="landing-hero-actions">
+        <a href="/signup" class="landing-button landing-button-small">
+          Créer un compte
+        </a>
+
+        <a href="/login" class="landing-secondary-link">
+          Se connecter
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="landing-footer">
+  <a href="/" class="landing-brand" aria-label="Kadea Chat, accueil">
+    <span class="landing-brand-mark">K</span>
+    <span>Kadea <strong>Chat</strong></span>
+  </a>
+ <hr>
+  <small>© 2026 Kadea Chat, tout droit reservé</small>
 </footer>
 
 @end
