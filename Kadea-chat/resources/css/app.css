@@ -1133,20 +1133,6 @@ body:has(.chat-page) {
   overflow-wrap: anywhere;
   animation: chat-message-appear 160ms ease-out;
 }
-
-.chat-main .chat-message--received {
-  align-self: flex-start;
-  background: var(--card);
-  border-bottom-left-radius: 4px;
-}
-
-.chat-main .chat-message--sent {
-  align-self: flex-end;
-  background: var(--app-surface-soft);
-  border-color: color-mix(in srgb, var(--brand-accent) 34%, var(--line-2));
-  border-bottom-right-radius: 4px;
-}
-
 .chat-main .chat-message strong {
   display: block;
   margin-bottom: 3px;
@@ -1271,7 +1257,7 @@ body:has(.chat-page) {
   font-size: 13px;
 }
 
-/* -------------------- Formulaire de saisie style WhatsApp -------------------- */
+/* -------------------- Formulaire de saisie -------------------- */
 
 .chat-main #chat-form.chat-composer {
   display: flex;
@@ -1310,7 +1296,7 @@ body:has(.chat-page) {
   color: var(--ink);
   background: var(--field);
   border: 1px solid var(--line-2);
-  border-radius: 20px; /* Style bulle WhatsApp */
+  border-radius: 20px; /* Style bulle */
   font: inherit;
   font-size: 14px;
 }
@@ -1333,7 +1319,7 @@ body:has(.chat-page) {
   color: var(--btn-fg);
   background: var(--brand-accent);
   border: 1px solid var(--brand-accent);
-  border-radius: 50%; /* Bouton rond style WhatsApp */
+  border-radius: 50%; /* Bouton rond send */
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -1502,44 +1488,6 @@ body:has(.chat-page) {
   }
 }
 
-/* Couleurs harmonisées des bulles — mode clair */
-:root[data-theme='light'] .chat-main .chat-message--sent {
-  background: #dceaff;
-  border-color: #a8c7fa;
-}
-
-:root[data-theme='light'] .chat-main .chat-message--sent p {
-  color: #1e3a8a;
-}
-
-:root[data-theme='light'] .chat-main .chat-message--received {
-  background: #ffffff;
-  border-color: #d1d5db;
-}
-
-:root[data-theme='light'] .chat-main .chat-message--received p {
-  color: #1f2937;
-}
-
-/* Couleurs harmonisées — mode sombre */
-:root[data-theme='dark'] .chat-main .chat-message--sent {
-  background: #243f67;
-  border-color: #42699b;
-}
-
-:root[data-theme='dark'] .chat-main .chat-message--sent p {
-  color: #eff6ff;
-}
-
-:root[data-theme='dark'] .chat-main .chat-message--received {
-  background: #1e293b;
-  border-color: #334155;
-}
-
-:root[data-theme='dark'] .chat-main .chat-message--received p {
-  color: #f1f5f9;
-}
-
 /* Aligne la conversation et son bouton Supprimer */
 .chat-conversation-row {
   display: flex;
@@ -1654,15 +1602,60 @@ body:has(.chat-page) {
   }
 }
 
-/* Bulles des messages — mode clair */
-.chat-message--sent {
-  background-color: #dceaff;
-  color: #1e3a8a;
-  border: 1px solid #a8c7fa;
+/* ==========================================================================
+   Styles de base des bulles de chat
+   ========================================================================== */
+.chat-main .chat-message--received {
+  align-self: flex-start;
+  background: var(--card);
+  border-bottom-left-radius: 4px;
 }
 
-.chat-message--received {
-  background-color: #ffffff;
+.chat-main .chat-message--sent {
+  align-self: flex-end;
+  background: var(--app-surface-soft);
+  border-color: color-mix(in srgb, var(--brand-accent) 34%, var(--line-2));
+  border-bottom-right-radius: 4px;
+}
+
+/* ==========================================================================
+   Couleurs harmonisées des bulles — Mode clair
+   ========================================================================== */
+:root[data-theme='light'] .chat-main .chat-message--sent {
+  background: #dceaff;
+  border-color: #a8c7fa;
+}
+
+:root[data-theme='light'] .chat-main .chat-message--sent p {
+  color: #1e3a8a;
+}
+
+:root[data-theme='light'] .chat-main .chat-message--received {
+  background: #ffffff;
+  border-color: #d1d5db;
+}
+
+:root[data-theme='light'] .chat-main .chat-message--received p {
   color: #1f2937;
-  border: 1px solid #d1d5db;
+}
+
+/* ==========================================================================
+   Couleurs harmonisées des bulles — Mode sombre
+   ========================================================================== */
+:root[data-theme='dark'] .chat-main .chat-message--sent {
+  background: #243f67;
+  border-color: #42699b;
+}
+
+:root[data-theme='dark'] .chat-main .chat-message--sent p {
+  color: #eff6ff;
+}
+
+:root[data-theme='dark'] .chat-main .chat-message--received {
+  background: #1e293b; /* Ajusté pour correspondre à la couleur de carte standard (--card) en mode sombre */
+  border-color: #334155;
+}
+
+:root[data-theme='dark'] .chat-main .chat-message--received p {
+  color: #f1f5f9;
 }
