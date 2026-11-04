@@ -1440,3 +1440,115 @@ input, textarea {
     transition: none;
   }
 }
+/* Aligne la conversation et son bouton Supprimer */
+.chat-conversation-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--line-2);
+}
+
+/* La conversation occupe l'espace disponible */
+.chat-conversation-row > .chat-conversation {
+  flex: 1;
+  min-width: 0;
+  border-bottom: 0;
+}
+
+/* Le formulaire ne prend que la place nécessaire */
+.chat-conversation-row > form {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+/* Style du bouton Supprimer */
+.chat-conversation-row .chat-delete-conversation {
+  padding: 6px 10px;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.chat-conversation-row .chat-delete-conversation:hover {
+  color: #b91c1c;
+  background: #fee2e2;
+}
+/* Aligner le bouton à droite de chaque conversation */
+.chat-conversation-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-conversation-row > .chat-conversation {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Apparence du bouton Supprimer */
+.chat-conversation-row .chat-delete-conversation {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 12px;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  background: #fff1f2;
+  color: #b91c1c;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* Effet au survol */
+.chat-conversation-row .chat-delete-conversation:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+}
+
+/* Conserver l'effet de survol précédent */
+.chat-conversation-row .chat-delete-conversation {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 150ms ease, visibility 150ms ease;
+}
+
+.chat-conversation-row:hover .chat-delete-conversation,
+.chat-conversation-row:focus-within .chat-delete-conversation {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Sur les appareils tactiles, le bouton reste visible */
+@media (hover: none) {
+  .chat-conversation-row .chat-delete-conversation {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* Masquer le bouton par défaut sur ordinateur */
+.chat-conversation-row .chat-delete-conversation {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 150ms ease, visibility 150ms ease;
+}
+
+/* Afficher le bouton au survol ou quand on navigue au clavier */
+.chat-conversation-row:hover .chat-delete-conversation,
+.chat-conversation-row:focus-within .chat-delete-conversation {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Le garder accessible sur les appareils tactiles */
+@media (hover: none) {
+  .chat-conversation-row .chat-delete-conversation {
+    opacity: 1;
+    visibility: visible;
+  }
+}
