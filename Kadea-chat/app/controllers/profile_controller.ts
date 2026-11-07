@@ -1,4 +1,5 @@
-import app from '@adonisjs/core/services/app'
+
+import cloudinary from '#services/cloudinary_service'
 import hash from '@adonisjs/core/services/hash'
 import vine from '@vinejs/vine'
 import type { HttpContext } from '@adonisjs/core/http'
@@ -30,17 +31,22 @@ export default class ProfileController {
     user.fullName = fullName
 
     if (avatar) {
-      const fileName = `${user.id}-${Date.now()}.${avatar.extname}`
+      try {
+        if (!avatar.tmpPath) {
+          throw new Error('Fichier temporaire introuvable.')
+        }
 
-      await avatar.move(app.makePath('public/uploads'), {
-        name: fileName,
-        overwrite: true,
-      })
+        const result = await cloudinary.uploader.upload(avatar.tmpPath, {
+          folder: 'kadea-chat/avatars',
+          public_id: `user-${user.id}`,
+          overwrite: true,
+          resource_type: 'image',
+        })
 
-      if (avatar.fileName) {
-        user.avatarPath = `/uploads/${fileName}`
-      } else {
-        session.flash('error', 'La photo n’a pas pu être enregistrée.')
+        user.avatarPath = result.secure_url
+      } catch (error) {
+        console.error('Erreur Cloudinary :', error)
+        session.flash('error', 'La photo n’a pas pu être enregistrée. Veuillez réessayer.')
         return response.redirect('/profile')
       }
     }
@@ -55,17 +61,14 @@ export default class ProfileController {
   async updatePassword({ auth, request, response, session }: HttpContext) {
     const user = auth.user!
 
-    // Définir les règles de validation des champs du formulaire
     const passwordValidator = vine.create({
       currentPassword: vine.string(),
       password: vine.string().minLength(8).maxLength(32),
       passwordConfirmation: vine.string().sameAs('password'),
     })
 
-    // Vérifier les données reçues
     const { currentPassword, password } = await request.validateUsing(passwordValidator)
 
-    // Vérifier que l'ancien mot de passe est correct
     const isCurrentPasswordValid = await hash.verify(user.password, currentPassword)
 
     if (!isCurrentPasswordValid) {
@@ -73,7 +76,6 @@ export default class ProfileController {
       return response.redirect('/profile')
     }
 
-    // Enregistrer le nouveau mot de passe
     user.password = password
     await user.save()
 

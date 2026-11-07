@@ -21,9 +21,13 @@ const env = await Env.create(new URL('../', import.meta.url), {
   MAIL_FROM_NAME: Env.schema.string(),
   MAIL_FROM_ADDRESS: Env.schema.string(),
   BREVO_API_KEY: Env.schema.secret(),
+  CLOUDINARY_CLOUD_NAME: Env.schema.string(),
+  CLOUDINARY_API_KEY: Env.schema.secret(),
+  CLOUDINARY_API_SECRET: Env.schema.secret(),
 })
 
 console.log('BREVO_API_KEY présente :', Boolean(env.get('BREVO_API_KEY')))
+
 
 export default env
 
