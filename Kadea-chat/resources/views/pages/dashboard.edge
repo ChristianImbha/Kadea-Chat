@@ -29,12 +29,24 @@
               @each(conversation in conversations)
                 <a class="dashboard-conversation" href="/conversations/{{ conversation.id }}">
                   <span class="dashboard-conversation__icon">
-                    @if(conversation.type === 'group')
-                      @svg('lucide:users-round', { width: 19, height: 19 })
-                    @else
-                      @svg('lucide:message-circle', { width: 19, height: 19 })
-                    @end
-                  </span>
+                        @if(conversation.type === 'group')
+                          @svg('lucide:users-round', { width: 19, height: 19 })
+                        @else
+                          @each(member in conversation.members)
+                            @if(member.userId !== auth.user.id)
+                              @if(member.user.avatarPath)
+                                <img
+                                  src="{{ member.user.avatarPath }}"
+                                  alt="Photo de {{ member.user.fullName }}"
+                                  class="dashboard-conversation__avatar"
+                                >
+                              @else
+                                @svg('lucide:user-round', { width: 19, height: 19 })
+                              @end
+                            @end
+                          @end
+                        @end
+                                        </span>
                   <span class="dashboard-conversation__content">
                     <span class="dashboard-conversation__title">
                       <strong>
