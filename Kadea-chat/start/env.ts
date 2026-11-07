@@ -26,8 +26,5 @@ const env = await Env.create(new URL('../', import.meta.url), {
   CLOUDINARY_API_SECRET: Env.schema.secret(),
 })
 
-console.log('BREVO_API_KEY présente :', Boolean(env.get('BREVO_API_KEY')))
-
-
 export default env
 

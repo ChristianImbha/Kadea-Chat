@@ -1,142 +1,190 @@
-
-
 # Kadea Chat
 
-Application web de messagerie développée dans le cadre du projet de fin de formation **Kadea Academy**. Kadea Chat permet aux utilisateurs d’échanger des messages dans des conversations privées ou des groupes, depuis un navigateur.
+Application web de messagerie développée dans le cadre du projet chef-d’œuvre de **Kadea Academy**. Kadea Chat permet aux utilisateurs d'échanger des messages dans des conversations privées ou des groupes depuis un navigateur.
 
 ## Liens du projet
 
 - **Application hébergée :** https://kadea-chat-3ygn.onrender.com
-- **Dépôt GitHub :** [https://github.com/ChristianImbha/Kadea-Chat](https://github.com/ChristianImbha/Kadea-Chat)
-- **Dépôt GitHub :**[https://github.com/kadea-academy-learners/26-01-kd-dev-web-matin-c-mon-thu-kin-capstone-kadea-chat-christianimbha](https://github.com/kadea-academy-learners/26-01-kd-dev-web-matin-c-mon-thu-kin-capstone-kadea-chat-christianimbha)
-
-## Technologies utilisées
-
-- AdonisJS 7
-- Edge
-- PostgreSQL
-- TypeScript
-- HTML, CSS et JavaScript
+- **Dépôt GitHub personnel :** https://github.com/ChristianImbha/Kadea-Chat
+- **Dépôt GitHub Kadea Academy :** https://github.com/kadea-academy-learners/26-01-kd-dev-web-matin-c-mon-thu-kin-capstone-kadea-chat-christianimbha
 
 ## Fonctionnalités
 
 ### Comptes et authentification
-
-- [x] Inscription et connexion
-- [x] Déconnexion
-- [x] Confirmation de l’adresse e-mail
-- [x] Réinitialisation du mot de passe
-- [x] Modification du profil et de la photo
+- Inscription et connexion
+- Déconnexion
+- Confirmation de l'adresse e-mail
+- Réinitialisation du mot de passe
+- Modification du profil et de la photo
 
 ### Conversations et messages
-
-- [x] Conversations privées et de groupe
-- [x] Affichage de la liste des conversations
-- [x] Envoi et conservation des messages
-- [x] Suppression d’un message — à confirmer
-- [x] Suppression d’une conversation de sa propre liste
-- [x] Réception des messages en temps réel sans rechargement — à confirmer
+- Conversations privées et de groupe
+- Affichage de la liste des conversations
+- Envoi et conservation des messages
+- Suppression logique d'un message (`is_deleted`)
+- Suppression d'une conversation de sa propre liste, selon le comportement implémenté dans l'application
+- Réception des messages en temps réel sans rechargement
+- Gestion des membres des groupes et contrôle d'accès aux conversations
 
 ### Interface
+- Interface adaptée aux écrans d'ordinateur et de téléphone
+- Affichage des conversations et de l'historique des messages
 
-- [x] Interface de messagerie adaptée aux écrans d’ordinateur et de téléphone
-- [x] Affichage des conversations et de l’historique des messages
+## Technologies utilisées
 
+| Technologie | Utilisation |
+|---|---|
+| AdonisJS 7 | Framework backend suivant l'architecture MVC |
+| TypeScript | Langage de programmation |
+| Edge.js | Moteur de templates côté serveur |
+| PostgreSQL | Base de données relationnelle |
+| Lucid ORM | Modèles, relations et migrations |
+| AdonisJS Auth | Authentification |
+| AdonisJS Transmit | Communication en temps réel |
+| AdonisJS Mail et Brevo API | Envoi des e-mails |
+| Tailwind CSS 4 | Styles et interface responsive |
+| Alpine.js | Interactions côté navigateur |
+| Vite | Compilation des ressources frontend |
+| Cloudinary | Gestion des images |
+| Git et GitHub | Versionnement du code source |
 
 ## Prérequis
 
-Avant de commencer, installez :
-
-- Node.js et npm
+- Node.js 24 ou supérieur (voir `engines` dans `package.json`)
+- npm
 - PostgreSQL
 - Git
+- Un compte Brevo et une clé API pour l'envoi des e-mails
+- Un compte Cloudinary pour la gestion des images
 
 ## Installation en local
 
-1. Clonez le dépôt :
+1. Cloner le dépôt :
 
    ```bash
    git clone https://github.com/ChristianImbha/Kadea-Chat.git
    cd Kadea-Chat
    ```
 
-2. Installez les dépendances :
+2. Installer les dépendances :
 
    ```bash
    npm install
    ```
 
-3. Créez un fichier `.env` à partir du fichier `.env.example`, s’il est présent :
+3. Copier `.env.example` vers `.env` (sous Windows, effectuer la copie depuis l'Explorateur de fichiers ou utiliser PowerShell) :
 
    ```bash
    cp .env.example .env
    ```
 
-   Sous Windows, vous pouvez aussi copier `.env.example` manuellement et nommer la copie `.env`.
+4. Créer une base PostgreSQL et renseigner les variables de connexion dans `.env`.
 
-4. Configurez les variables d’environnement décrites ci-dessous. Créez également une base de données PostgreSQL correspondant à la configuration.
+5. Renseigner les clés Brevo et Cloudinary ainsi que les autres variables requises.
 
-5. Exécutez les migrations :
+6. Exécuter les migrations :
 
    ```bash
    node ace migration:run
    ```
 
-6. Démarrez l’application en mode développement :
+7. Démarrer l'application en développement :
 
    ```bash
    npm run dev
    ```
 
-   Ouvrez ensuite l’adresse locale affichée dans le terminal.
+   Ouvrir l'URL locale affichée dans le terminal.
 
-## Variables d’environnement
+## Variables d'environnement
 
-Renseignez les variables nécessaires dans votre fichier `.env`. **Ne publiez jamais les valeurs secrètes** et ne commitez pas ce fichier.
+Créer le fichier `.env` à partir de `.env.example`. Les valeurs ci-dessous sont des exemples ou des champs à compléter ; elles ne sont pas des identifiants de production.
 
-| Variable       | Description                                                                                      |
-| -------------- | ------------------------------------------------------------------------------------------------ |
-| `PORT`         | Port d’écoute de l’application                                                                   |
-| `HOST`         | Adresse d’écoute du serveur                                                                      |
-| `APP_KEY`      | Clé secrète de l’application AdonisJS                                                            |
-| `NODE_ENV`     | Environnement d’exécution                                                                        |
-| `DB_HOST`      | Hôte PostgreSQL                                                                                  |
-| `DB_PORT`      | Port PostgreSQL                                                                                  |
-| `DB_USER`      | Utilisateur PostgreSQL                                                                           |
-| `DB_PASSWORD`  | Mot de passe PostgreSQL                                                                          |
-| `DB_DATABASE`  | Nom de la base de données                                                                        |
-| Variables SMTP | Paramètres du serveur e-mail utilisé pour la confirmation et la réinitialisation du mot de passe |
+| Variable | Description |
+|---|---|
+| `TZ` | Fuseau horaire du processus |
+| `PORT` | Port d'écoute de l'application |
+| `HOST` | Adresse d'écoute du serveur |
+| `NODE_ENV` | Environnement (`development`, `production` ou `test`) |
+| `LOG_LEVEL` | Niveau de journalisation |
+| `APP_KEY` | Clé secrète de l'application AdonisJS |
+| `APP_URL` | URL de l'application |
+| `SESSION_DRIVER` | Pilote de session (`cookie`, `memory` ou `database`) |
+| `DB_HOST` | Hôte PostgreSQL |
+| `DB_PORT` | Port PostgreSQL |
+| `DB_USER` | Utilisateur PostgreSQL |
+| `DB_PASSWORD` | Mot de passe PostgreSQL |
+| `DB_DATABASE` | Nom de la base PostgreSQL |
+| `MAIL_MAILER` | Transport e-mail ; la configuration actuelle attend `brevo` |
+| `MAIL_FROM_NAME` | Nom affiché comme expéditeur |
+| `MAIL_FROM_ADDRESS` | Adresse e-mail de l'expéditeur |
+| `BREVO_API_KEY` | Clé API Brevo |
+| `CLOUDINARY_CLOUD_NAME` | Nom du compte Cloudinary |
+| `CLOUDINARY_API_KEY` | Clé API Cloudinary |
+| `CLOUDINARY_API_SECRET` | Secret API Cloudinary |
 
-Consultez le fichier `.env.example` du projet pour connaître les noms exacts des variables utilisées par cette version de l’application.
+**Sécurité :** ne jamais publier le fichier `.env`, les mots de passe ou les clés API. Le dépôt doit contenir uniquement `.env.example` avec des valeurs fictives ou vides.
+
+### Envoi des e-mails
+
+Kadea Chat utilise **AdonisJS Mail avec le transport Brevo API**. Brevo sert notamment à envoyer les e-mails de confirmation de compte et de réinitialisation du mot de passe. Cette application n'utilise pas le transport SMTP classique dans la configuration fournie.
+
+### Gestion des images
+
+Cloudinary est configuré pour la gestion des images de profil. Les identifiants Cloudinary doivent être fournis par variables d'environnement et conservés secrets.
 
 ## Base de données
 
-La base de données PostgreSQL contient notamment les tables suivantes :
+La base utilise PostgreSQL et Lucid ORM. Les migrations sont conservées dans `database/migrations`.
 
-- `users` : comptes utilisateurs ;
-- `conversations` : conversations privées ou de groupe ;
-- `conversation_members` : association entre les utilisateurs et les conversations ;
-- `messages` : messages envoyés dans les conversations ;
-- `email_verification_tokens` : jetons utilisés pour confirmer les adresses e-mail.
+Les principales tables métier sont :
 
-Les relations principales sont les suivantes :
+- `users` : comptes, informations de profil et adresse e-mail vérifiée ;
+- `conversations` : conversations privées ou de groupe et utilisateur créateur ;
+- `conversation_members` : association entre les utilisateurs et les conversations, avec la référence facultative au dernier message lu ;
+- `messages` : contenu des messages, conversation, auteur et indicateur de suppression ;
+- `email_verification_tokens` : jetons de confirmation d'adresse e-mail ;
+- `password_reset_tokens` : jetons de réinitialisation du mot de passe.
 
-- Un utilisateur peut participer à plusieurs conversations.
-- Une conversation peut contenir plusieurs membres.
-- Une conversation peut contenir plusieurs messages.
-- Chaque message est associé à une conversation et à son auteur.
+La table `adonis_schema`, si elle est présente dans la base, est une table technique utilisée par Lucid pour suivre les migrations.
 
-**Le schéma détaillé de la base de données est disponible dans** [docs/database-schema.md](./docs/database-schema.md).
+Le diagramme relationnel et la description des relations sont disponibles dans [`docs/database-schema.md`](./docs/database-schema.md).
 
+## Commandes disponibles
 
+| Commande | Description |
+|---|---|
+| `npm run dev` | Démarrer le serveur de développement avec HMR |
+| `npm run build` | Construire l'application pour la production |
+| `npm start` | Démarrer l'application construite |
+| `npm test` | Exécuter les tests configurés |
+| `npm run lint` | Vérifier le code avec ESLint |
+| `npm run format` | Formater les fichiers avec Prettier |
+| `npm run typecheck` | Vérifier les types TypeScript |
 
-## Sécurité
+## Architecture du projet
 
-- Les mots de passe ne doivent pas être stockés en clair.
-- Les données saisies par les utilisateurs sont validées côté serveur.
-- L’accès aux conversations et aux messages est réservé aux membres autorisés.
-- Les variables secrètes sont conservées dans `.env`, qui ne doit pas être versionné.
+L'application suit l'organisation MVC d'AdonisJS :
+
+- `app/controllers` : réception des requêtes et orchestration des actions ;
+- `app/models` : modèles Lucid et accès aux données ;
+- `app/validators` : validation des données entrantes ;
+- `app/middleware` : traitements exécutés avant les contrôleurs ;
+- `resources/views` : vues Edge ;
+- `resources/css` et `resources/js` : ressources frontend ;
+- `database/migrations` : évolution du schéma PostgreSQL ;
+- `config` et `start` : configuration et initialisation de l'application.
+
+## Déploiement
+
+L'application est hébergée sur Render. Les paramètres de production (base PostgreSQL, clé d'application, Brevo et Cloudinary) sont configurés dans l'environnement d'exécution de l'hébergeur et ne doivent pas être committés dans Git.
+
+- **URL publique :** https://kadea-chat-3ygn.onrender.com
+
+## Utilisation de l'intelligence artificielle
+
+Les assistants d'intelligence artificielle utilisés, leur rôle et les parties concernées doivent être déclarés de manière transparente conformément aux consignes du projet chef-d'œuvre. L'auteur doit être capable d'expliquer et de justifier le code livré, y compris les parties réalisées avec assistance.
 
 ## Auteur
 
-Projet réalisé par **Christian Imbha** dans le cadre du projet de fin de formation en développement web à Kadea Academy.
+Projet réalisé par **Christian Imbha** dans le cadre du projet chef-d'œuvre en développement web à Kadea Academy.
