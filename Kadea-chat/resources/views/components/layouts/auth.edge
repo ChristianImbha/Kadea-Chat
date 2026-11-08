@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html
   lang="fr"
@@ -21,23 +22,17 @@
   <body>
     <div class="auth">
       <div class="auth__form-col">
-        @!logo({ size: 28 })
-        <div class="auth__form-wrap">{{{ await $slots.main() }}}</div>
-        <div style="height: 20px;"></div>
+        <div class="auth__top">
+          @!logo({ size: 28 })
+          @!themeToggle({ defaultTheme: 'dark' })
+        </div>
+
+        <div class="auth__form-wrap">
+          {{{ await $slots.main() }}}
+        </div>
       </div>
-
-      <aside class="auth__aside">
-        <div class="auth__aside-top">
-        @!themeToggle({ defaultTheme: 'dark' })
-        </div>
-
-        <div class="auth__brand-panel">
-          <span class="auth__brand-kicker">KADEA CHAT · MESSAGERIE PRIVÉE</span>
-          <p class="auth__quote">Vos conversations, simplement. En privé, en groupe, à votre rythme.</p>
-          <p class="auth__brand-note">Une messagerie claire pour garder le fil de ce qui compte.</p>
-        </div>
-      </aside>
     </div>
+
     @include('partials/flash_alerts')
-    
+  </body>
 </html>

@@ -94,7 +94,7 @@ input, textarea, select {
 }
 
 /* ==========================================================================
-   UNIFORMITÉ TOTALE DES TITRES ET TEXTES (Style épuré WhatsApp)
+   UNIFORMITÉ TOTALE DES TITRES ET TEXTES
    ========================================================================== */
 h1, h2, h3, h4, h5, h6,
 .auth__title, 
@@ -391,22 +391,32 @@ p,
    Authentification — formulaire à gauche, présentation à droite
    ========================================================================== */
 .auth {
-  display: grid;
-  grid-template-columns: 1.04fr 1fr;
+  display: flex;
+  justify-content: center;
   min-height: 100vh;
+  background: var(--paper);
 }
 .auth__form-col {
   display: flex;
   flex-direction: column;
-  padding: 30px 36px;
+  width: 100%;
+  min-height: 100vh;
+  padding: 30px clamp(20px, 6vw, 80px);
   position: relative;
   background: var(--card);
 }
+.auth__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .auth__form-wrap {
   margin: auto;
   width: 100%;
-  max-width: 344px;
-  padding: 20px 0;
+  max-width: 420px;
+  padding: 40px 0;
 }
 .auth__form {
   display: flex;
@@ -1725,5 +1735,31 @@ body:has(.chat-page) {
 
   .dashboard-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .auth__form-col {
+    padding: 20px;
+  }
+
+  .auth__form-wrap {
+    max-width: 100%;
+    padding: 32px 0;
+  }
+
+  .auth__title {
+    font-size: clamp(26px, 7vw, 34px);
+  }
+
+  .auth__form {
+    margin-top: 24px;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  .auth__form-col {
+    padding: 16px;
   }
 }
